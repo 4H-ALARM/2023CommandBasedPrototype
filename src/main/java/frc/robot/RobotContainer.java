@@ -6,7 +6,7 @@ package frc.robot;
 
 
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import frc.robot.subsystems.*;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -26,9 +28,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+  
   // The robot's subsystems
   private final Drivetrain m_robotDrive = new Drivetrain();
+  private final Grabber m_grabberSubsystem = new Grabber();
+
+  // The robot's commands
+  private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
+  private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -73,6 +81,12 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    m_driverController.x().whileTrue(m_GrabberOpen);
+    m_driverController.x().whileFalse(m_GrabberStop);
+
+    m_driverController.
+
   }
 
   /**
