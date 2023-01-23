@@ -36,7 +36,7 @@ public class RobotContainer {
   public final CommandJoystick m_DriveJoystick = 
     new CommandJoystick(1);
 
-  private final XboxController m_C = new XboxController(0);
+  public final XboxController m_C = new XboxController(0);
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -91,15 +91,19 @@ public class RobotContainer {
      * Pros: makes use of robot built in scheduler, example of functional programming style,  no need to pass joystick refrence
      * Cons: new to ALARM, obscure structure, command creation at run time
      */
-    m_ArmController.b().whileTrue(m_grabberSubsystem.openCommand());
+    m_ArmController.b().onTrue(m_grabberSubsystem.openCommand());
     m_ArmController.b().onFalse(m_grabberSubsystem.stopCommand());
+    /** same approach but using chained commands */
+    m_ArmController.b().onTrue(m_grabberSubsystem.openCommand()).onFalse(m_grabberSubsystem.stopCommand());
 
     /** Controls option 4 - use scheduler to read joysticks and trigger existing commands classes
      * Pros: makes use of robot built in scheduler, atomic commands can be used in a sequence, no need to pass joystick refrence
      * Cons: new to ALARM, obscure structure, commands need to written
      */
-    m_ArmController.x().whileTrue(m_GrabberOpen);
+    m_ArmController.x().onTrue(m_GrabberOpen);
     m_ArmController.x().onFalse(m_GrabberStop);
+    /** same approach but using chained commands */
+    m_ArmController.x().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
 
     /** Controls option that was deprecated
      */
@@ -120,4 +124,5 @@ public class RobotContainer {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
+
 }
