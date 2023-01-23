@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -81,7 +83,13 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    /** Controls option 1 - read driver inputs here and makes calls into subsystem methods
+     * Pros: Simple to understand
+     * Cons: Long code - hard to read, potential interactions with subsysystems timing, code duplication for autonomous
+     * need to create joysticks here
+     */
+  }
 
   @Override
   public void testInit() {

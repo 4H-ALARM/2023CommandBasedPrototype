@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   public void drive(double xSpeed, double ySpeed, double rot) {
-    m_drive.driveCartesian(ySpeed, xSpeed, rot);
+    m_drive.driveCartesian(xSpeed, ySpeed, rot);
   }
 
   @Override
