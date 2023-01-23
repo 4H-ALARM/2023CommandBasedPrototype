@@ -5,8 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -35,6 +35,11 @@ public class Grabber extends SubsystemBase {
 
   @Override
   public void periodic() {
+     /** Controls option 2 - read driver inputs here and makes calls into subsystem methods
+     * Pros: Simple to understand, compartmentailize operations and subsystems
+     * Cons: Likely interactions, need to pass controller reference to subsystems code duplication for autonomous
+     */
+
     // This method will be called once per scheduler run
     boolean open = m_c.getAButton();
     boolean close = m_c.getBButton();
@@ -47,6 +52,25 @@ public class Grabber extends SubsystemBase {
       stop();
     }
 
+  }
+
+
+  public CommandBase openCommand() {
+    // Inline construction of command goes here.
+    // Subsystem::RunOnce implicitly requires `this` subsystem.
+    return runOnce(
+        () -> {
+          open();
+        });
+  }
+
+  public CommandBase stopCommand() {
+    // Inline construction of command goes here.
+    // Subsystem::RunOnce implicitly requires `this` subsystem.
+    return runOnce(
+        () -> {
+          stop();
+        });
   }
 
 }
