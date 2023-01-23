@@ -10,6 +10,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -31,12 +32,14 @@ public class RobotContainer {
   public final CommandXboxController m_driverController =
       new CommandXboxController(0);
 
+  private final XboxController m_C = new XboxController(0);
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   
   // The robot's subsystems
   private final Drivetrain m_robotDrive = new Drivetrain();
-  private final Grabber m_grabberSubsystem = new Grabber();
+  private final Grabber m_grabberSubsystem = new Grabber(m_C);
 
   // The robot's commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
@@ -80,8 +83,14 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    //m_driverController.x().whileTrue(m_GrabberOpen);
-    //m_driverController.x().whileFalse(m_GrabberStop);
+    m_driverController.x().whileTrue(m_GrabberOpen);
+    m_driverController.x().onFalse(m_GrabberStop);
+
+    // R button to start ball gate open -> close sequence
+    new JoystickButton(m_C, 0)
+    .whenPressed(new GrabberOpen(m_grabberSubsystem));
+    new JoystickButton(m_C, 0)
+    .whenReleased(new GrabberStop(m_grabberSubsystem));
 
   }
 
