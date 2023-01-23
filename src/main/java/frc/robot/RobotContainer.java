@@ -26,6 +26,11 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  public final CommandXboxController m_driverController =
+      new CommandXboxController(0);
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   
@@ -36,13 +41,6 @@ public class RobotContainer {
   // The robot's commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
-
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(0);
-
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -82,10 +80,8 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    m_driverController.x().whileTrue(m_GrabberOpen);
-    m_driverController.x().whileFalse(m_GrabberStop);
-
-    m_driverController.
+    //m_driverController.x().whileTrue(m_GrabberOpen);
+    //m_driverController.x().whileFalse(m_GrabberStop);
 
   }
 
