@@ -27,6 +27,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
+    resetHeading();
     m_rotation = m_gyro.getRotation2d();
   }
 
@@ -56,6 +57,10 @@ public class Drivetrain extends SubsystemBase {
     m_turnRate = m_gyro.getRate();
 
     updateDashboard();
+  }
+
+  public void resetHeading(){
+    m_gyro.reset();
   }
 
   private void updateDashboard() {
