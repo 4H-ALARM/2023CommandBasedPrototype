@@ -84,11 +84,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    /** Controls option 1 - read driver inputs here and makes calls into subsystem methods
-     * Pros: Simple to understand
-     * Cons: Long code - hard to read, potential interactions with subsysystems timing, code duplication for autonomous
-     * need to create joysticks here
-     */
+    
   }
 
   @Override
