@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
-
+    m_rotation = m_gyro.getRotation2d();
   }
 
   /**
@@ -41,9 +41,9 @@ public class Drivetrain extends SubsystemBase {
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     if (fieldRelative) {
-      m_drive.driveCartesian(xSpeed, ySpeed, rot);
-    } else {
       m_drive.driveCartesian(xSpeed, ySpeed, rot, m_rotation);
+    } else {
+      m_drive.driveCartesian(xSpeed, ySpeed, rot);
     }
     
   }
