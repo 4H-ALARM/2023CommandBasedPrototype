@@ -48,6 +48,9 @@ public class RobotContainer {
   // The robot's commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
+  private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
+
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -91,19 +94,21 @@ public class RobotContainer {
      * Pros: makes use of robot built in scheduler, example of functional programming style,  no need to pass joystick refrence
      * Cons: new to ALARM, obscure structure, command creation at run time
      */
-    m_ArmController.b().onTrue(m_grabberSubsystem.openCommand());
-    m_ArmController.b().onFalse(m_grabberSubsystem.stopCommand());
+    //m_ArmController.b().onTrue(m_grabberSubsystem.openCommand());
+    //m_ArmController.b().onFalse(m_grabberSubsystem.stopCommand());
     /** same approach but using chained commands */
-    m_ArmController.b().onTrue(m_grabberSubsystem.openCommand()).onFalse(m_grabberSubsystem.stopCommand());
+    //m_ArmController.b().onTrue(m_grabberSubsystem.openCommand()).onFalse(m_grabberSubsystem.stopCommand());
 
     /** Controls option 4 - use scheduler to read joysticks and trigger existing commands classes
      * Pros: makes use of robot built in scheduler, atomic commands can be used in a sequence, no need to pass joystick refrence
      * Cons: new to ALARM, obscure structure, commands need to written
      */
-    m_ArmController.x().onTrue(m_GrabberOpen);
-    m_ArmController.x().onFalse(m_GrabberStop);
+    //m_ArmController.x().onTrue(m_GrabberOpen);
+    //m_ArmController.x().onFalse(m_GrabberStop);
     /** same approach but using chained commands */
-    m_ArmController.x().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+
 
     /** Controls option that was deprecated
      */
