@@ -11,11 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import static frc.robot.Constants.*;
+
 public class Drivetrain extends SubsystemBase {
-  private final WPI_TalonFX m_frontLeft = new WPI_TalonFX(1);
-  private final WPI_TalonFX m_rearLeft = new WPI_TalonFX(2);
-  private final WPI_TalonFX m_frontRight = new WPI_TalonFX(3);
-  private final WPI_TalonFX m_rearRight = new WPI_TalonFX(4);
+  private final WPI_TalonFX m_frontLeft = new WPI_TalonFX(CANaddresses.k_FrontLeftMotor);
+  private final WPI_TalonFX m_rearLeft = new WPI_TalonFX(CANaddresses.k_RearLeftMotor);
+  private final WPI_TalonFX m_frontRight = new WPI_TalonFX(CANaddresses.k_FrontRightMotor);
+  private final WPI_TalonFX m_rearRight = new WPI_TalonFX(CANaddresses.k_RearRight);
 
   private final MecanumDrive m_drive =
       new MecanumDrive(m_frontLeft, m_rearLeft, m_frontRight, m_rearRight);
