@@ -14,6 +14,7 @@ public class ResetGyro extends CommandBase {
   public ResetGyro(Drivetrain dt) {
     this.m_dt = dt;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(dt);
   }
 
   // Called when the command is initially scheduled.
