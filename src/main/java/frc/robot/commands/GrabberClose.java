@@ -15,6 +15,7 @@ public class GrabberClose extends CommandBase {
     this.m_Grabber = g;
 
     // Use addRequirements(g) here to declare subsystem dependencies.
+    addRequirements(g);
   }
 
   // Called when the command is initially scheduled.
