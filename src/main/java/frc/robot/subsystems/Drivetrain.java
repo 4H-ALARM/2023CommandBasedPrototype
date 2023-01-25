@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import static frc.robot.Constants.*;
@@ -31,6 +33,11 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     resetHeading();
     m_rotation = m_gyro.getRotation2d();
+
+    initMotor(m_frontLeft, false);
+    initMotor(m_rearLeft, false);
+    initMotor(m_frontRight, false);
+    initMotor(m_rearRight, false);
   }
 
   /**
@@ -63,6 +70,11 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetHeading(){
     m_gyro.reset();
+  }
+
+  private void initMotor(WPI_TalonFX m, boolean invert) {
+      m.setInverted(invert);
+      m.setNeutralMode(NeutralMode.Brake);
   }
 
   private void updateDashboard() {
