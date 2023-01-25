@@ -22,6 +22,10 @@ package frc.robot;
     }
 
     public static class DriveMotorParameters {
+      public static final boolean k_FLM_Invert = false;
+      public static final boolean k_RLM_Invert = false;
+      public static final boolean k_FRM_Invert = true;
+      public static final boolean k_RRM_Invert = true;
 
     }
 
