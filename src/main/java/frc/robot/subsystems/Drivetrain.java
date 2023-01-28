@@ -34,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
     resetHeading();
     m_rotation = m_gyro.getRotation2d();
 
-    initMotor(m_frontLeft, false);
-    initMotor(m_rearLeft, false);
+    initMotor(m_frontLeft, true);
+    initMotor(m_rearLeft, true);
     initMotor(m_frontRight, false);
     initMotor(m_rearRight, false);
   }
@@ -50,10 +50,36 @@ public class Drivetrain extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+
+    double x_squared = 0.0;
+    double y_squared = 0.0;
+    double rot_squared = 0.0;
+
+    if (xSpeed < 0){
+      x_squared = -1 * xSpeed * xSpeed;
+    }
+    else {
+      x_squared = xSpeed * xSpeed;
+    }
+
+    if (ySpeed < 0){
+      y_squared = -1 * ySpeed * ySpeed;
+    }
+    else {
+      y_squared = ySpeed * ySpeed;
+    }
+
+    if (rot < 0){
+      rot_squared = -1 * rot * rot;
+    }
+    else {
+      rot_squared = rot * rot;
+    }
+
     if (fieldRelative) {
       m_drive.driveCartesian(xSpeed, ySpeed, rot, m_rotation);
     } else {
-      m_drive.driveCartesian(xSpeed, ySpeed, rot);
+      m_drive.driveCartesian(x_squared, y_squared, rot_squared);
     }
     
   }
