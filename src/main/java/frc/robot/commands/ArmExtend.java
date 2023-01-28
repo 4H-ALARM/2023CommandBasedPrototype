@@ -26,7 +26,9 @@ public class ArmExtend extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_Arm.extend();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -35,6 +37,6 @@ public class ArmExtend extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

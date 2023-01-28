@@ -16,11 +16,11 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void open(){
+  public void extend(){
     m_Armmotor.set(0.7);
   }
 
-  public void close() {
+  public void retract() {
     m_Armmotor.set(-0.7);
   }
 
