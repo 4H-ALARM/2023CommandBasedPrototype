@@ -20,6 +20,7 @@ package frc.robot;
       public static final int k_FrontRightMotor = 3;
       public static final int k_RearRight = 4;
       public static final int k_Grabber = 10;
+      public static final int k_Arm = 20;
     }
 
     public static class DriveMotorParameters {
