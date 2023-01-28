@@ -32,8 +32,8 @@ public class RobotContainer {
   public final CommandXboxController m_ArmController =
     new CommandXboxController(0);
 
-  public final CommandJoystick m_DriveJoystick = 
-    new CommandJoystick(1);
+  public final CommandXboxController m_DriveJoystick = 
+    new CommandXboxController(1);
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -63,9 +63,9 @@ public class RobotContainer {
       new RunCommand(
         () ->
             m_robotDrive.drive(
-              -m_DriveJoystick.getY(),
-              -m_DriveJoystick.getX(),
-              -m_DriveJoystick.getZ(),
+              m_DriveJoystick.getLeftY(),
+              m_DriveJoystick.getLeftX(),
+              m_DriveJoystick.getRightX(),
               false
               ),
         m_robotDrive)
