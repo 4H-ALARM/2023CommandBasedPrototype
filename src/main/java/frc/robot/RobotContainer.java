@@ -5,7 +5,6 @@
 package frc.robot;
 
 
-import frc.robot.commands.Autos;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,12 +41,15 @@ public class RobotContainer {
   // The robot's subsystems
   private final Drivetrain m_robotDrive = new Drivetrain();
   private final Grabber m_grabberSubsystem = new Grabber();
+  private final Arm m_Arm = new Arm();
 
   // The robot's commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
-
+  private final ArmExtend m_ArmExtend = new ArmExtend(m_Arm);
+  private final ArmRetract m_ArmRetract = new ArmRetract(m_Arm);
+  private final ArmStop m_ArmStop = new ArmStop(m_Arm);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -98,6 +100,8 @@ public class RobotContainer {
     /** same approach but using chained commands */
     m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
     m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
+    m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
 
   }
 
