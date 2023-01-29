@@ -42,6 +42,7 @@ public class RobotContainer {
   private final Drivetrain m_robotDrive = new Drivetrain();
   private final Grabber m_grabberSubsystem = new Grabber();
   private final Arm m_Arm = new Arm();
+  private final vision m_vision = new vision();
 
   // The robot's commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
