@@ -51,8 +51,8 @@ public class RobotContainer {
   private final ArmRetract m_ArmRetract = new ArmRetract(m_Arm);
   private final ArmStop m_ArmStop = new ArmStop(m_Arm);
   private final liftShoulder m_liftShoulder = new liftShoulder(m_Arm);
-  private final liftShoulder m_lowerShoulder = new liftShoulder(m_Arm);
-  private final liftShoulder m_stopShoulder = new liftShoulder(m_Arm);
+  private final lowerShoulder m_lowerShoulder = new lowerShoulder(m_Arm);
+  private final stopShoulder m_stopShoulder = new stopShoulder(m_Arm);
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
 
 
