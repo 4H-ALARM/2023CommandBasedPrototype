@@ -10,7 +10,7 @@ import frc.robot.subsystems.Arm;
 public class liftShoulder extends CommandBase {
   private Arm m_Arm;
 
-  /** Creates a new ArmExtend. */
+  /** Creates a new liftShoulder. */
   public liftShoulder(Arm l) {
     this.m_Arm = l;
 

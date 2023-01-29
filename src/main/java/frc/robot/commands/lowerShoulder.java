@@ -11,7 +11,7 @@ import frc.robot.subsystems.Arm;
 public class lowerShoulder extends CommandBase {
   private Arm m_Arm;
 
-  /** Creates a new ArmExtend. */
+  /** Creates a new lowerShoulder. */
   public lowerShoulder(Arm l) {
     this.m_Arm = l;
 

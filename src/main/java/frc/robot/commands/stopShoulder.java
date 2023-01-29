@@ -11,7 +11,7 @@ import frc.robot.subsystems.Arm;
 public class stopShoulder extends CommandBase {
   private Arm m_Arm;
 
-  /** Creates a new ArmExtend. */
+  /** Creates a new stopShoulder. */
   public stopShoulder(Arm s) {
     this.m_Arm = s;
 
