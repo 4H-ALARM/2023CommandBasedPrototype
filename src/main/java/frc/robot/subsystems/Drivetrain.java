@@ -95,6 +95,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetHeading(){
+    m_gyro.calibrate();
     m_gyro.reset();
   }
 

@@ -50,6 +50,10 @@ public class RobotContainer {
   private final ArmExtend m_ArmExtend = new ArmExtend(m_Arm);
   private final ArmRetract m_ArmRetract = new ArmRetract(m_Arm);
   private final ArmStop m_ArmStop = new ArmStop(m_Arm);
+  private final liftShoulder m_liftShoulder = new liftShoulder(m_Arm);
+  private final lowerShoulder m_lowerShoulder = new lowerShoulder(m_Arm);
+  private final stopShoulder m_stopShoulder = new stopShoulder(m_Arm);
+  private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -102,6 +106,10 @@ public class RobotContainer {
     m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
     m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
+    m_ArmController.povUp().onTrue(m_liftShoulder).onFalse(m_stopShoulder);
+    m_ArmController.povDown().onTrue(m_lowerShoulder).onFalse(m_stopShoulder);
+
+    m_DriveJoystick.a().onTrue(m_ResetGyro);
 
   }
 

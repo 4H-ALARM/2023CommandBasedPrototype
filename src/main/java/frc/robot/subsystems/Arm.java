@@ -9,8 +9,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Arm extends SubsystemBase {
   private final WPI_VictorSPX m_Armmotor = new WPI_VictorSPX(CANaddresses.k_Arm);
+  private final WPI_VictorSPX m_Shoulder = new WPI_VictorSPX(CANaddresses.k_Shoulder);
   
   /** Creates a new Arm. */
+  public Arm () {
+    
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -29,7 +33,18 @@ public class Arm extends SubsystemBase {
   }
 
 
-  /** Creates a new Arm. */
-  public Arm() {}
+
+  public void lift(){
+    m_Shoulder.set(0.7);
+  }
+
+  public void lower() {
+    m_Shoulder.set(-0.7);
+  }
+
+  public void stopShoulder() {
+    m_Shoulder.set(0.0);
+  }
+
 
 }
