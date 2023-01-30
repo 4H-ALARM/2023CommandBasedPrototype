@@ -51,9 +51,9 @@ public class Drivetrain extends SubsystemBase {
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
 
-    double x_squared = 0.0;
-    double y_squared = 0.0;
-    double rot_squared = 0.0;
+    double x_squared = squareInput(xSpeed);
+    double y_squared = squareInput(ySpeed);
+    double rot_squared = squareInput(rot);
 
     if (xSpeed < 0){
       x_squared = -1 * xSpeed * xSpeed;
@@ -109,6 +109,12 @@ public class Drivetrain extends SubsystemBase {
   private double encoderToDistance(double encoderCount ) {
     double d = java.lang.Math.round(encoderCount /2048 *0.06 * Math.PI);
     return (d);
+  }
+
+  private double squareInput(double i) {
+    double s = i*i;
+    if (i < 0){ s = -1 * s; }
+    return(s);
   }
 
   private void updateDashboard() {
