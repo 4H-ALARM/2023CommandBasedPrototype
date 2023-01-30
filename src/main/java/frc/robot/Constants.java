@@ -24,19 +24,19 @@ package frc.robot;
       public static final int k_Shoulder = 21;
     }
 
-    public static class DriveMotorParameters {
-      public static final boolean k_FLM_Invert = false;
-      public static final boolean k_RLM_Invert = false;
-      public static final boolean k_FRM_Invert = true;
-      public static final boolean k_RRM_Invert = true;
+    public static class DriveParameters {
+      
+    }
+
+    public static class ArmParameters {
 
     }
 
-    public static class ArmMotorParameters {
+    public static class GrabberParameters {
 
     }
 
-    public static class GrabberMotorParameters {
+    public static class VisionParameters {
 
     }
   
