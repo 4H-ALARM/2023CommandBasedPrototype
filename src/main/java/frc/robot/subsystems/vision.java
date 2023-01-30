@@ -34,8 +34,8 @@ public class vision extends SubsystemBase {
     SmartDashboard.putNumber("LimelightArea", area);
 
     ledMode.setNumber(3);
-    double nv = ledMode.getDouble(4);
-    SmartDashboard.putNumber("ledMode", nv);
+    double ledState = ledMode.getDouble(-1);
+    SmartDashboard.putNumber("ledMode", ledState);
 
   }
 }
