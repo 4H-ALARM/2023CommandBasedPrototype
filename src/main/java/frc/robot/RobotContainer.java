@@ -4,21 +4,15 @@
 
 package frc.robot;
 
-
-import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,23 +32,36 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   
-  // The robot's subsystems
+  // Robot's subsystems *************************************************
   private final Drivetrain m_robotDrive = new Drivetrain();
   private final Grabber m_grabberSubsystem = new Grabber();
   private final Arm m_Arm = new Arm();
   private final vision m_vision = new vision();
+  // End subsystems *****************************************************
 
-  // The robot's commands
+  // Robot's commands  **************************************************
+
+  // Grabber commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
+
+  // Arm Commands
   private final ArmExtend m_ArmExtend = new ArmExtend(m_Arm);
   private final ArmRetract m_ArmRetract = new ArmRetract(m_Arm);
   private final ArmStop m_ArmStop = new ArmStop(m_Arm);
   private final liftShoulder m_liftShoulder = new liftShoulder(m_Arm);
   private final lowerShoulder m_lowerShoulder = new lowerShoulder(m_Arm);
   private final stopShoulder m_stopShoulder = new stopShoulder(m_Arm);
+
+  // Drive Commands note these are in addition to the default 
+  // joystick controlled driving in teleop
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
+
+  // Vision Commands
+  
+
+  // End robot's commands  **************************************************
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -88,29 +95,26 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_ArmController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-
+    
     /** Controls option 4 - use scheduler to read joysticks and trigger existing commands classes
      * Pros: makes use of robot built in scheduler, atomic commands can be used in a sequence, no need to pass joystick refrence
      * Cons: new to ALARM, obscure structure, commands need to written
      */
-    //m_ArmController.x().onTrue(m_GrabberOpen);
-    //m_ArmController.x().onFalse(m_GrabberStop);
-    /** same approach but using chained commands */
+    
+     // Trigger to Grabber command mappings
     m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
     m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+
+    // Trigger to Arm command mappings
     m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
     m_ArmController.povUp().onTrue(m_liftShoulder).onFalse(m_stopShoulder);
     m_ArmController.povDown().onTrue(m_lowerShoulder).onFalse(m_stopShoulder);
 
+    // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
+
+    // Trigger to Vision command mappings 
 
   }
 

@@ -103,11 +103,22 @@ public class Drivetrain extends SubsystemBase {
   private void initMotor(WPI_TalonFX m, boolean invert) {
       m.setInverted(invert);
       m.setNeutralMode(NeutralMode.Brake);
+      m.setSelectedSensorPosition(0);
+  }
+
+  private double encoderToDistance(double encoderCount ) {
+    double d = java.lang.Math.round(encoderCount /2048 *0.06 * Math.PI);
+    return (d);
   }
 
   private void updateDashboard() {
     double modulo = m_heading%360.0;
     SmartDashboard.putNumber("Gyro Heading", modulo);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
+    SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
   }
+  
 }
