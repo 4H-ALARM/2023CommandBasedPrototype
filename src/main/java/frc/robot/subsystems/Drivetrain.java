@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.lang.Math;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -83,6 +82,7 @@ public class Drivetrain extends SubsystemBase {
       m_drive.driveCartesian(x_squared, y_squared, rot_squared);
     }
     
+    
   }
 
   @Override
@@ -91,8 +91,6 @@ public class Drivetrain extends SubsystemBase {
     m_heading = m_gyro.getAngle();
     m_rotation = m_gyro.getRotation2d();
     m_turnRate = m_gyro.getRate();
-
-    
 
     updateDashboard();
   }
@@ -108,17 +106,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void updateDashboard() {
-    double modulo360 = m_heading%360.0;
-    SmartDashboard.putNumber("Gyro Heading", modulo360);
+    double modulo = m_heading%360.0;
+    SmartDashboard.putNumber("Gyro Heading", modulo);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
-
-    
-
-    SmartDashboard.putNumber("FLMC",java.lang.Math.round((m_frontLeft.getSelectedSensorPosition()/2048)*.06* Math.PI));
-    SmartDashboard.putNumber("FRMC",java.lang.Math.round((m_frontRight.getSelectedSensorPosition()/2048)*.06* Math.PI));
-    SmartDashboard.putNumber("RLMC",java.lang.Math.round((m_rearLeft.getSelectedSensorPosition()/2048)*.06* Math.PI));
-    SmartDashboard.putNumber("RRMC",java.lang.Math.round((m_rearRight.getSelectedSensorPosition()/2048)*.06* Math.PI));
-
   }
-
 }
