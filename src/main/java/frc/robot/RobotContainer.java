@@ -57,6 +57,7 @@ public class RobotContainer {
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
+  private final RotateForTargetSeq m_RTS = new RotateForTargetSeq(m_vision, m_robotDrive);
 
   // Vision Commands
 
@@ -115,6 +116,7 @@ public class RobotContainer {
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
+    m_DriveJoystick.x().onTrue(m_RTS);
 
     // Trigger to Vision command mappings 
 
