@@ -52,4 +52,11 @@ public class vision extends SubsystemBase {
     ledMode.setNumber(3);
   }
 
+  public boolean targetFound () {
+    boolean found = false;
+    double id = tid.getDouble(0.0);
+    if (id != 0) { found = true;}
+    return(found);
+  }
+
 }

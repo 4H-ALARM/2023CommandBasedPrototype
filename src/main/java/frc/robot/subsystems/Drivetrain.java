@@ -86,7 +86,6 @@ public class Drivetrain extends SubsystemBase {
       m_drive.driveCartesian(x_squared, y_squared, rot_squared);
     }
     
-    
   }
 
   public void polarDrive(double magnitude, Rotation2d direction, double spin) {
@@ -106,6 +105,18 @@ public class Drivetrain extends SubsystemBase {
   public void resetHeading(){
     m_gyro.calibrate();
     m_gyro.reset();
+  }
+
+  public void rotate() {
+    drive(0.0, 0.0, 0.3, false);
+  }
+
+  public void stop() {
+    drive(0.0, 0.0, 0.0, false);
+  }
+
+  public double getHeading() {
+    return(m_heading);
   }
 
   private void initMotor(WPI_TalonFX m, boolean invert) {
