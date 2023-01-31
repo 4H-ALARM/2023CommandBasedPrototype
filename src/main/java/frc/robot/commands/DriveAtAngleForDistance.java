@@ -11,14 +11,23 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveAtAngleForDistance extends CommandBase {
   private Drivetrain m_dt;
+  private double m_speed = 0.0;
   private double m_startPoint = 0.0;
-  private final double m_targetDistance = 5.0; /*made up number for now */
-  private Rotation2d m_angle = new Rotation2d(0.785398);  /* 45degrees in radians */
+  private double m_targetDistance = 0.0;
+  private Rotation2d m_angle;
 
 
-  /** Creates a new DriveAtAngleForDistance. */
-  public DriveAtAngleForDistance(Drivetrain dt) {
+  /** Creates a new DriveAtAngleForDistance. 
+   * @param drivetrain susbsystem
+   * @param speed range 0 - 1
+   * @param a angle in radians
+   * @param td target distance (arbitrary units)
+  */
+  public DriveAtAngleForDistance(Drivetrain dt, double speed, double a, double td) {
     this.m_dt = dt;
+    this.m_speed = speed;
+    this.m_angle = new Rotation2d(a);
+    this.m_targetDistance = td;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt);
   }
@@ -34,7 +43,7 @@ public class DriveAtAngleForDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_dt.polarDrive(0.05, m_angle, 0);
+    m_dt.polarDrive(m_speed, m_angle, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,7 +54,6 @@ public class DriveAtAngleForDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean done = false;
-
     double[] md = m_dt.getMotorDistances();
     double current = md[0]; /*use FL as our current */
     if ((current - m_startPoint) > m_targetDistance) { done = true;}
