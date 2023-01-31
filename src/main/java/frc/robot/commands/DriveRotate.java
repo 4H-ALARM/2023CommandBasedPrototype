@@ -42,9 +42,16 @@ public class DriveRotate extends CommandBase {
   @Override
   public boolean isFinished() {
     boolean done = false;
+    
     double heading = m_dt.getHeading();
     heading = java.lang.Math.abs(heading);
-    if ((targetFound()) || ((heading - m_startHeading) > 360)) {
+    
+    double compare = heading - m_startHeading;
+    if (heading < m_startHeading) {
+      compare = m_startHeading - heading;
+    }
+
+    if ((targetFound()) || (compare > 360)) {
       done = true;
     }
     return (done);
