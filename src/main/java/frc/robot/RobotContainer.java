@@ -59,7 +59,9 @@ public class RobotContainer {
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
 
   // Vision Commands
-  
+
+  private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
+  private final limeLightOn m_limeLightOn = new limeLightOn(m_vision);
 
   // End robot's commands  **************************************************
 
@@ -115,6 +117,9 @@ public class RobotContainer {
     m_DriveJoystick.a().onTrue(m_ResetGyro);
 
     // Trigger to Vision command mappings 
+
+    m_DriveJoystick.button(7).onTrue(m_limeLightOn);
+    m_DriveJoystick.button(8).onTrue(m_limeLightOff);
 
   }
 

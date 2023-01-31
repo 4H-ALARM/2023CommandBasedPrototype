@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -28,6 +30,8 @@ public class Drivetrain extends SubsystemBase {
   private double m_heading = 0.0;
   private double m_turnRate = 0.0;
   private Rotation2d m_rotation;
+
+  ShuffleboardTab tab = Shuffleboard.getTab("Tab Title");
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -85,6 +89,10 @@ public class Drivetrain extends SubsystemBase {
     
   }
 
+  public void polarDrive(double magnitude, Rotation2d direction, double spin) {
+    m_drive.drivePolar(magnitude, direction, spin);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -119,12 +127,14 @@ public class Drivetrain extends SubsystemBase {
 
   private void updateDashboard() {
     double modulo = m_heading%360.0;
+    if (modulo < 0) {modulo = 360.0 - modulo;}
     SmartDashboard.putNumber("Gyro Heading", modulo);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
     SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
+
   }
   
 }
