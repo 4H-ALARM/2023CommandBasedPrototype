@@ -92,6 +92,20 @@ public class Drivetrain extends SubsystemBase {
     m_drive.drivePolar(magnitude, direction, spin);
   }
 
+  /** getMotorDistances
+   * @return array of motor distances, FL, FR, RL, RR
+   */
+  public double[] getMotorDistances () {
+    double[] ms = new double[4];
+
+    ms[0] = encoderToDistance(m_frontLeft.getSelectedSensorPosition());
+    ms[1] = encoderToDistance(m_frontRight.getSelectedSensorPosition());
+    ms[2] = encoderToDistance(m_rearLeft.getSelectedSensorPosition());
+    ms[3] = encoderToDistance(m_rearRight.getSelectedSensorPosition());
+
+    return(ms);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
