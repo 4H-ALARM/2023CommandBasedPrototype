@@ -58,6 +58,7 @@ public class RobotContainer {
   // joystick controlled driving in teleop
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
   private final RotateForTargetSeq m_RTS = new RotateForTargetSeq(m_vision, m_robotDrive);
+  private final DriveStop m_Stop = new DriveStop(m_robotDrive);
   private final DriveAtAngleForDistance m_Drive45Angle = 
     new DriveAtAngleForDistance(m_robotDrive,0.5,0.785398,5.0);
 
@@ -119,7 +120,7 @@ public class RobotContainer {
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.x().onTrue(m_RTS);
-    m_DriveJoystick.y().onTrue(m_Drive45Angle);
+    m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
 
     // Trigger to Vision command mappings 
 
