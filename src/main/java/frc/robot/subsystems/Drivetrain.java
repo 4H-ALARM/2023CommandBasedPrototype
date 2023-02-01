@@ -147,19 +147,23 @@ public class Drivetrain extends SubsystemBase {
 
   private double squareInput(double i) {
     double s = i*i;
-    if (i < 0){ s = -1 * s; }
+    if (i < 0){ s = -s; }
     return(s);
   }
 
   private void updateDashboard() {
     double modulo = m_heading%360.0;
-    if (modulo < 0) {modulo = 360.0 - modulo;}
+    if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
     SmartDashboard.putNumber("Gyro Heading", modulo);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
     SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
 
   }
   
