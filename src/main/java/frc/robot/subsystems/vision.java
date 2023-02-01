@@ -54,7 +54,7 @@ public class vision extends SubsystemBase {
   public boolean targetFound () {
     boolean found = false;
     double id = tid.getDouble(0.0);
-    if (id != 0) { found = true;}
+    if (id != -1) { found = true;}
     return(found);
   }
 
