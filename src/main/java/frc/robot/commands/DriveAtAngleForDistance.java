@@ -14,7 +14,6 @@ public class DriveAtAngleForDistance extends CommandBase {
   private double m_speed = 0.3;
   private double m_startPoint = 0.0;
   private double m_targetDistance = 15.0;
-  private double m_Radians = 0.785398;
   private Rotation2d m_angle;
 
 
@@ -24,8 +23,11 @@ public class DriveAtAngleForDistance extends CommandBase {
    * @param a angle in radians
    * @param td target distance (arbitrary units)
   */
-  public DriveAtAngleForDistance(Drivetrain dt) {
+  public DriveAtAngleForDistance(Drivetrain dt, double speed, double a, double td) {
     this.m_dt = dt;
+    this.m_speed = speed;
+    this.m_angle = new Rotation2d(a);
+    this.m_targetDistance = td;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt);
   }
@@ -41,7 +43,7 @@ public class DriveAtAngleForDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_dt.polarDrive(m_speed, 0.785398, 0);
+      m_dt.polarDrive(m_speed, m_angle, 0);
   }
 
   // Called once the command ends or is interrupted.
