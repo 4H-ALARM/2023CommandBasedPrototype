@@ -35,6 +35,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
+    m_gyro.calibrate();
     resetHeading();
     m_rotation = m_gyro.getRotation2d();
 
@@ -88,7 +89,8 @@ public class Drivetrain extends SubsystemBase {
     
   }
 
-  public void polarDrive(double magnitude, Rotation2d direction, double spin) {
+  public void polarDrive(double magnitude, double a, double spin) {
+    Rotation2d direction = new Rotation2d(a);
     m_drive.drivePolar(magnitude, direction, spin);
   }
 
@@ -117,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetHeading(){
-    m_gyro.calibrate();
+    // m_gyro.calibrate();
     m_gyro.reset();
   }
 
