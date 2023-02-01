@@ -60,27 +60,6 @@ public class Drivetrain extends SubsystemBase {
     double y_squared = squareInput(ySpeed);
     double rot_squared = squareInput(rot);
 
-    if (xSpeed < 0){
-      x_squared = -1 * xSpeed * xSpeed;
-    }
-    else {
-      x_squared = xSpeed * xSpeed;
-    }
-
-    if (ySpeed < 0){
-      y_squared = -1 * ySpeed * ySpeed;
-    }
-    else {
-      y_squared = ySpeed * ySpeed;
-    }
-
-    if (rot < 0){
-      rot_squared = -1 * rot * rot;
-    }
-    else {
-      rot_squared = rot * rot;
-    }
-
     if (fieldRelative) {
       m_drive.driveCartesian(xSpeed, ySpeed, rot, m_rotation);
     } else {
