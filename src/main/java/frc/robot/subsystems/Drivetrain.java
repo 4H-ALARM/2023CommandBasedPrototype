@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+// import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 import static frc.robot.Constants.*;
 
@@ -139,10 +140,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("FLMCv",encoderToDistance(m_frontLeft.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("FRMCv",encoderToDistance(m_frontRight.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
 
   }
   
