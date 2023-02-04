@@ -62,7 +62,10 @@ public class RobotContainer {
   private final DriveAtAngleForDistance m_Drive45Angle = 
     new DriveAtAngleForDistance(m_robotDrive, 0.3, 0.785398163, 15.0); 
   private final DriveAtAngleForDistance m_DriveStraight = 
-    new DriveAtAngleForDistance(m_robotDrive, 0.2, 0.0, 10.0);
+    new DriveAtAngleForDistance(m_robotDrive, 0.2, 0.0, 10.0); 
+  private final SwitchDrivePerspective m_switchPerspective = 
+    new SwitchDrivePerspective(m_robotDrive);
+
   // Vision Commands
   private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
   private final limeLightOn m_limeLightOn = new limeLightOn(m_vision);
@@ -83,8 +86,7 @@ public class RobotContainer {
             m_robotDrive.drive(
               m_DriveJoystick.getLeftY(),
               m_DriveJoystick.getLeftX(),
-              m_DriveJoystick.getRightX(),
-              false
+              m_DriveJoystick.getRightX()
               ),
         m_robotDrive)
         );
@@ -122,6 +124,7 @@ public class RobotContainer {
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.x().onTrue(m_RTS);
     // m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
+    m_DriveJoystick.y().onTrue((m_switchPerspective));
     m_DriveJoystick.b().onTrue((m_DriveStraight).andThen(m_Stop));
 
     // Trigger to Vision command mappings 
