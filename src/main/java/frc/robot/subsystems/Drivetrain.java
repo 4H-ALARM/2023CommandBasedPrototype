@@ -101,9 +101,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_heading = m_gyro.getAngle();
-    m_rotation = m_gyro.getRotation2d();
-    m_turnRate = m_gyro.getRate();
+    m_heading = m_pidgeon.getAngle();
+    m_rotation = m_pidgeon.getRotation2d();
+    m_turnRate = m_pidgeon.getRate();
     m_yaw = m_pidgeon.getYaw();
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
 
