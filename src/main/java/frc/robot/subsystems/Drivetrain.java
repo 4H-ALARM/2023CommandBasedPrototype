@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-// import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenix.ErrorCode;
 
 import static frc.robot.Constants.*;
 
@@ -32,11 +33,17 @@ public class Drivetrain extends SubsystemBase {
   private double m_turnRate = 0.0;
   private Rotation2d m_rotation;
 
+  private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
+  private double m_yaw = 0.0;
+  private double[]  m_gravityVector = new double[3];
+  private ErrorCode m_gravityError = ErrorCode.OK;
+
   ShuffleboardTab tab = Shuffleboard.getTab("Tab Title");
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     m_gyro.calibrate();
+    m_pidgeon.calibrate();
     resetHeading();
     m_rotation = m_gyro.getRotation2d();
 
@@ -93,13 +100,15 @@ public class Drivetrain extends SubsystemBase {
     m_heading = m_gyro.getAngle();
     m_rotation = m_gyro.getRotation2d();
     m_turnRate = m_gyro.getRate();
+    m_yaw = m_pidgeon.getYaw();
+    m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
 
     updateDashboard();
   }
 
   public void resetHeading(){
-    // m_gyro.calibrate();
     m_gyro.reset();
+    m_pidgeon.reset();
   }
 
   public void rotate() {
@@ -136,6 +145,10 @@ public class Drivetrain extends SubsystemBase {
     if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
     SmartDashboard.putNumber("Gyro Heading", modulo);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
+    SmartDashboard.putNumber("Yaw", m_yaw);
+    SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
+    SmartDashboard.putNumber("GravityY",m_gravityVector[1]);
+    SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
     SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));

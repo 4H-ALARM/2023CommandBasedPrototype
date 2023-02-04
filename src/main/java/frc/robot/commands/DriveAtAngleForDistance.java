@@ -13,6 +13,8 @@ public class DriveAtAngleForDistance extends CommandBase {
   private Drivetrain m_dt;
   private double m_speed = 0.3;
   private double m_startPoint = 0.0;
+  private double m_UL = 0.0;
+  private double m_LL = 0.0;
   private double m_targetDistance = 15.0;
   private Rotation2d m_angle;
 
@@ -21,13 +23,14 @@ public class DriveAtAngleForDistance extends CommandBase {
    * @param drivetrain susbsystem
    * @param speed range 0 - 1
    * @param a angle in radians
-   * @param td target distance (arbitrary units)
+   * @param td target distance (always positive arbitrary units)
   */
   public DriveAtAngleForDistance(Drivetrain dt, double speed, double a, double td) {
     this.m_dt = dt;
     this.m_speed = speed;
     this.m_angle = new Rotation2d(a);
     this.m_targetDistance = td;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt);
   }
@@ -36,14 +39,16 @@ public class DriveAtAngleForDistance extends CommandBase {
   @Override
   public void initialize() {
     double[] md = m_dt.getMotorDistances();
-    m_startPoint = md[0]; /*use FL as our distance start */
-    m_dt.resetHeading(); /* take current heading as reference for target angle */
+    this.m_startPoint = md[0]; /*use FL as our distance start */
+    this.m_UL = java.lang.Math.abs(this.m_startPoint) + this.m_targetDistance;
+    this.m_LL = java.lang.Math.abs(this.m_startPoint) - this.m_targetDistance;
+    this.m_dt.resetHeading(); /* take current heading as reference for target angle */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_dt.polarDrive(m_speed, m_angle, 0);
+      this.m_dt.polarDrive(this.m_speed, this.m_angle, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -55,8 +60,8 @@ public class DriveAtAngleForDistance extends CommandBase {
   public boolean isFinished() {
     boolean done = false;
     double[] md = m_dt.getMotorDistances();
-    double current = md[0]; /*use FL as our current */
-    if ((current - m_startPoint) > m_targetDistance) { done = true;}
+    double current = java.lang.Math.abs(md[0]); /*use FL as our current */
+    if ((current > this.m_UL) || (current < this.m_LL)) { done = true;}
     return(done);
   }
 }
