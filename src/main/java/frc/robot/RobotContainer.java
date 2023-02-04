@@ -5,13 +5,16 @@
 package frc.robot;
 
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.*;
+import frc.robot.Constants.StartingPosition;
 import frc.robot.commands.*;
 
 /**
@@ -62,7 +65,12 @@ public class RobotContainer {
   private final DriveAtAngleForDistance m_Drive45Angle = 
     new DriveAtAngleForDistance(m_robotDrive, 0.3, 0.785398163, 15.0); 
   private final DriveAtAngleForDistance m_DriveStraight = 
-    new DriveAtAngleForDistance(m_robotDrive, 0.2, 0.0, 10.0);
+    new DriveAtAngleForDistance(m_robotDrive, 0.2, 0.0, 10.0); 
+  private final SwitchDrivePerspective m_switchPerspective = 
+    new SwitchDrivePerspective(m_robotDrive);
+  private final AutoDriveStraight m_autoStraight = 
+    new AutoDriveStraight(m_robotDrive);
+
   // Vision Commands
   private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
   private final limeLightOn m_limeLightOn = new limeLightOn(m_vision);
@@ -83,8 +91,7 @@ public class RobotContainer {
             m_robotDrive.drive(
               m_DriveJoystick.getLeftY(),
               m_DriveJoystick.getLeftX(),
-              m_DriveJoystick.getRightX(),
-              false
+              m_DriveJoystick.getRightX()
               ),
         m_robotDrive)
         );
@@ -122,7 +129,9 @@ public class RobotContainer {
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.x().onTrue(m_RTS);
     // m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
+    m_DriveJoystick.y().onTrue((m_switchPerspective));
     m_DriveJoystick.b().onTrue((m_DriveStraight).andThen(m_Stop));
+
 
     // Trigger to Vision command mappings 
     m_DriveJoystick.button(7).onTrue(m_limeLightOn);
@@ -135,9 +144,20 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public CommandBase getAutonomousCommand(StartingPosition sp) {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+
+    CommandBase autCommand = m_ResetGyro;
+
+      switch(sp) {
+        case LEFT:
+          break;
+        case MIDDLE:
+          break;
+        case RIGHT:
+          break;
+    }
+    return (autCommand);
   }
 
 }

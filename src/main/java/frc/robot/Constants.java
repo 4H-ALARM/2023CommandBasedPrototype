@@ -41,7 +41,9 @@ package frc.robot;
 
     }
   
-      
+    public static enum StartingPosition {
+      LEFT, MIDDLE, RIGHT
+    }  
 }
   
 

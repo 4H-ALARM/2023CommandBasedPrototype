@@ -32,6 +32,7 @@ public class Drivetrain extends SubsystemBase {
   private double m_heading = 0.0;
   private double m_turnRate = 0.0;
   private Rotation2d m_rotation;
+  private boolean m_fieldRelative = false;
 
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
   private double m_yaw = 0.0;
@@ -60,16 +61,15 @@ public class Drivetrain extends SubsystemBase {
    * @param xSpeed Speed of the robot in the x direction (forward/backwards).
    * @param ySpeed Speed of the robot in the y direction (sideways).
    * @param rot Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+  public void drive(double xSpeed, double ySpeed, double rot) {
 
     double x_squared = squareInput(xSpeed);
     double y_squared = squareInput(ySpeed);
     double rot_squared = squareInput(rot);
 
-    if (fieldRelative) {
-      m_drive.driveCartesian(xSpeed, ySpeed, rot, m_rotation);
+    if (m_fieldRelative) {
+      m_drive.driveCartesian(x_squared, y_squared, rot_squared, m_rotation);
     } else {
       m_drive.driveCartesian(x_squared, y_squared, rot_squared);
     }
@@ -94,12 +94,16 @@ public class Drivetrain extends SubsystemBase {
     return(ms);
   }
 
+  public void switchPerspective (){
+    m_fieldRelative = !m_fieldRelative;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_heading = m_gyro.getAngle();
-    m_rotation = m_gyro.getRotation2d();
-    m_turnRate = m_gyro.getRate();
+    m_heading = m_pidgeon.getAngle();
+    m_rotation = m_pidgeon.getRotation2d();
+    m_turnRate = m_pidgeon.getRate();
     m_yaw = m_pidgeon.getYaw();
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
 
@@ -112,11 +116,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void rotate() {
-    drive(0.0, 0.0, 0.3, false);
+    drive(0.0, 0.0, 0.3);
   }
 
   public void stop() {
-    drive(0.0, 0.0, 0.0, false);
+    drive(0.0, 0.0, 0.0);
   }
 
   public double getHeading() {
@@ -157,6 +161,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("FRMCv",encoderToDistance(m_frontRight.getSelectedSensorVelocity()));
     SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
     SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
+    SmartDashboard.putBoolean("Perspective",m_fieldRelative);
 
   }
   
