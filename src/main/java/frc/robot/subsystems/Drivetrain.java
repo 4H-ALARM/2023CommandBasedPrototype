@@ -28,6 +28,10 @@ public class Drivetrain extends SubsystemBase {
   private final MecanumDrive m_drive =
       new MecanumDrive(m_frontLeft, m_rearLeft, m_frontRight, m_rearRight);
 
+  private double m_y = 0.0;
+  private double m_x = 0.0;
+  private double m_r = 0.0;
+
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   private double m_heading = 0.0;
   private double m_turnRate = 0.0;
@@ -67,6 +71,10 @@ public class Drivetrain extends SubsystemBase {
     double x_squared = squareInput(xSpeed);
     double y_squared = squareInput(ySpeed);
     double rot_squared = squareInput(rot);
+
+    m_y = y_squared;
+    m_x = x_squared;
+    m_r = rot_squared;
 
     if (m_fieldRelative) {
       m_drive.driveCartesian(x_squared, y_squared, rot_squared, m_rotation);
@@ -162,7 +170,13 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
     SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
-
+    SmartDashboard.putNumber("Y In", m_y);
+    SmartDashboard.putNumber("X In", m_x);
+    SmartDashboard.putNumber("R In", m_r);
+    SmartDashboard.putNumber("FLMCs",m_frontLeft.get());
+    SmartDashboard.putNumber("FRMCs",m_frontRight.get());
+    SmartDashboard.putNumber("RLMCs",m_rearLeft.get());
+    SmartDashboard.putNumber("RRMCs",m_rearRight.get());
   }
   
 }
