@@ -40,6 +40,7 @@ public class Drivetrain extends SubsystemBase {
   private boolean m_fieldRelative = false;
   private boolean m_driverSetHeading = false;
   private boolean m_autoMaintainHeading = true;
+  private double m_AHCF = DriveParameters.k_RotationFactor;
 
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
   private double m_yaw = 0.0;
@@ -142,6 +143,7 @@ public class Drivetrain extends SubsystemBase {
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
 
     updateDashboard();
+    m_AHCF = SmartDashboard.getNumber("AHCF", DriveParameters.k_RotationFactor);
   }
 
   public void resetHeading(){
@@ -173,7 +175,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private double rotationCorrection() {
-    double c = (m_heading - m_driverHeading)*DriveParameters.k_RotationFactor;
+    double c = (m_heading - m_driverHeading)*m_AHCF;
 
     if ((c > -DriveParameters.k_minRotInput) && (c < DriveParameters.k_minRotInput)) {
       // correction is too small, stop hunting by setting to 0
@@ -216,7 +218,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
     SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
-    SmartDashboard.putBoolean("Auto Heading",m_autoMaintainHeading);
+    SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
     SmartDashboard.putNumber("Y In", m_y);
     SmartDashboard.putNumber("X In", m_x);
     SmartDashboard.putNumber("R In", m_r);
