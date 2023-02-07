@@ -39,7 +39,7 @@ public class Drivetrain extends SubsystemBase {
   private Rotation2d m_rotation;
   private boolean m_fieldRelative = false;
   private boolean m_driverSetHeading = false;
-  private boolean m_autoMaintainHeading = true;
+  private boolean m_autoMaintainHeading = false;
   private double m_AHCF = DriveParameters.k_RotationFactor;
 
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
@@ -47,14 +47,12 @@ public class Drivetrain extends SubsystemBase {
   private double[]  m_gravityVector = new double[3];
   private ErrorCode m_gravityError = ErrorCode.OK;
 
-  ShuffleboardTab tab = Shuffleboard.getTab("Tab Title");
-
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     m_gyro.calibrate();
     m_pidgeon.calibrate();
     resetHeading();
-    m_heading = m_pidgeon.getAngle();
+    m_heading = m_pidgeon.getYaw();
     m_driverHeading = m_pidgeon.getAngle();
     m_rotation = m_pidgeon.getRotation2d();
 
@@ -62,6 +60,8 @@ public class Drivetrain extends SubsystemBase {
     initMotor(m_rearLeft, true);
     initMotor(m_frontRight, false);
     initMotor(m_rearRight, false);
+
+    SmartDashboard.putNumber("AHCF", DriveParameters.k_RotationFactor);
   }
 
   /**
@@ -83,13 +83,13 @@ public class Drivetrain extends SubsystemBase {
         (!m_autoMaintainHeading)) {
       // If driver is providing rotation input - use it
       m_driverSetHeading = true;
-      m_driverHeading = m_pidgeon.getAngle();
+      m_driverHeading = m_pidgeon.getYaw();
       r = rot_squared;
     } else {
       // apply correction to maintain last heading
       if (m_driverSetHeading) {
         // if last pass driver set rotation, get the latest heading
-        m_driverHeading = m_pidgeon.getAngle();
+        m_driverHeading = m_pidgeon.getYaw();
       }
       m_driverSetHeading = false;
       r = rotationCorrection();
@@ -136,10 +136,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_heading = m_pidgeon.getAngle();
+    m_heading = m_pidgeon.getYaw();
     m_rotation = m_pidgeon.getRotation2d();
     m_turnRate = m_pidgeon.getRate();
-    m_yaw = m_pidgeon.getYaw();
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
 
     updateDashboard();
@@ -203,7 +202,8 @@ public class Drivetrain extends SubsystemBase {
 
     double modulo = m_heading%360.0;
     if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
-    SmartDashboard.putNumber("Gyro Heading", modulo);
+    SmartDashboard.putNumber("Gyro Heading", m_heading);
+    SmartDashboard.putNumber("Driver Heading", m_driverHeading);
     SmartDashboard.putNumber("Gyro Rate", m_turnRate);
     SmartDashboard.putNumber("Yaw", m_yaw);
     SmartDashboard.putNumber("GravityX",m_gravityVector[0]);

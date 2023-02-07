@@ -27,8 +27,8 @@ package frc.robot;
 
     public static class DriveParameters {
       public static final double k_minRotInput = 0.05;
-      public static final double k_RotationFactor = -0.1;
-      public static final double k_RotationMaxCorrection = 0.5;      
+      public static final double k_RotationFactor = -0.01875;
+      public static final double k_RotationMaxCorrection = 0.25;      
     }
 
     public static class ArmParameters {
