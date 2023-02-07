@@ -68,6 +68,8 @@ public class RobotContainer {
     new DriveAtAngleForDistance(m_robotDrive, 0.2, 0.0, 10.0); 
   private final SwitchDrivePerspective m_switchPerspective = 
     new SwitchDrivePerspective(m_robotDrive);
+  private final ToggleMaintainHeading m_toggleMaintainHeading = 
+    new ToggleMaintainHeading(m_robotDrive);
   private final AutoDriveStraight m_autoStraight = 
     new AutoDriveStraight(m_robotDrive);
 
@@ -130,6 +132,7 @@ public class RobotContainer {
     m_DriveJoystick.x().onTrue(m_RTS);
     // m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
     m_DriveJoystick.y().onTrue((m_switchPerspective));
+    m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.b().onTrue((m_DriveStraight).andThen(m_Stop));
 
 
