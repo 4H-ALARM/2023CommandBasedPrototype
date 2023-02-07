@@ -34,9 +34,12 @@ public class Drivetrain extends SubsystemBase {
 
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   private double m_heading = 0.0;
+  private double m_driverHeading = 0.0;
   private double m_turnRate = 0.0;
   private Rotation2d m_rotation;
   private boolean m_fieldRelative = false;
+  private boolean m_driverSetHeading = false;
+  private boolean m_autoMaintainHeading = true;
 
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
   private double m_yaw = 0.0;
@@ -50,7 +53,9 @@ public class Drivetrain extends SubsystemBase {
     m_gyro.calibrate();
     m_pidgeon.calibrate();
     resetHeading();
-    m_rotation = m_gyro.getRotation2d();
+    m_heading = m_pidgeon.getAngle();
+    m_driverHeading = m_pidgeon.getAngle();
+    m_rotation = m_pidgeon.getRotation2d();
 
     initMotor(m_frontLeft, true);
     initMotor(m_rearLeft, true);
@@ -67,19 +72,36 @@ public class Drivetrain extends SubsystemBase {
    * @param rot Angular rate of the robot.
    */
   public void drive(double xSpeed, double ySpeed, double rot) {
-
+    double r = 0.0;
     double x_squared = squareInput(xSpeed);
     double y_squared = squareInput(ySpeed);
     double rot_squared = squareInput(rot);
 
+    if ((rot < -DriveParameters.k_minRotInput) || 
+        (rot > DriveParameters.k_minRotInput) ||
+        (!m_autoMaintainHeading)) {
+      // If driver is providing rotation input - use it
+      m_driverSetHeading = true;
+      m_driverHeading = m_pidgeon.getAngle();
+      r = rot_squared;
+    } else {
+      // apply correction to maintain last heading
+      if (m_driverSetHeading) {
+        // if last pass driver set rotation, get the latest heading
+        m_driverHeading = m_pidgeon.getAngle();
+      }
+      m_driverSetHeading = false;
+      r = rotationCorrection();
+    }
+
     m_y = y_squared;
     m_x = x_squared;
-    m_r = rot_squared;
+    m_r = r;
 
     if (m_fieldRelative) {
-      m_drive.driveCartesian(x_squared, y_squared, rot_squared, m_rotation);
+      m_drive.driveCartesian(x_squared, y_squared, r, m_rotation);
     } else {
-      m_drive.driveCartesian(x_squared, y_squared, rot_squared);
+      m_drive.driveCartesian(x_squared, y_squared, r);
     }
     
   }
@@ -104,6 +126,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void switchPerspective (){
     m_fieldRelative = !m_fieldRelative;
+  }
+
+  public void switchHeadingAutoMaintain () {
+    m_autoMaintainHeading = !m_autoMaintainHeading;
   }
 
   @Override
@@ -146,6 +172,25 @@ public class Drivetrain extends SubsystemBase {
     return (d);
   }
 
+  private double rotationCorrection() {
+    double c = (m_heading - m_driverHeading)*DriveParameters.k_RotationFactor;
+
+    if ((c > -DriveParameters.k_minRotInput) && (c < DriveParameters.k_minRotInput)) {
+      // correction is too small, stop hunting by setting to 0
+      c = 0.0;
+    }
+
+    // Don't allow corrections too large
+    if (c < -DriveParameters.k_RotationMaxCorrection) {
+      c = -DriveParameters.k_RotationMaxCorrection;
+    } 
+    if (c > DriveParameters.k_minRotInput) {
+      c = DriveParameters.k_RotationMaxCorrection;
+    }    
+
+    return (c);
+  }
+
   private double squareInput(double i) {
     double s = i*i;
     if (i < 0){ s = -s; }
@@ -153,6 +198,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void updateDashboard() {
+
     double modulo = m_heading%360.0;
     if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
     SmartDashboard.putNumber("Gyro Heading", modulo);
@@ -165,11 +211,12 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("FLMCv",encoderToDistance(m_frontLeft.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("FRMCv",encoderToDistance(m_frontRight.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
+    SmartDashboard.putBoolean("Auto Heading",m_autoMaintainHeading);
     SmartDashboard.putNumber("Y In", m_y);
     SmartDashboard.putNumber("X In", m_x);
     SmartDashboard.putNumber("R In", m_r);
