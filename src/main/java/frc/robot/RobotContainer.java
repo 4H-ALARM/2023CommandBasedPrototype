@@ -91,7 +91,7 @@ public class RobotContainer {
             m_robotDrive.drive(
               m_DriveJoystick.getLeftY(),
               m_DriveJoystick.getLeftX(),
-              m_DriveJoystick.getRightX()
+              -m_DriveJoystick.getRightX()
               ),
         m_robotDrive)
         );
@@ -147,7 +147,7 @@ public class RobotContainer {
   public CommandBase getAutonomousCommand(StartingPosition sp) {
     // An example command will be run in autonomous
 
-    CommandBase autCommand = m_ResetGyro;
+    CommandBase autCommand = new AutoSequenceOne(m_robotDrive);
 
       switch(sp) {
         case LEFT:
