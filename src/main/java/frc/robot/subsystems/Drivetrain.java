@@ -213,10 +213,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
     SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("FLMCv",encoderToDistance(m_frontLeft.getSelectedSensorVelocity()));
-    SmartDashboard.putNumber("FRMCv",encoderToDistance(m_frontRight.getSelectedSensorVelocity()));
-    SmartDashboard.putNumber("RLMCv",encoderToDistance(m_rearLeft.getSelectedSensorVelocity()));
-    SmartDashboard.putNumber("RRMCv",encoderToDistance(m_rearRight.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
     SmartDashboard.putNumber("Y In", m_y);
