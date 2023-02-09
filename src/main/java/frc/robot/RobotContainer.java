@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -15,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.*;
 import frc.robot.Constants.StartingPosition;
+import frc.robot.Constants.USBPorts;
 import frc.robot.commands.*;
 
 /**
@@ -27,13 +25,13 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public final CommandXboxController m_ArmController =
-    new CommandXboxController(0);
+    new CommandXboxController(USBPorts.k_armPort);
 
   public final CommandXboxController m_DriveJoystick = 
-    new CommandXboxController(1);
+    new CommandXboxController(USBPorts.k_drivePort);
 
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   
   // Robot's subsystems *************************************************
   private final Drivetrain m_robotDrive = new Drivetrain();

@@ -5,12 +5,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Debug;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -32,7 +30,6 @@ public class Drivetrain extends SubsystemBase {
   private double m_x = 0.0;
   private double m_r = 0.0;
 
-  private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
   private double m_heading = 0.0;
   private double m_driverHeading = 0.0;
   private double m_turnRate = 0.0;
@@ -41,7 +38,6 @@ public class Drivetrain extends SubsystemBase {
   private boolean m_driverSetHeading = false;
   private boolean m_autoMaintainHeading = false;
   private double m_AHCF = DriveParameters.k_RotationFactor;
-
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
   private double m_yaw = 0.0;
   private double[]  m_gravityVector = new double[3];
@@ -49,11 +45,10 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
-    m_gyro.calibrate();
     m_pidgeon.calibrate();
     resetHeading();
     m_heading = m_pidgeon.getYaw();
-    m_driverHeading = m_pidgeon.getAngle();
+    m_driverHeading = m_heading;
     m_rotation = m_pidgeon.getRotation2d();
 
     initMotor(m_frontLeft, true);
@@ -95,9 +90,12 @@ public class Drivetrain extends SubsystemBase {
       r = rotationCorrection();
     }
 
-    m_y = y_squared;
-    m_x = x_squared;
-    m_r = r;
+    if (Debug.ON) {
+      m_y = y_squared;
+      m_x = x_squared;
+      m_r = r;      
+    }
+    
 
     if (m_fieldRelative) {
       m_drive.driveCartesian(x_squared, y_squared, r, m_rotation);
@@ -138,15 +136,17 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     m_heading = m_pidgeon.getYaw();
     m_rotation = m_pidgeon.getRotation2d();
-    m_turnRate = m_pidgeon.getRate();
+    
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
+    if (Debug.ON) {
+      m_turnRate = m_pidgeon.getRate();
+    }
 
     updateDashboard();
     m_AHCF = SmartDashboard.getNumber("AHCF", DriveParameters.k_RotationFactor);
   }
 
   public void resetHeading(){
-    m_gyro.reset();
     m_pidgeon.reset();
   }
 
@@ -198,34 +198,41 @@ public class Drivetrain extends SubsystemBase {
     return(s);
   }
 
-  private void updateDashboard() {
-
-    double modulo = m_heading%360.0;
-    if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
-    SmartDashboard.putNumber("Gyro Heading", m_heading);
-    SmartDashboard.putNumber("Driver Heading", m_driverHeading);
-    SmartDashboard.putNumber("Gyro Rate", m_turnRate);
-    SmartDashboard.putNumber("Yaw", m_yaw);
-    SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
-    SmartDashboard.putNumber("GravityY",m_gravityVector[1]);
+  private void updateDashboard() {   
+    
+    SmartDashboard.putNumber("Yaw", m_yaw);    
     SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
-    SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
-    SmartDashboard.putNumber("Y In", m_y);
-    SmartDashboard.putNumber("X In", m_x);
-    SmartDashboard.putNumber("R In", m_r);
-    SmartDashboard.putNumber("FLMCs",m_frontLeft.get());
-    SmartDashboard.putNumber("FRMCs",m_frontRight.get());
-    SmartDashboard.putNumber("RLMCs",m_rearLeft.get());
-    SmartDashboard.putNumber("RRMCs",m_rearRight.get());
+    SmartDashboard.putNumber("AHCF", m_AHCF);    
+
+    if (Debug.ON) {
+      double modulo = m_heading%360.0;
+      if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
+      SmartDashboard.putNumber("Y In", m_y);
+      SmartDashboard.putNumber("X In", m_x);
+      SmartDashboard.putNumber("R In", m_r);
+      SmartDashboard.putNumber("FLMCs",m_frontLeft.get());
+      SmartDashboard.putNumber("FRMCs",m_frontRight.get());
+      SmartDashboard.putNumber("RLMCs",m_rearLeft.get());
+      SmartDashboard.putNumber("RRMCs",m_rearRight.get());
+      SmartDashboard.putNumber("FLMCv",m_frontLeft.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("FRMCv",m_frontRight.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("RLMCv",m_rearLeft.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("RRMCv",m_rearRight.getSelectedSensorVelocity());
+      SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
+      SmartDashboard.putNumber("GravityY",m_gravityVector[1]);
+      SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
+      SmartDashboard.putNumber("FLMC",encoderToDistance(m_frontLeft.getSelectedSensorPosition()));
+      SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
+      SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
+      SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
+      SmartDashboard.putNumber("Gyro Heading", m_heading);
+      SmartDashboard.putNumber("Driver Heading", m_driverHeading);
+      SmartDashboard.putNumber("Gyro Rate", m_turnRate);
+      SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
+      SmartDashboard.putNumber("GravityY",m_gravityVector[1]);
+    }
   }
   
 }
