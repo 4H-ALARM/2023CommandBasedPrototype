@@ -25,6 +25,11 @@ package frc.robot;
       public static final int k_pigeon2 = 30;
     }
 
+    public static final class USBPorts {
+      public static final int k_armPort = 0;
+      public static final int k_drivePort = 1;
+    }
+
     public static class DriveParameters {
       public static final double k_minRotInput = 0.05;
       public static final double k_RotationFactor = -0.01875;
@@ -45,7 +50,13 @@ package frc.robot;
   
     public static enum StartingPosition {
       LEFT, MIDDLE, RIGHT
-    }  
+    } 
+    
+    public final class Debug {
+      //set to false to allow compiler to identify and eliminate
+      //unreachable code
+      public static final boolean ON = false;
+    }
 }
   
 

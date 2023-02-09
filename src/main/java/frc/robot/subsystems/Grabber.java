@@ -33,28 +33,8 @@ public class Grabber extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-     
+  public void periodic() {     
 
-  }
-
-
-  public CommandBase openCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          open();
-        });
-  }
-
-  public CommandBase stopCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          stop();
-        });
   }
 
 }
