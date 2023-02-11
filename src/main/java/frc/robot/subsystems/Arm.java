@@ -22,11 +22,11 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    m_armExtender.set(ArmParameters.k_armRaiseSpeed);
+    m_armExtender.set(ArmParameters.k_armExtendSpeed);
   }
 
   public void retract() {
-    m_armExtender.set(ArmParameters.k_armLowerSpeed);
+    m_armExtender.set(ArmParameters.k_armRetractSpeed);
   }
 
   public void stop() {
@@ -36,11 +36,11 @@ public class Arm extends SubsystemBase {
 
 
   public void lift(){
-    m_Shoulder.set(0.7);
+    m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
   }
 
   public void lower() {
-    m_Shoulder.set(-0.7);
+    m_Shoulder.set(ArmParameters.k_armRetractSpeed);
   }
 
   public void stopShoulder() {
