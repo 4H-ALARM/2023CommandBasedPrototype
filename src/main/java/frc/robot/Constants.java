@@ -19,7 +19,6 @@ package frc.robot;
       public static final int k_RearLeftMotor = 2;
       public static final int k_FrontRightMotor = 3;
       public static final int k_RearRight = 4;
-      public static final int k_Grabber = 10;
       public static final int k_Arm = 20;
       public static final int k_Shoulder = 21;
       public static final int k_pigeon2 = 30;
@@ -37,11 +36,15 @@ package frc.robot;
     }
 
     public static class ArmParameters {
+      public static final double k_armRaiseSpeed = 0.7;
+      public static final double k_armLowerSpeed = -0.7;
 
     }
 
     public static class GrabberParameters {
-
+      public static final int k_GrabberPWM = 3;
+      public static final double k_openAngle = 90.0;
+      public static final double k_closeAngle = -90.0;
     }
 
     public static class VisionParameters {

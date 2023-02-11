@@ -5,11 +5,12 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Arm extends SubsystemBase {
-  private final WPI_VictorSPX m_Armmotor = new WPI_VictorSPX(CANaddresses.k_Arm);
-  private final WPI_VictorSPX m_Shoulder = new WPI_VictorSPX(CANaddresses.k_Shoulder);
+  private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Arm);
+  private final WPI_TalonSRX m_Shoulder = new WPI_TalonSRX(CANaddresses.k_Shoulder);
   
   /** Creates a new Arm. */
   public Arm () {
@@ -21,15 +22,15 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    m_Armmotor.set(0.7);
+    m_armExtender.set(ArmParameters.k_armRaiseSpeed);
   }
 
   public void retract() {
-    m_Armmotor.set(-0.7);
+    m_armExtender.set(ArmParameters.k_armLowerSpeed);
   }
 
   public void stop() {
-    m_Armmotor.set(0.0);
+    m_armExtender.set(0.0);
   }
 
 

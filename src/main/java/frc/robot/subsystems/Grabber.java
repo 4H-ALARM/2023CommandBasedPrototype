@@ -4,33 +4,30 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 public class Grabber extends SubsystemBase {
 
-  private final WPI_VictorSPX m_clawmotor = new WPI_VictorSPX(CANaddresses.k_Grabber);
+  private final Servo m_clawServo = new Servo(GrabberParameters.k_GrabberPWM);
   
   /** Creates a new Grabber. */
   public Grabber() {
-    m_clawmotor.setInverted(false);
   }
 
   public void open(){
-    m_clawmotor.set(0.7);
+    m_clawServo.setAngle(GrabberParameters.k_openAngle);
   }
 
   public void close() {
-    m_clawmotor.set(-0.9);
+    m_clawServo.setAngle(GrabberParameters.k_closeAngle);
   }
 
-  public void stop() {
-    m_clawmotor.set(0.0);
-  }
+//  public void stop() {
+//    m_clawServo.set(0.0);
+//  }
 
   @Override
   public void periodic() {     
