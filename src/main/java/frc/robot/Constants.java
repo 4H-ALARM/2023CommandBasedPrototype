@@ -45,8 +45,8 @@ package frc.robot;
 
     public static class GrabberParameters {
       public static final int k_GrabberPWM = 3;
-      public static final double k_openAngle = 90.0;
-      public static final double k_closeAngle = -90.0;
+      public static final double k_openAngle = 10.0;
+      public static final double k_closeAngle = -10.0;
     }
 
     public static class VisionParameters {
