@@ -92,21 +92,20 @@ public class RobotContainer {
               m_DriveJoystick.getLeftY(),
               m_DriveJoystick.getLeftX(),
               -m_DriveJoystick.getRightX()
-          ),
+            ),
       m_robotDrive)
     );
 
     // Set the default arm command to split-stick arcade drive
-    m_robotDrive.setDefaultCommand(
+    m_Arm.setDefaultCommand(
       new RunCommand(
         () ->
-            m_Arm.move(
-              m_DriveJoystick.getLeftY(),
+            m_Arm.move
+              (m_DriveJoystick.getLeftY(), 
               m_DriveJoystick.getRightY()
-          ),
-      m_Arm)
+            ),
+        m_Arm)
     );
-
 
   }
 
