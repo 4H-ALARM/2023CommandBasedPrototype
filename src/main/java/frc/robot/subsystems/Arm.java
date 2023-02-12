@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Arm extends SubsystemBase {
@@ -19,6 +20,10 @@ public class Arm extends SubsystemBase {
   
   /** Creates a new Arm. */
   public Arm () {
+    m_Shoulder.setInverted(false);
+    m_Shoulder.setNeutralMode(NeutralMode.Brake);
+    m_armExtender.setInverted(false);
+    m_armExtender.setNeutralMode(NeutralMode.Brake);
     
   }
   @Override
