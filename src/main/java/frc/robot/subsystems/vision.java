@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class vision extends SubsystemBase {
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tx = table.getEntry("tx");
-  NetworkTableEntry ty = table.getEntry("ty");
-  NetworkTableEntry ta = table.getEntry("ta");
-  NetworkTableEntry tid = table.getEntry("tid");
-  NetworkTableEntry ledMode = table.getEntry("ledMode");
+  NetworkTable m_table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry m_tx = m_table.getEntry("tx");
+  NetworkTableEntry m_ty = m_table.getEntry("ty");
+  NetworkTableEntry m_ta = m_table.getEntry("ta");
+  NetworkTableEntry m_tid = m_table.getEntry("tid");
+  NetworkTableEntry m_ledMode = m_table.getEntry("ledMode");
+  NetworkTableEntry m_pipeLine = m_table.getEntry("pipeline");
+
+  private double m_currentPipeline = 0;
 
   /** Creates a new vision. */
   public vision() {
@@ -28,32 +31,45 @@ public class vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double id = tid.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    double x = m_tx.getDouble(0.0);
+    double y = m_ty.getDouble(0.0);
+    double id = m_tid.getDouble(0.0);
+    double area = m_ta.getDouble(0.0);
 
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putNumber("AprilTag ID;", id);
 
-    double ledState = ledMode.getDouble(-1);
+    double ledState = m_ledMode.getDouble(-1);
     SmartDashboard.putNumber("ledMode", ledState);
+
+    m_currentPipeline = m_pipeLine.getDouble(0.0);
+    SmartDashboard.putNumber("Pipe", m_currentPipeline);
 
   }
 
   public void off() {
-    ledMode.setNumber(1);
+    m_ledMode.setNumber(1);
   }
 
   public void on() {
-    ledMode.setNumber(3);
+    m_ledMode.setNumber(3);
+  }
+
+  public void swapPipleLine() {
+    if (m_currentPipeline == 1.0) {
+      m_currentPipeline = 0.0;
+    } else {
+      m_currentPipeline = 1.0;
+    }
+
+    m_pipeLine.setNumber(m_currentPipeline);
   }
 
   public boolean targetFound () {
     boolean found = false;
-    double id = tid.getDouble(0.0);
+    double id = m_tid.getDouble(0.0);
     if (id != -1) { found = true;}
     return(found);
   }
