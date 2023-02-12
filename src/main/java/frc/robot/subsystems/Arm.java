@@ -11,6 +11,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Arm extends SubsystemBase {
   private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Arm);
   private final WPI_TalonSRX m_Shoulder = new WPI_TalonSRX(CANaddresses.k_Shoulder);
+
+  private boolean m_atFullExtension = false;
+  private boolean m_atFullRetraction = false;
+  private boolean m_atFullRaise = false;
+  private boolean m_atFullLower = false;
   
   /** Creates a new Arm. */
   public Arm () {
@@ -19,37 +24,78 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    checkExtension();
+    checkRaise();
   }
 
   public void move(double raiseSpeed, double extendSpeed) {
-    m_Shoulder.set(raiseSpeed);
-    m_armExtender.set(extendSpeed);
+    double r = squareInput(raiseSpeed);
+    double e = squareInput(extendSpeed);
+
+    // check to see if we should stop retracting
+    if (e > 0) {
+      if (m_atFullRetraction) { e = 0.0; }
+    } else {
+      // we are extending so check for stop
+      if (m_atFullExtension) { e = 0.0; }
+    }
+
+    // check to see if we should stop lowering
+    if (r > 0) {
+      if (m_atFullLower) { r = 0.0; }
+    } else {
+      // we are raising so check for stop
+      if (m_atFullRaise) { r = 0.0; }
+    }
+
+    m_Shoulder.set(r);
+    m_armExtender.set(e);
   }
 
   public void extend(){
-    m_armExtender.set(ArmParameters.k_armExtendSpeed);
+    if (!m_atFullExtension) {
+      m_armExtender.set(ArmParameters.k_armExtendSpeed);
+    }    
   }
 
   public void retract() {
-    m_armExtender.set(ArmParameters.k_armRetractSpeed);
+    if (!m_atFullRetraction) {
+      m_armExtender.set(ArmParameters.k_armRetractSpeed);
+    }    
   }
 
   public void stop() {
     m_armExtender.set(0.0);
   }
 
-
-
   public void lift(){
-    m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
+    if (!m_atFullRaise) {
+      m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
+    }    
   }
 
   public void lower() {
-    m_Shoulder.set(ArmParameters.k_armRetractSpeed);
+    if (!m_atFullLower) {
+      m_Shoulder.set(ArmParameters.k_armRetractSpeed);
+    }
   }
 
   public void stopShoulder() {
     m_Shoulder.set(0.0);
+  }
+
+  private double squareInput(double i) {
+    double s = i*i;
+    if (i < 0){ s = -s; }
+    return(s);
+  }
+
+  private void checkExtension() {
+    // assume we a way to see if fully extended or rettracted
+  }
+
+  private void checkRaise() {
+    // assume we a way to see if fully extended or rettracted
   }
 
 
