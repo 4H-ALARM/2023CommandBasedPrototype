@@ -70,13 +70,17 @@ public class Arm extends SubsystemBase {
   public void extend(){
     if (!m_atFullExtension) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
-    }    
+    } else {
+      stop();
+    }
   }
 
   public void retract() {
     if (!m_atFullRetraction) {
       m_armExtender.set(ArmParameters.k_armRetractSpeed);
-    }    
+    } else {
+      stop();
+    } 
   }
 
   public void stop() {
@@ -86,12 +90,16 @@ public class Arm extends SubsystemBase {
   public void lift(){
     if (!m_atFullRaise) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
-    }    
+    } else {
+      stopShoulder();
+    }
   }
 
   public void lower() {
     if (!m_atFullLower) {
       m_Shoulder.set(ArmParameters.k_armRetractSpeed);
+    } else {
+      stopShoulder();
     }
   }
 
