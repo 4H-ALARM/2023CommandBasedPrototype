@@ -84,7 +84,7 @@ public class RobotContainer {
     configureBindings();
 
     // Configure default commands
-    // Set the default drive command to split-stick arcade drive
+    // Set the default drive command to split-stick mecanum drive
     m_robotDrive.setDefaultCommand(
       new RunCommand(
         () ->
@@ -92,9 +92,20 @@ public class RobotContainer {
               m_DriveJoystick.getLeftY(),
               m_DriveJoystick.getLeftX(),
               -m_DriveJoystick.getRightX()
-              ),
-        m_robotDrive)
-        );
+          ),
+      m_robotDrive)
+    );
+
+    // Set the default arm command to split-stick arcade drive
+    m_robotDrive.setDefaultCommand(
+      new RunCommand(
+        () ->
+            m_Arm.move(
+              m_DriveJoystick.getLeftY(),
+              m_DriveJoystick.getRightY()
+          ),
+      m_Arm)
+    );
 
 
   }
