@@ -21,6 +21,11 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public void move(double raiseSpeed, double extendSpeed) {
+    m_Shoulder.set(raiseSpeed);
+    m_armExtender.set(extendSpeed);
+  }
+
   public void extend(){
     m_armExtender.set(ArmParameters.k_armExtendSpeed);
   }
