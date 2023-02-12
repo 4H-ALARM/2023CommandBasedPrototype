@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -14,6 +15,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Arm extends SubsystemBase {
   private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Arm);
   private final WPI_TalonSRX m_Shoulder = new WPI_TalonSRX(CANaddresses.k_Shoulder);
+
+  private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitChannel);
+  private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractChannel);
 
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
@@ -31,8 +35,10 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    checkExtension();
-    checkRaise();
+
+    // add these calls after sensors are added and tested
+    //checkExtension();
+    //checkRaise();
 
     updateDashboard();
   }
@@ -100,11 +106,29 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkExtension() {
-    // assume we a way to see if fully extended or rettracted
+    if (m_fullRetractDetector.get()) {
+      m_atFullRetraction = true;
+      m_armExtender.setSelectedSensorPosition(0.0);
+    } else {
+      m_atFullRetraction = false;
+    }
+    
+    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullExtendCount) {
+      m_atFullExtension = true;
+    } else {
+      m_atFullExtension = false;
+    }
   }
 
   private void checkRaise() {
-    // assume we a way to see if fully extended or rettracted
+    if (m_lowerLimitDetector.get()) {
+      m_atFullLower = true;
+    } else {
+      m_atFullLower = false;
+    }
+
+    // assume we a way to see if fully raised
+    m_atFullRaise = false;
   }
 
   private void updateDashboard() {

@@ -40,6 +40,9 @@ package frc.robot;
       public static final double k_armLowerSpeed = -0.7;
       public static final double k_armExtendSpeed = 0.7;
       public static final double k_armRetractSpeed = -0.7;
+      public static final int k_lowerLimitChannel = 0;
+      public static final int k_fullRetractChannel = 1;
+      public static final double k_fullExtendCount = 100.0;
 
     }
 
