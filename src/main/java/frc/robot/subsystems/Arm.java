@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -31,6 +33,8 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
     checkExtension();
     checkRaise();
+
+    updateDashboard();
   }
 
   public void move(double raiseSpeed, double extendSpeed) {
@@ -101,6 +105,14 @@ public class Arm extends SubsystemBase {
 
   private void checkRaise() {
     // assume we a way to see if fully extended or rettracted
+  }
+
+  private void updateDashboard() {
+    SmartDashboard.putBoolean("RL", m_atFullRaise);
+    SmartDashboard.putBoolean("LL", m_atFullLower);
+    SmartDashboard.putBoolean("FE", m_atFullExtension);
+    SmartDashboard.putBoolean("FR", m_atFullRetraction);
+
   }
 
 
