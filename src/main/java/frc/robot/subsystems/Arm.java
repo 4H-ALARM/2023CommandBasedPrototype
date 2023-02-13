@@ -122,7 +122,8 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkExtensionRetractLimits() {
-    if (m_fullRetractDetector.get()) {
+    // check if we hit limit switch, have to invert reading
+    if (!m_fullRetractDetector.get()) {
       m_atFullRetraction = true;
       m_armExtender.setSelectedSensorPosition(0.0);
     } else {
@@ -137,7 +138,8 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkRaiseLowerLimits() {
-    if (m_lowerLimitDetector.get()) {
+    // check if we hit limit switch, have to invert reading
+    if (!m_lowerLimitDetector.get()) {
       m_atFullLower = true;
       m_Shoulder.setSelectedSensorPosition(0.0);
     } else {
@@ -152,10 +154,10 @@ public class Arm extends SubsystemBase {
   }
 
   private void updateDashboard() {
-    SmartDashboard.putBoolean("RL", m_atFullRaise);
-    SmartDashboard.putBoolean("LL", m_atFullLower);
-    SmartDashboard.putBoolean("EL", m_atFullExtension);
-    SmartDashboard.putBoolean("RL", m_atFullRetraction);
+    SmartDashboard.putBoolean("Full Raise", m_atFullRaise);
+    SmartDashboard.putBoolean("Full Lower", m_atFullLower);
+    SmartDashboard.putBoolean("Full Extend", m_atFullExtension);
+    SmartDashboard.putBoolean("Full Retract", m_atFullRetraction);
 
     if (Debug.ArmON) {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
