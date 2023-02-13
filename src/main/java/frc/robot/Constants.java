@@ -19,7 +19,7 @@ package frc.robot;
       public static final int k_RearLeftMotor = 2;
       public static final int k_FrontRightMotor = 3;
       public static final int k_RearRight = 4;
-      public static final int k_Arm = 20;
+      public static final int k_Extender = 20;
       public static final int k_Shoulder = 21;
       public static final int k_pigeon2 = 30;
     }
@@ -63,7 +63,8 @@ package frc.robot;
     public final class Debug {
       //set to false to allow compiler to identify and eliminate
       //unreachable code
-      public static final boolean ON = false;
+      public static final boolean DriveON = false;
+      public static final boolean ArmON = false;
     }
 }
   
