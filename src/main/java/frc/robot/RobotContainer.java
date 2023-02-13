@@ -101,8 +101,8 @@ public class RobotContainer {
       new RunCommand(
         () ->
             m_Arm.move
-              (m_DriveJoystick.getLeftY(), 
-              m_DriveJoystick.getRightY()
+              (m_ArmController.getLeftY(), 
+              m_ArmController.getRightY()
             ),
         m_Arm)
     );
