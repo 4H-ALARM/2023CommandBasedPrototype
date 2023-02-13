@@ -33,16 +33,14 @@ public class Arm extends SubsystemBase {
 
     m_armExtender.setInverted(false);
     m_armExtender.setNeutralMode(NeutralMode.Brake);
-    m_armExtender.setSensorPhase(false);    
+    m_armExtender.setSensorPhase(false); 
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-
-    // add these calls after sensors are added and tested
-    //checkExtension();
-    //checkRaise();
+        // add these calls after sensors are added and tested
+    checkExtensionRetractLimits();
+    checkRaiseLowerLimits();
 
     updateDashboard();
   }
@@ -123,7 +121,7 @@ public class Arm extends SubsystemBase {
     return(s);
   }
 
-  private void checkExtension() {
+  private void checkExtensionRetractLimits() {
     if (m_fullRetractDetector.get()) {
       m_atFullRetraction = true;
       m_armExtender.setSelectedSensorPosition(0.0);
@@ -138,7 +136,7 @@ public class Arm extends SubsystemBase {
     }
   }
 
-  private void checkRaise() {
+  private void checkRaiseLowerLimits() {
     if (m_lowerLimitDetector.get()) {
       m_atFullLower = true;
       m_Shoulder.setSelectedSensorPosition(0.0);
@@ -146,7 +144,7 @@ public class Arm extends SubsystemBase {
       m_atFullLower = false;
     }
 
-    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullRaiseCount) {
+    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_fullRaiseCount) {
       m_atFullRaise = true;
     } else {
       m_atFullRaise = false;
