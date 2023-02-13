@@ -8,16 +8,18 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Debug;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Arm extends SubsystemBase {
-  private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Arm);
+  private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Extender);
   private final WPI_TalonSRX m_Shoulder = new WPI_TalonSRX(CANaddresses.k_Shoulder);
 
-  private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitChannel);
-  private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractChannel);
+  private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
+  private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
 
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
@@ -43,9 +45,23 @@ public class Arm extends SubsystemBase {
     updateDashboard();
   }
 
-  public void move(double raiseSpeed, double extendSpeed) {
+/**
+   * Moves the arm, both raising and lowering and extension/retraction at given Speeds range from [-1, 1]
+   *
+   * @param raiseSpeed Speed of arm raise/lower motion, Positive is lowering
+   * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
+   */
+    public void move(double raiseSpeed, double extendSpeed) {
     double r = squareInput(raiseSpeed);
     double e = squareInput(extendSpeed);
+
+    // check to see if we should stop lowering
+    if (r > 0) {
+      if (m_atFullLower) { r = 0.0; }
+    } else {
+      // we are raising so check for stop
+      if (m_atFullRaise) { r = 0.0; }
+    }
 
     // check to see if we should stop retracting
     if (e > 0) {
@@ -55,13 +71,6 @@ public class Arm extends SubsystemBase {
       if (m_atFullExtension) { e = 0.0; }
     }
 
-    // check to see if we should stop lowering
-    if (r > 0) {
-      if (m_atFullLower) { r = 0.0; }
-    } else {
-      // we are raising so check for stop
-      if (m_atFullRaise) { r = 0.0; }
-    }
 
     m_Shoulder.set(r);
     m_armExtender.set(e);
@@ -144,6 +153,11 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putBoolean("LL", m_atFullLower);
     SmartDashboard.putBoolean("FE", m_atFullExtension);
     SmartDashboard.putBoolean("FR", m_atFullRetraction);
+
+    if (Debug.ArmON) {
+      SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
+      SmartDashboard.putNumber("ExtenSp", m_armExtender.get());
+    }
 
   }
 

@@ -90,7 +90,7 @@ public class Drivetrain extends SubsystemBase {
       r = rotationCorrection();
     }
 
-    if (Debug.ON) {
+    if (Debug.DriveON) {
       m_y = y_squared;
       m_x = x_squared;
       m_r = r;      
@@ -138,7 +138,7 @@ public class Drivetrain extends SubsystemBase {
     m_rotation = m_pidgeon.getRotation2d();
     
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
-    if (Debug.ON) {
+    if (Debug.DriveON) {
       m_turnRate = m_pidgeon.getRate();
     }
 
@@ -206,7 +206,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
     SmartDashboard.putNumber("AHCF", m_AHCF);    
 
-    if (Debug.ON) {
+    if (Debug.DriveON) {
       double modulo = m_heading%360.0;
       if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
       SmartDashboard.putNumber("Y In", m_y);
