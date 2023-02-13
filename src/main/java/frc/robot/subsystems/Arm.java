@@ -151,12 +151,13 @@ public class Arm extends SubsystemBase {
   private void updateDashboard() {
     SmartDashboard.putBoolean("RL", m_atFullRaise);
     SmartDashboard.putBoolean("LL", m_atFullLower);
-    SmartDashboard.putBoolean("FE", m_atFullExtension);
-    SmartDashboard.putBoolean("FR", m_atFullRetraction);
+    SmartDashboard.putBoolean("EL", m_atFullExtension);
+    SmartDashboard.putBoolean("RL", m_atFullRetraction);
 
     if (Debug.ArmON) {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
       SmartDashboard.putNumber("ExtenSp", m_armExtender.get());
+      SmartDashboard.putNumber("ExtCnt", m_armExtender.getSelectedSensorPosition());
     }
 
   }
