@@ -4,19 +4,18 @@
 
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
+import frc.robot.Constants.Debug;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.Debug;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Arm extends SubsystemBase {
   private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Extender);
-  private final WPI_TalonSRX m_Shoulder = new WPI_TalonSRX(CANaddresses.k_Shoulder);
+  private final WPI_TalonFX m_Shoulder = new WPI_TalonFX(CANaddresses.k_Shoulder);
 
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
   private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
@@ -30,10 +29,13 @@ public class Arm extends SubsystemBase {
   public Arm () {
     m_Shoulder.setInverted(false);
     m_Shoulder.setNeutralMode(NeutralMode.Brake);
+    m_Shoulder.setSensorPhase(false);
+
     m_armExtender.setInverted(false);
     m_armExtender.setNeutralMode(NeutralMode.Brake);
-    
+    m_armExtender.setSensorPhase(false);    
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -70,7 +72,6 @@ public class Arm extends SubsystemBase {
       // we are extending so check for stop
       if (m_atFullExtension) { e = 0.0; }
     }
-
 
     m_Shoulder.set(r);
     m_armExtender.set(e);
@@ -140,12 +141,16 @@ public class Arm extends SubsystemBase {
   private void checkRaise() {
     if (m_lowerLimitDetector.get()) {
       m_atFullLower = true;
+      m_Shoulder.setSelectedSensorPosition(0.0);
     } else {
       m_atFullLower = false;
     }
 
-    // assume we a way to see if fully raised
-    m_atFullRaise = false;
+    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullRaiseCount) {
+      m_atFullRaise = true;
+    } else {
+      m_atFullRaise = false;
+    }
   }
 
   private void updateDashboard() {
@@ -156,10 +161,10 @@ public class Arm extends SubsystemBase {
 
     if (Debug.ArmON) {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
-      SmartDashboard.putNumber("ExtenSp", m_armExtender.get());
+      SmartDashboard.putNumber("ShoulCnt", m_Shoulder.getSelectedSensorPosition());
+      SmartDashboard.putNumber("ExtSp", m_armExtender.get());
       SmartDashboard.putNumber("ExtCnt", m_armExtender.getSelectedSensorPosition());
     }
-
   }
 
 

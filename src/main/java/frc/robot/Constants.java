@@ -43,6 +43,7 @@ package frc.robot;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = 100.0;
+      public static final double k_fullRaiseCount = 100.0;
 
     }
 
