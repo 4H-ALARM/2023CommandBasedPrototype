@@ -44,7 +44,6 @@ package frc.robot;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = 100.0;
       public static final double k_fullRaiseCount = 100.0;
-
     }
 
     public static class GrabberParameters {
@@ -54,7 +53,8 @@ package frc.robot;
     }
 
     public static class VisionParameters {
-
+      public static final int k_lightOff = 1;
+      public static final int k_lightOn = 3;
     }
   
     public static enum StartingPosition {

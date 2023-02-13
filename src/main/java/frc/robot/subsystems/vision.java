@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import static frc.robot.Constants.*;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -50,11 +52,11 @@ public class vision extends SubsystemBase {
   }
 
   public void off() {
-    m_ledMode.setNumber(1);
+    m_ledMode.setNumber(VisionParameters.k_lightOff);
   }
 
   public void on() {
-    m_ledMode.setNumber(3);
+    m_ledMode.setNumber(VisionParameters.k_lightOn);
   }
 
   public void swapPipleLine() {
