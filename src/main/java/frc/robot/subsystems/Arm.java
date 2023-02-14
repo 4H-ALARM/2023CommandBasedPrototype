@@ -54,7 +54,7 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = (squareInput(raiseSpeed))*0.7;
+    double r = (squareInput(raiseSpeed))*0.5;
     double e = squareInput(extendSpeed);
 
     // check to see if we should stop lowering
