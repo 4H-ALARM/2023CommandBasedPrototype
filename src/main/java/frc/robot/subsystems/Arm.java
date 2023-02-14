@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Arm extends SubsystemBase {
-  private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Extender);
+  private final WPI_VictorSPX m_armExtender = new WPI_VictorSPX(CANaddresses.k_Extender);
   private final WPI_TalonFX m_Shoulder = new WPI_TalonFX(CANaddresses.k_Shoulder);
 
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
