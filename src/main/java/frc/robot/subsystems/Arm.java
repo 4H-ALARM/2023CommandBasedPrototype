@@ -1,4 +1,5 @@
 // Copyright (c) FIRST and other WPILib contributors.
+
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -28,7 +29,7 @@ public class Arm extends SubsystemBase {
   
   /** Creates a new Arm. */
   public Arm () {
-    m_Shoulder.setInverted(false);
+    m_Shoulder.setInverted(true);
     m_Shoulder.setNeutralMode(NeutralMode.Brake);
     m_Shoulder.setSensorPhase(false);
 
@@ -53,7 +54,7 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = squareInput(raiseSpeed);
+    double r = (squareInput(raiseSpeed))*0.7;
     double e = squareInput(extendSpeed);
 
     // check to see if we should stop lowering
