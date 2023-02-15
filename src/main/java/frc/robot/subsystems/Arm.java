@@ -147,8 +147,9 @@ public class Arm extends SubsystemBase {
     } else {
       m_atFullLower = false;
     }
-
-    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_fullRaiseCount) {
+    // count in raise direction is negative
+    
+    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_fullRaiseCount) {
       m_atFullRaise = true;
     } else {
       m_atFullRaise = false;
