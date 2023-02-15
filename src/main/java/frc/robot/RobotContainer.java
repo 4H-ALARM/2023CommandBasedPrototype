@@ -126,12 +126,12 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.a().onTrue(m_GrabberOpen);
+    m_ArmController.b().onTrue(m_GrabberClose);
 
     // Trigger to Arm command mappings
-    m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
-    m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
+    //m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
+    //m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
     m_ArmController.povUp().onTrue(m_liftShoulder).onFalse(m_stopShoulder);
     m_ArmController.povDown().onTrue(m_lowerShoulder).onFalse(m_stopShoulder);
 
