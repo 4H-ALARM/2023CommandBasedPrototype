@@ -5,9 +5,13 @@
 
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
+
+import org.opencv.features2d.FlannBasedMatcher;
+
 import frc.robot.Constants.Debug;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,6 +26,8 @@ public class Arm extends SubsystemBase {
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
   private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
 
+  private final Encoder m_extEnc = new Encoder(ArmParameters.k_extEncADIO, ArmParameters.k_extEncBDIO);
+
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
   private boolean m_atFullRaise = false;
@@ -33,9 +39,13 @@ public class Arm extends SubsystemBase {
     m_Shoulder.setNeutralMode(NeutralMode.Brake);
     m_Shoulder.setSensorPhase(false);
 
+    // Note victor controller has brake set by a button on the controller
     m_armExtender.setInverted(false);
-    m_armExtender.setNeutralMode(NeutralMode.Brake);
-    m_armExtender.setSensorPhase(false); 
+
+    m_extEnc.setDistancePerPulse(1.0);
+    m_extEnc.setMinRate(10.0);
+    m_extEnc.setReverseDirection(false);
+    m_extEnc.setSamplesToAverage(4);
   }
 
   @Override
@@ -127,12 +137,12 @@ public class Arm extends SubsystemBase {
     // check if we hit limit switch, have to invert reading
     if (!m_fullRetractDetector.get()) {
       m_atFullRetraction = true;
-      m_armExtender.setSelectedSensorPosition(0.0);
+      m_extEnc.reset();
     } else {
       m_atFullRetraction = false;
     }
     
-    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullExtendCount) {
+    if (m_extEnc.get() > ArmParameters.k_fullExtendCount) {
       m_atFullExtension = true;
     } else {
       m_atFullExtension = false;
@@ -165,7 +175,7 @@ public class Arm extends SubsystemBase {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
       SmartDashboard.putNumber("ShoulCnt", m_Shoulder.getSelectedSensorPosition());
       SmartDashboard.putNumber("ExtSp", m_armExtender.get());
-      SmartDashboard.putNumber("ExtCnt", m_armExtender.getSelectedSensorPosition());
+      SmartDashboard.putNumber("ExtCnt", m_extEnc.get());
     }
   }
 
