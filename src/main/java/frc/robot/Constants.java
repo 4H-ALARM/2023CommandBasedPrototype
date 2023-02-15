@@ -42,8 +42,10 @@ package frc.robot;
       public static final double k_armRetractSpeed = 0.3;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
+      public static final int k_extEncADIO = 2;
+      public static final int k_extEncBDIO = 3;
       public static final double k_fullExtendCount = 100.0;
-      public static final double k_fullRaiseCount = -20000.0;
+      public static final double k_fullRaiseCount = -20000.0;      
     }
 
     public static class GrabberParameters {
