@@ -46,7 +46,14 @@ package frc.robot;
       public static final int k_extEncADIO = 2;
       public static final int k_extEncBDIO = 3;
       public static final double k_fullExtendCount = 100.0;
-      public static final double k_fullRaiseCount = -30000.0;      
+      public static final double k_fullRaiseCount = -30000.0;
+      public static final double k_startStowCount = -10000.0;
+      public static final double k_safeStowCount = -50; 
+      public static final double k_llExtendGoodGrab = 20;
+      public static final double k_ulExtendGoodGrab = 25;
+      public static final double k_llSoulderGoodGrab = -250;
+      public static final double k_ulShoulderGoodGrab = -200;
+
     }
 
     public static class GrabberParameters {
