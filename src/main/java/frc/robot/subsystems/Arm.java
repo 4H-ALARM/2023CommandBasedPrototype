@@ -31,6 +31,8 @@ public class Arm extends SubsystemBase {
   private boolean m_atFullRetraction = false;
   private boolean m_atFullRaise = false;
   private boolean m_atFullLower = false;
+  private boolean m_safeToLower = false;
+  private boolean m_goodGrabPos = false;
   
   /** Creates a new Arm. */
   public Arm () {
@@ -52,6 +54,8 @@ public class Arm extends SubsystemBase {
         // add these calls after sensors are added and tested
     checkExtensionRetractLimits();
     checkRaiseLowerLimits();
+    checkSafeToLower();
+    checkGrabPos();
 
     updateDashboard();
   }
@@ -68,7 +72,7 @@ public class Arm extends SubsystemBase {
 
     // check to see if we should stop lowering
     if (r > 0) {
-      if (m_atFullLower) { r = 0.0; }
+      if ((m_atFullLower) || (!m_safeToLower)) { r = 0.0; }
     } else {
       // we are raising so check for stop
       if (m_atFullRaise) { r = 0.0; }
@@ -164,11 +168,39 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  private void checkSafeToLower() {
+    if ((m_extEnc.get() < ArmParameters.k_safeStowCount) &&
+        (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_startStowCount))
+    {
+      m_safeToLower = true;
+    } else {
+      m_safeToLower = true;  // TODO change this to false when encoder is working
+    }
+
+  }
+
+  private void checkGrabPos() {
+    double ec = m_extEnc.get();
+    double sc = m_Shoulder.getSelectedSensorPosition();
+
+    if ((ec > ArmParameters.k_llExtendGoodGrab) && 
+        (ec < ArmParameters.k_ulExtendGoodGrab) &&
+        (sc > ArmParameters.k_llSoulderGoodGrab) &&
+        (sc < ArmParameters.k_ulShoulderGoodGrab)) {
+          m_goodGrabPos = true;
+        } else {
+          m_goodGrabPos = false;
+        }
+
+  }
+
   private void updateDashboard() {
     SmartDashboard.putBoolean("Full Raise", m_atFullRaise);
     SmartDashboard.putBoolean("Full Lower", m_atFullLower);
     SmartDashboard.putBoolean("Full Extend", m_atFullExtension);
     SmartDashboard.putBoolean("Full Retract", m_atFullRetraction);
+    SmartDashboard.putBoolean("Safe-Lower", m_safeToLower);
+    SmartDashboard.putBoolean("Good Grab", m_goodGrabPos);
 
     if (Debug.ArmON) {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
