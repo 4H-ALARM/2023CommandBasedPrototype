@@ -6,10 +6,8 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 
-import org.opencv.features2d.FlannBasedMatcher;
-
 import frc.robot.Constants.Debug;
-
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +23,7 @@ public class Arm extends SubsystemBase {
 
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
   private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
+  private SlewRateLimiter m_limiter = new SlewRateLimiter(ArmParameters.k_raiseLimit);
 
   private final Encoder m_extEnc = new Encoder(ArmParameters.k_extEncADIO, ArmParameters.k_extEncBDIO);
 
@@ -64,7 +63,7 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = (squareInput(raiseSpeed))*0.5;
+    double r = m_limiter.calculate(raiseSpeed);//(squareInput(raiseSpeed))*0.5;
     double e = squareInput(extendSpeed);
 
     // check to see if we should stop lowering

@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Debug;
 
 import static frc.robot.Constants.*;
 
@@ -18,11 +20,11 @@ public class Grabber extends SubsystemBase {
   }
 
   public void open(){
-    m_clawServo.setAngle(GrabberParameters.k_openAngle);
+    m_clawServo.set(GrabberParameters.k_openValue);
   }
 
   public void close() {
-    m_clawServo.setAngle(GrabberParameters.k_closeAngle);
+    m_clawServo.set(GrabberParameters.k_closeValue);
   }
 
 //  public void stop() {
@@ -30,7 +32,10 @@ public class Grabber extends SubsystemBase {
 //  }
 
   @Override
-  public void periodic() {     
+  public void periodic() {    
+    if (Debug.ArmON) {
+      SmartDashboard.putNumber("Grabber", m_clawServo.get());
+    }
 
   }
 
