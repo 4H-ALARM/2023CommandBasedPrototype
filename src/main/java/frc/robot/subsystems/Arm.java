@@ -119,7 +119,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lower() {
-    if (!m_atFullLower) {
+    if ((!m_atFullLower) && (m_safeToLower)) {
       m_Shoulder.set(ArmParameters.k_armRetractSpeed);
     } else {
       stopShoulder();
