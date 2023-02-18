@@ -46,7 +46,7 @@ package frc.robot;
       public static final int k_extEncADIO = 2;
       public static final int k_extEncBDIO = 3;
       public static final double k_fullExtendCount = 100.0;
-      public static final double k_fullRaiseCount = -30000.0;
+      public static final double k_fullRaiseCount = -40000.0;
       public static final double k_startStowCount = -10000.0;
       public static final double k_safeStowCount = -50; 
       public static final double k_llExtendGoodGrab = 20;
