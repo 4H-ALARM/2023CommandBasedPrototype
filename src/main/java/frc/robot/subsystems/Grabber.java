@@ -14,17 +14,22 @@ import static frc.robot.Constants.*;
 public class Grabber extends SubsystemBase {
 
   private final Servo m_clawServo = new Servo(GrabberParameters.k_GrabberPWM);
+  private double m_setpoint = 1;
   
   /** Creates a new Grabber. */
   public Grabber() {
   }
 
-  public void open(){
+  public void open(){ 
+   //m_setpoint = m_setpoint - 0.05;
+    //if (m_setpoint < 0) {m_setpoint = 0;}
     m_clawServo.set(GrabberParameters.k_openValue);
   }
 
   public void close() {
-    m_clawServo.set(GrabberParameters.k_closeValue);
+    //m_setpoint = m_setpoint + 0.05;
+    //if (m_setpoint > 1) {m_setpoint = 1;}
+    m_clawServo.set(GrabberParameters.k_closeValueCone);
   }
 
 //  public void stop() {
