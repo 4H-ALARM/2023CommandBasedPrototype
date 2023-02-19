@@ -15,17 +15,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Arm extends SubsystemBase {
-  private final WPI_VictorSPX m_armExtender = new WPI_VictorSPX(CANaddresses.k_Extender);
+  private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Extender);
   private final WPI_TalonFX m_Shoulder = new WPI_TalonFX(CANaddresses.k_Shoulder);
 
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
   private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
   private SlewRateLimiter m_limiter = new SlewRateLimiter(ArmParameters.k_raiseLimit);
 
-  private final Encoder m_extEnc = new Encoder(ArmParameters.k_extEncADIO, ArmParameters.k_extEncBDIO);
+  // private final Encoder m_extEnc = new Encoder(ArmParameters.k_extEncADIO, ArmParameters.k_extEncBDIO);
 
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
@@ -42,11 +42,13 @@ public class Arm extends SubsystemBase {
 
     // Note victor controller has brake set by a button on the controller
     m_armExtender.setInverted(false);
+    m_armExtender.setNeutralMode(NeutralMode.Brake);
+    m_armExtender.setSensorPhase(false);
 
-    m_extEnc.setDistancePerPulse(1.0);
-    m_extEnc.setMinRate(10.0);
-    m_extEnc.setReverseDirection(false);
-    m_extEnc.setSamplesToAverage(4);
+    //m_extEnc.setDistancePerPulse(1.0);
+    //m_extEnc.setMinRate(10.0);
+    //m_extEnc.setReverseDirection(false);
+    //m_extEnc.setSamplesToAverage(4);
   }
 
   @Override
@@ -140,12 +142,13 @@ public class Arm extends SubsystemBase {
     // check if we hit limit switch, have to invert reading
     if (!m_fullRetractDetector.get()) {
       m_atFullRetraction = true;
-      m_extEnc.reset();
+      m_armExtender.setSelectedSensorPosition(0.0);
+      //m_extEnc.reset();
     } else {
       m_atFullRetraction = false;
     }
     
-    if (m_extEnc.get() > ArmParameters.k_fullExtendCount) {
+    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullExtendCount) {
       m_atFullExtension = true;
     } else {
       m_atFullExtension = false;
@@ -169,7 +172,7 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkSafeToLower() {
-    if ((m_extEnc.get() < ArmParameters.k_safeStowCount) &&
+    if ((m_armExtender.getSelectedSensorPosition() < ArmParameters.k_safeStowCount) &&
         (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_startStowCount))
     {
       m_safeToLower = true;
@@ -180,7 +183,7 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkGrabPos() {
-    double ec = m_extEnc.get();
+    double ec = m_armExtender.getSelectedSensorPosition();
     double sc = m_Shoulder.getSelectedSensorPosition();
 
     if ((ec > ArmParameters.k_llExtendGoodGrab) && 
@@ -206,7 +209,7 @@ public class Arm extends SubsystemBase {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
       SmartDashboard.putNumber("ShoulCnt", m_Shoulder.getSelectedSensorPosition());
       SmartDashboard.putNumber("ExtSp", m_armExtender.get());
-      SmartDashboard.putNumber("ExtCnt", m_extEnc.get());
+      SmartDashboard.putNumber("ExtCnt", m_armExtender.getSelectedSensorPosition());
     }
   }
 
