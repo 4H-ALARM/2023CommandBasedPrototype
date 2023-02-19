@@ -69,7 +69,7 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = m_limiter.calculate(raiseSpeed);//(squareInput(raiseSpeed))*0.5;
+    double r = m_limiter.calculate(raiseSpeed);
     double e = squareInput(extendSpeed);
 
     // check to see if we should stop lowering
@@ -149,7 +149,7 @@ public class Arm extends SubsystemBase {
     }
     
     if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullExtendCount) {
-      m_atFullExtension = true;
+      m_atFullExtension = false;  //TODO change to true when we have the full extend count
     } else {
       m_atFullExtension = false;
     }
