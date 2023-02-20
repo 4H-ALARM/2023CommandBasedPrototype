@@ -214,6 +214,8 @@ public class Arm extends SubsystemBase {
     // protect against divide by zero    
     if (cosAngle != 0) {
       ec = ArmParameters.k_armHeight/cosAngle;
+      // remove the fixed length of the arm from the target extension
+      ec = ec - ArmParameters.k_shortestArmLength;
     }
     
     // if reach is too far return 0

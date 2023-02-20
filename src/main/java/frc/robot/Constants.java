@@ -55,6 +55,7 @@ package frc.robot;
       public static final double k_ulShoulderGoodGrab = -200;
       public static final double k_armRadianPerCount = Math.toRadians(90.0)/50000.0; // ~50K in 90 degrees
       public static final double k_armHeight = 1000;  // arm height in extender counts
+      public static final double k_shortestArmLength = 700; // length of the fixed portion of the arm in extender counts
       public static final double k_safeReach = 100; // max extension count allowed for a grab
     }
 
