@@ -173,7 +173,7 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkGrabPos() {
-    double ec = m_armExtender.getSelectedSensorPosition();
+    double ec = Math.abs(m_armExtender.getSelectedSensorPosition());
     double sc = m_Shoulder.getSelectedSensorPosition();
 
     if ((ec > ArmParameters.k_llExtendGoodGrab) && 
@@ -184,7 +184,42 @@ public class Arm extends SubsystemBase {
         } else {
           m_goodGrabPos = false;
         }
+// TODO replace the remove if statement with using target extension to see if we are good for grab
+        double te = getExtensionNeededForGrab(sc);
+        if ((te == 0.0) ||  
+            (ec > (te + ArmParameters.k_ulExtendGoodGrab)) ||
+            (ec < (te - ArmParameters.k_llExtendGoodGrab))){
+              m_goodGrabPos = false;
+          } else {
+            m_goodGrabPos = true;
+          }
+        
+        if (Debug.ArmON) {
+          SmartDashboard.putNumber("TarExt", te);
+        }
+  }
 
+/**
+   * Returns the nominal extension count needed for a succesful grab
+   *
+   * @param shoulderCount current shoulder position
+   * @return extendCount nominal extension count, always positive an should have error margin applied, 0 if none
+   */
+  private double getExtensionNeededForGrab(double shoulderCount) {
+    double ec = 0.0;
+    double angleInRadians = Math.abs(shoulderCount) * ArmParameters.k_armRadianPerCount;
+    double cosAngle = Math.cos(angleInRadians);
+
+    // The extension is the hypotenuse calculated from shoulder angle and arm pivot height
+    // protect against divide by zero    
+    if (cosAngle != 0) {
+      ec = ArmParameters.k_armHeight/cosAngle;
+    }
+    
+    // if reach is too far return 0
+    if (ec > ArmParameters.k_safeReach) { ec = 0.0; }
+
+    return (ec);
   }
 
   private void updateDashboard() {
