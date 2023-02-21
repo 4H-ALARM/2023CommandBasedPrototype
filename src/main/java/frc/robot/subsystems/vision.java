@@ -21,7 +21,7 @@ public class vision extends SubsystemBase {
   NetworkTableEntry m_ledMode = m_table.getEntry("ledMode");
   NetworkTableEntry m_pipeLine = m_table.getEntry("pipeline");
 
-  private double m_currentPipeline = 0;
+  private double m_currentPipeline = 1;
 
   /** Creates a new vision. */
   public vision() {
@@ -46,7 +46,7 @@ public class vision extends SubsystemBase {
     double ledState = m_ledMode.getDouble(-1);
     SmartDashboard.putNumber("ledMode", ledState);
 
-    m_currentPipeline = m_pipeLine.getDouble(0.0);
+    m_pipeLine.setNumber(m_currentPipeline);
     SmartDashboard.putNumber("Pipe", m_currentPipeline);
 
   }
