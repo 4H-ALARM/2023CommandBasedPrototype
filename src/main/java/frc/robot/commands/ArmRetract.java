@@ -11,6 +11,7 @@ import frc.robot.subsystems.Arm;
 
 public class ArmRetract extends CommandBase {
   private Arm m_Arm;
+  private boolean m_atFullRetract = false;
 
   /** Creates a new ArmRetract. */
   public ArmRetract(Arm r) {
@@ -27,16 +28,22 @@ public class ArmRetract extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Arm.retract();
+    m_atFullRetract =  m_Arm.retract();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Arm.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    boolean done = false;
+    if (m_atFullRetract) {
+      done = true;
+    }
+    return (done);
   }
 }
