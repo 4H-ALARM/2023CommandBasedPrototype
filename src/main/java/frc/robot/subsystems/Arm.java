@@ -91,12 +91,13 @@ public class Arm extends SubsystemBase {
     }
   }
 
-  public void retract() {
+  public boolean retract() {
     if (!m_atFullRetraction) {
       m_armExtender.set(ArmParameters.k_armRetractSpeed);
     } else {
       stop();
     } 
+    return (m_atFullRetraction);
   }
 
   public void stop() {
@@ -162,8 +163,8 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkSafeToLower() {
-    if ((m_armExtender.getSelectedSensorPosition() < ArmParameters.k_safeStowCount) &&
-        (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_startStowCount))
+    if ((m_armExtender.getSelectedSensorPosition() <= ArmParameters.k_safeExtenderStowCount) &&
+        (m_Shoulder.getSelectedSensorPosition() <= ArmParameters.k_startStowCount))
     {
       m_safeToLower = true;
     } else {

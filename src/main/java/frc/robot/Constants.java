@@ -48,7 +48,7 @@ package frc.robot;
       public static final double k_fullExtendCount = 100.0;
       public static final double k_fullRaiseCount = -42000.0;
       public static final double k_startStowCount = -10000.0;
-      public static final double k_safeStowCount = -50; 
+      public static final double k_safeExtenderStowCount = 0.0; 
       public static final double k_llExtendGoodGrab = 20;
       public static final double k_ulExtendGoodGrab = 25;
       public static final double k_llSoulderGoodGrab = -250;
