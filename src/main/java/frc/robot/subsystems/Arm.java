@@ -193,8 +193,8 @@ public class Arm extends SubsystemBase {
           } else {
             m_goodGrabPos = true;
           }
-        
-        if (Debug.ArmON) {
+
+          if (Debug.ArmON) {
           SmartDashboard.putNumber("TarExt", te);
         }
   }
