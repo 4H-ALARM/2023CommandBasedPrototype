@@ -45,18 +45,18 @@ package frc.robot;
       public static final int k_fullRetractDIO = 1;
       public static final int k_extEncADIO = 2;
       public static final int k_extEncBDIO = 3;
-      public static final double k_fullExtendCount = -230000;
+      public static final double k_fullExtendCount = -230000.0;
       public static final double k_fullRaiseCount = -140000.0;
-      public static final double k_startStowCount = -10000.0;
-      public static final double k_safeExtenderStowCount = 0.0; 
+      public static final double k_startStowCount = -50000.0;
+      public static final double k_safeExtenderStowCount = -100.0; 
       public static final double k_llExtendGoodGrab = 20;
       public static final double k_ulExtendGoodGrab = 25;
       public static final double k_llSoulderGoodGrab = -250;
       public static final double k_ulShoulderGoodGrab = -200;
       public static final double k_armRadianPerCount = Math.toRadians(90.0)/140000.0; // ~150K in 90 degrees
-      public static final double k_armHeight = 1000;  // arm height in extender counts
-      public static final double k_shortestArmLength = 700; // length of the fixed portion of the arm in extender counts
-      public static final double k_safeReach = 100; // max extension count allowed for a grab
+      public static final double k_armHeight = 500000;  // arm height in extender counts
+      public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
+      public static final double k_safeReach = 100000; // max extension count allowed for a grab
     }
 
     public static class GrabberParameters {

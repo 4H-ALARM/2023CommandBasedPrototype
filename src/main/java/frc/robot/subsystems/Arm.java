@@ -174,14 +174,15 @@ public class Arm extends SubsystemBase {
   }
 
   private void checkSafeToLower() {
-    if ((m_armExtender.getSelectedSensorPosition() <= ArmParameters.k_safeExtenderStowCount) &&
-        (m_Shoulder.getSelectedSensorPosition() <= ArmParameters.k_startStowCount))
-    {
-      m_safeToLower = true;
-    } else {
-      m_safeToLower = true;  // TODO change this to false when encoder is working
+    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_startStowCount) {
+      m_safeToLower = true;  //lowering arm is away from the chassis
+    } else  {
+      if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_safeExtenderStowCount) {
+        m_safeToLower = true; // retracted enough to stow
+      } else {
+        m_safeToLower = false;  // need to retract before allowing stow
+      }
     }
-
   }
 
   private void checkGrabPos() {
