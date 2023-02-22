@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -29,6 +30,8 @@ public class Arm extends SubsystemBase {
   private boolean m_atFullLower = false;
   private boolean m_safeToLower = false;
   private boolean m_goodGrabPos = false;
+  private boolean m_armRaiseZeroed = false;
+  private boolean m_armExtendZeroed = false;
   
   /** Creates a new Arm. */
   public Arm () {
@@ -37,7 +40,7 @@ public class Arm extends SubsystemBase {
     m_Shoulder.setSensorPhase(false);
 
     // Note victor controller has brake set by a button on the controller
-    m_armExtender.setInverted(false);
+    m_armExtender.setInverted(true);
     m_armExtender.setNeutralMode(NeutralMode.Brake);
     m_armExtender.setSensorPhase(false);
   }
@@ -60,8 +63,8 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = m_limiter.calculate(raiseSpeed);
-    double e = squareInput(extendSpeed);
+    double r = raiseSpeed; //m_limiter.calculate(raiseSpeed);
+    double e = extendSpeed; //squareInput(extendSpeed);
 
     // check to see if we should stop lowering
     if (r > 0) {
@@ -89,6 +92,12 @@ public class Arm extends SubsystemBase {
     } else {
       stop();
     }
+  }
+
+  public boolean extendToPos(double pos){
+    boolean atLimit = false;
+    if (m_armExtendZeroed) {m_armExtender.set(ControlMode.Position, pos);}
+    return atLimit;
   }
 
   public boolean retract() {
@@ -134,13 +143,14 @@ public class Arm extends SubsystemBase {
     // check if we hit limit switch, have to invert reading
     if (!m_fullRetractDetector.get()) {
       m_atFullRetraction = true;
+      m_armExtendZeroed = true;
       m_armExtender.setSelectedSensorPosition(0.0);
     } else {
       m_atFullRetraction = false;
     }
     
-    if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_fullExtendCount) {
-      m_atFullExtension = false;  //TODO change to true when we have the full extend count
+    if (m_armExtender.getSelectedSensorPosition() < ArmParameters.k_fullExtendCount) {
+      m_atFullExtension = true;
     } else {
       m_atFullExtension = false;
     }
@@ -149,6 +159,7 @@ public class Arm extends SubsystemBase {
   private void checkRaiseLowerLimits() {
     // check if we hit limit switch, have to invert reading
     if (!m_lowerLimitDetector.get()) {
+      m_armRaiseZeroed = true;
       m_atFullLower = true;
       m_Shoulder.setSelectedSensorPosition(0.0);
     } else {
