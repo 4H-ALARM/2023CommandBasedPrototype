@@ -21,6 +21,7 @@ package frc.robot;
       public static final int k_RearRight = 4;
       public static final int k_Extender = 20;
       public static final int k_Shoulder = 21;
+      public static final int k_claw = 22;
       public static final int k_pigeon2 = 30;
     }
 
@@ -43,8 +44,6 @@ package frc.robot;
       public static final double k_armRetractSpeed = 0.3;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
-      public static final int k_extEncADIO = 2;
-      public static final int k_extEncBDIO = 3;
       public static final double k_fullExtendCount = -230000.0;
       public static final double k_fullRaiseCount = -140000.0;
       public static final double k_startStowCount = -50000.0;
@@ -61,9 +60,15 @@ package frc.robot;
 
     public static class GrabberParameters {
       public static final int k_GrabberPWM = 3;
+      public static final int k_encADIO = 2;
+      public static final int k_encBDIO = 3;
+      public static final int k_openDetctorDIO = 2;
       public static final double k_openValue = 0.15;
       public static final double k_closeValueCube = 0.55;
       public static final double k_closeValueCone = 0.95;
+      public static final double k_openSpeed = 0.5;
+      public static final double k_closeSpeed = -0.5;
+      public static final double k_closeCount = 5000;
     }
 
     public static class VisionParameters {
