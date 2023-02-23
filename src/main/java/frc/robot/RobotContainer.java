@@ -126,8 +126,8 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.a().onTrue(m_GrabberOpen);
-    m_ArmController.b().onTrue(m_GrabberClose);
+    m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
 
     // Trigger to Arm command mappings
     //m_ArmController.x().onTrue(m_ArmExtend).onFalse(m_ArmStop);
@@ -137,11 +137,11 @@ public class RobotContainer {
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
-    m_DriveJoystick.x().onTrue(m_RTS);
+    // m_DriveJoystick.x().onTrue(m_RTS);
     // m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
     m_DriveJoystick.y().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
-    m_DriveJoystick.b().onTrue((m_DriveStraight).andThen(m_Stop));
+    // m_DriveJoystick.b().onTrue((m_DriveStraight).andThen(m_Stop));
 
 
     // Trigger to Vision command mappings 
