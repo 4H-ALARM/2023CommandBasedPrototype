@@ -32,6 +32,8 @@ public class Arm extends SubsystemBase {
   private boolean m_goodGrabPos = false;
   private boolean m_armRaiseZeroed = false;
   private boolean m_armExtendZeroed = false;
+  private boolean m_overrideShoulder = false;
+  private boolean m_overrideExtender = false;
   
   /** Creates a new Arm. */
   public Arm () {
@@ -66,20 +68,30 @@ public class Arm extends SubsystemBase {
     double r = raiseSpeed; //m_limiter.calculate(raiseSpeed);
     double e = extendSpeed; //squareInput(extendSpeed);
 
-    // check to see if we should stop lowering
-    if (r > 0) {
-      if ((m_atFullLower) || (!m_safeToLower)) { r = 0.0; }
+    // check if shoulder raise override is active
+    if (m_overrideShoulder) {
+      
     } else {
-      // we are raising so check for stop
-      if (m_atFullRaise) { r = 0.0; }
+      // check to see if we should stop lowering
+      if (r > 0) {
+        if ((m_atFullLower) || (!m_safeToLower)) { r = 0.0; }
+      } else {
+        // we are raising so check for stop
+        if (m_atFullRaise) { r = 0.0; }
+      }
     }
+    
+    //check to see if arm extend override is active
+    if (m_overrideExtender){
 
-    // check to see if we should stop retracting
-    if (e > 0) {
-      if (m_atFullRetraction) { e = 0.0; }
     } else {
-      // we are extending so check for stop
-      if (m_atFullExtension) { e = 0.0; }
+      // check to see if we should stop retracting
+      if (e > 0) {
+        if (m_atFullRetraction) { e = 0.0; }
+      } else {
+        // we are extending so check for stop
+        if (m_atFullExtension) { e = 0.0; }
+    }
     }
 
     m_Shoulder.set(r);
@@ -107,6 +119,18 @@ public class Arm extends SubsystemBase {
       stop();
     } 
     return (m_atFullRetraction);
+  }
+
+  public void fullRetract() {
+    while (m_atFullRetraction == false) {
+      m_armExtender.set(-0.8);
+    }
+  }
+
+  public void fullLower() {
+    while (m_atFullLower == false) {
+      m_Shoulder.set(-0.8);
+    }
   }
 
   public void stop() {
@@ -137,6 +161,14 @@ public class Arm extends SubsystemBase {
     double s = i*i;
     if (i < 0){ s = -s; }
     return(s);
+  }
+
+  public boolean isArmRetracted() {
+    return  m_atFullRetraction;
+  }
+
+  public boolean isArmLowered() {
+    return m_atFullLower;
   }
 
   private void checkExtensionRetractLimits() {
@@ -237,6 +269,22 @@ public class Arm extends SubsystemBase {
     return (ec);
   }
 
+  public void shoulderOverride() {
+    if (m_overrideShoulder) {
+      m_overrideShoulder = false;
+    } else {
+      m_overrideShoulder = true;
+    }
+  }
+
+  public void extenderOverride() {
+    if (m_overrideExtender) {
+      m_overrideExtender = false;
+    } else {
+      m_overrideExtender = true;
+    }
+  }
+
   private void updateDashboard() {
     SmartDashboard.putBoolean("Full Raise", m_atFullRaise);
     SmartDashboard.putBoolean("Full Lower", m_atFullLower);
@@ -244,6 +292,8 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putBoolean("Full Retract", m_atFullRetraction);
     SmartDashboard.putBoolean("Safe-Lower", m_safeToLower);
     SmartDashboard.putBoolean("Good Grab", m_goodGrabPos);
+    SmartDashboard.putBoolean("Shoulder Override", m_overrideShoulder);
+    SmartDashboard.putBoolean("Extender Override", m_overrideExtender);
 
     if (Debug.ArmON) {
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
