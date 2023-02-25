@@ -62,7 +62,7 @@ package frc.robot;
       public static final int k_GrabberPWM = 3;
       public static final int k_encADIO = 2;
       public static final int k_encBDIO = 3;
-      public static final int k_openDetctorDIO = 2;
+      public static final int k_openDetctorDIO = 4;
       public static final double k_openValue = 0.15;
       public static final double k_closeValueCube = 0.55;
       public static final double k_closeValueCone = 0.95;

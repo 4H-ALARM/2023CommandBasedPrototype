@@ -54,6 +54,12 @@ public class RobotContainer {
   private final liftShoulder m_liftShoulder = new liftShoulder(m_Arm);
   private final lowerShoulder m_lowerShoulder = new lowerShoulder(m_Arm);
   private final stopShoulder m_stopShoulder = new stopShoulder(m_Arm);
+  private final OverrideShoulder m_overrideShoulder = new OverrideShoulder(m_Arm);
+  private final OverrideExtender m_overrideExtender = new OverrideExtender(m_Arm);
+  private final FullLower m_fullLower = new FullLower(m_Arm);
+  private final FullRetract m_FullRetract = new FullRetract(m_Arm);
+  private final StowArm m_StowArm = new StowArm(m_Arm);
+  
 
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
@@ -134,6 +140,9 @@ public class RobotContainer {
     //m_ArmController.y().onTrue(m_ArmRetract).onFalse(m_ArmStop);
     m_ArmController.povUp().onTrue(m_liftShoulder).onFalse(m_stopShoulder);
     m_ArmController.povDown().onTrue(m_lowerShoulder).onFalse(m_stopShoulder);
+    m_ArmController.leftBumper().onTrue(m_overrideShoulder);
+    m_ArmController.rightBumper().onTrue(m_overrideExtender);
+    m_ArmController.leftTrigger().onTrue(m_StowArm);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
