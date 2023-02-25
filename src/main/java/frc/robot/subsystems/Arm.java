@@ -122,14 +122,17 @@ public class Arm extends SubsystemBase {
   }
 
   public void fullRetract() {
-    while (m_atFullRetraction == false) {
-      m_armExtender.set(-0.8);
+    
+    if (!m_atFullRetraction) {
+      m_armExtender.set(0.3);
     }
+    
+    
   }
 
   public void fullLower() {
-    while (m_atFullLower == false) {
-      m_Shoulder.set(-0.8);
+    if (!m_atFullLower) {
+      m_Shoulder.set(0.3);
     }
   }
 

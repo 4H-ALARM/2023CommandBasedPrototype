@@ -13,11 +13,11 @@ import frc.robot.subsystems.Arm;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StowArm extends SequentialCommandGroup {
-  private Arm m_Arm;
+  
   /** Creates a new StowArm. */
-  public StowArm() {
+  public StowArm(Arm a) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FullRetract(m_Arm), new FullLower(m_Arm));
+    addCommands(new FullRetract(a), new FullLower(a));
   }
 }

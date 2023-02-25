@@ -58,7 +58,7 @@ public class RobotContainer {
   private final OverrideExtender m_overrideExtender = new OverrideExtender(m_Arm);
   private final FullLower m_fullLower = new FullLower(m_Arm);
   private final FullRetract m_FullRetract = new FullRetract(m_Arm);
-  private final StowArm m_StowArm = new StowArm();
+  private final StowArm m_StowArm = new StowArm(m_Arm);
   
 
   // Drive Commands note these are in addition to the default 
