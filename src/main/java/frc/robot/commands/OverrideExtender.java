@@ -9,10 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
 public class OverrideExtender extends CommandBase {
-  private Arm m_y;
+  private Arm m_arm;
+
   /** Creates a new OverrideShoulder. */
   public OverrideExtender(Arm y) {
-    this.m_Arm = y;
+    this.m_arm = y;
     addRequirements(y);
   }
 
@@ -23,7 +24,7 @@ public class OverrideExtender extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_y.extenderOverride();
+    m_arm.extenderOverride();
   }
 
   // Called once the command ends or is interrupted.
