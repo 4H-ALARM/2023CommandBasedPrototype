@@ -60,12 +60,10 @@ public class vision extends SubsystemBase {
   }
 
   public void swapPipleLine() {
-    if (m_currentPipeline == 1.0) {
+    m_currentPipeline++;
+    if (m_currentPipeline > VisionParameters.k_pipelineCount) {
       m_currentPipeline = 0.0;
-    } else {
-      m_currentPipeline = 1.0;
-    }
-
+    } 
     m_pipeLine.setNumber(m_currentPipeline);
   }
 
