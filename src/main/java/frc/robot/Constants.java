@@ -74,7 +74,7 @@ package frc.robot;
     public static class VisionParameters {
       public static final int k_lightOff = 1;
       public static final int k_lightOn = 3;
-      public static final int k_pipelineCount = 3;
+      public static final int k_pipelineCount = 2;
     }
   
     public static enum StartingPosition {

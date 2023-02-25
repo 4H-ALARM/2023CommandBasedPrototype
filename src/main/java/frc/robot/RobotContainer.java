@@ -80,6 +80,7 @@ public class RobotContainer {
   // Vision Commands
   private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
   private final limeLightOn m_limeLightOn = new limeLightOn(m_vision);
+  private final swapPipeline m_swapPipeline = new swapPipeline(m_vision);
 
   // End robot's commands  **************************************************
 
@@ -156,6 +157,7 @@ public class RobotContainer {
     // Trigger to Vision command mappings 
     m_DriveJoystick.button(7).onTrue(m_limeLightOn);
     m_DriveJoystick.button(8).onTrue(m_limeLightOff);
+    m_DriveJoystick.rightTrigger().onTrue(m_swapPipeline);
 
   }
 

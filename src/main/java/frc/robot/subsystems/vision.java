@@ -59,13 +59,14 @@ public class vision extends SubsystemBase {
     m_ledMode.setNumber(VisionParameters.k_lightOn);
   }
 
-  public void swapPipleLine() {
+  public void swapPipeline() {
     m_currentPipeline++;
     if (m_currentPipeline > VisionParameters.k_pipelineCount) {
       m_currentPipeline = 0.0;
     } 
     m_pipeLine.setNumber(m_currentPipeline);
   }
+
 
   public boolean targetFound () {
     boolean found = false;
