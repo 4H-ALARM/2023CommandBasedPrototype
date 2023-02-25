@@ -96,7 +96,7 @@ public class RobotContainer {
         () ->
             m_robotDrive.drive(
               m_DriveJoystick.getLeftY(),
-              m_DriveJoystick.getLeftX(),
+              -m_DriveJoystick.getLeftX(),
               -m_DriveJoystick.getRightX()
             ),
       m_robotDrive)
