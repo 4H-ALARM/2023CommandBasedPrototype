@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Debug;
@@ -18,7 +17,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Grabber extends SubsystemBase {
 
-  private final Servo m_clawServo = new Servo(GrabberParameters.k_GrabberPWM);
   private final WPI_TalonSRX m_clawMotor = new WPI_TalonSRX(CANaddresses.k_claw);
   private final Encoder m_encoder = new Encoder(GrabberParameters.k_encADIO,GrabberParameters.k_encBDIO);
   private final DigitalInput m_openDetector = new DigitalInput(GrabberParameters.k_openDetctorDIO);
@@ -35,7 +33,6 @@ public class Grabber extends SubsystemBase {
   }
 
   public void open(){ 
-    m_clawServo.set(GrabberParameters.k_openValue);
     if (m_atFullOpen) {
       stop();
     } else {
@@ -44,7 +41,6 @@ public class Grabber extends SubsystemBase {
   }
 
   public void close() {
-    m_clawServo.set(GrabberParameters.k_closeValueCone);
     if (m_encoder.get() > GrabberParameters.k_closeCount) {
       stop();
     } else {

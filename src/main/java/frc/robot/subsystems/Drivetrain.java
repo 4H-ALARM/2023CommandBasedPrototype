@@ -30,7 +30,6 @@ public class Drivetrain extends SubsystemBase {
   private double m_x = 0.0;
   private double m_r = 0.0;
 
-  private double m_heading = 0.0;
   private double m_driverHeading = 0.0;
   private double m_turnRate = 0.0;
   private Rotation2d m_rotation;
@@ -40,6 +39,7 @@ public class Drivetrain extends SubsystemBase {
   private double m_AHCF = DriveParameters.k_RotationFactor;
   private final WPI_Pigeon2 m_pidgeon = new WPI_Pigeon2(30);
   private double m_yaw = 0.0;
+  private double m_pitch = 0.0;
   private double[]  m_gravityVector = new double[3];
   private ErrorCode m_gravityError = ErrorCode.OK;
 
@@ -47,8 +47,8 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     m_pidgeon.calibrate();
     resetHeading();
-    m_heading = m_pidgeon.getYaw();
-    m_driverHeading = m_heading;
+    m_yaw = m_pidgeon.getYaw();
+    m_driverHeading = m_yaw; //start by assuming we are facing the way the drive wants
     m_rotation = m_pidgeon.getRotation2d();
 
     initMotor(m_frontLeft, true);
@@ -94,15 +94,13 @@ public class Drivetrain extends SubsystemBase {
       m_y = y_squared;
       m_x = x_squared;
       m_r = r;      
-    }
-    
+    }    
 
     if (m_fieldRelative) {
       m_drive.driveCartesian(x_squared, y_squared, r, m_rotation);
     } else {
       m_drive.driveCartesian(x_squared, y_squared, r);
     }
-    
   }
 
   public void polarDrive(double magnitude, Rotation2d direction, double spin) {
@@ -134,9 +132,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_heading = m_pidgeon.getYaw();
     m_rotation = m_pidgeon.getRotation2d();
-    
+    m_yaw = m_pidgeon.getYaw();
+    m_pitch = m_pidgeon.getPitch();
     m_gravityError = m_pidgeon.getGravityVector(m_gravityVector);
     if (Debug.DriveON) {
       m_turnRate = m_pidgeon.getRate();
@@ -159,7 +157,30 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading() {
-    return(m_heading);
+    return(m_yaw);
+  }
+
+  /**
+   * Using the pitch and gravity vector information from the pidgeon
+   * and the move method balance the robot on the charging station
+   */
+  public void balance() {
+    //TODO figure out what to call the move method with and then build a command to run this method 
+
+    if ((m_gravityVector[2] < DriveParameters.k_balancePoint) &&
+        (m_gravityError == ErrorCode.OK)) {
+      // out of balance so calculate the correction
+      // use the "z" component of the gravity vector 
+      double c = (m_gravityVector[2] * DriveParameters.k_balanceCorrectionFactor);
+      if (m_pitch < 0) {
+        // change the direction of the correction based on the pitch
+        c = -c;
+      }
+      drive(c,0,0);
+    } else {
+      stop();
+    }
+
   }
 
   private void initMotor(WPI_TalonFX m, boolean invert) {
@@ -174,7 +195,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private double rotationCorrection() {
-    double c = (m_heading - m_driverHeading)*m_AHCF;
+    double c = (m_yaw - m_driverHeading)*m_AHCF;
 
     if ((c > -DriveParameters.k_minRotInput) && (c < DriveParameters.k_minRotInput)) {
       // correction is too small, stop hunting by setting to 0
@@ -200,14 +221,15 @@ public class Drivetrain extends SubsystemBase {
 
   private void updateDashboard() {   
     
-    SmartDashboard.putNumber("Yaw", m_yaw);    
+    SmartDashboard.putNumber("Yaw", m_yaw);
+    SmartDashboard.putNumber("Pitch", m_pitch);
     SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
     SmartDashboard.putNumber("AHCF", m_AHCF);    
 
     if (Debug.DriveON) {
-      double modulo = m_heading%360.0;
+      double modulo = m_yaw%360.0;
       if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
       SmartDashboard.putNumber("Y In", m_y);
       SmartDashboard.putNumber("X In", m_x);
@@ -227,7 +249,6 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putNumber("FRMC",encoderToDistance(m_frontRight.getSelectedSensorPosition()));
       SmartDashboard.putNumber("RLMC",encoderToDistance(m_rearLeft.getSelectedSensorPosition()));
       SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
-      SmartDashboard.putNumber("Gyro Heading", m_heading);
       SmartDashboard.putNumber("Driver Heading", m_driverHeading);
       SmartDashboard.putNumber("Gyro Rate", m_turnRate);
       SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
