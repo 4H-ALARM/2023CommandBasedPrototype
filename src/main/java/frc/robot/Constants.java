@@ -34,8 +34,9 @@ package frc.robot;
       public static final double k_minRotInput = 0.05;
       public static final double k_RotationFactor = -0.01875;
       public static final double k_RotationMaxCorrection = 0.10;
-      public static final double k_balancePoint = 0.9;  // TODO adjust the max amount out of balanace
-      public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this   
+      public static final double k_balancePoint = 0.9;  //TODO adjust the max amount out of balanace
+      public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this
+      public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
     }
 
     public static class ArmParameters {
