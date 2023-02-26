@@ -61,7 +61,7 @@ public class vision extends SubsystemBase {
 
   public void swapPipeline() {
     m_currentPipeline++;
-    if (m_currentPipeline > VisionParameters.k_pipelineCount) {
+    if (m_currentPipeline > VisionParameters.k_maxPipeline) {
       m_currentPipeline = 0.0;
     } 
     m_pipeLine.setNumber(m_currentPipeline);
@@ -73,6 +73,27 @@ public class vision extends SubsystemBase {
     double id = m_tid.getDouble(0.0);
     if (id != -1) { found = true;}
     return(found);
+  }
+
+  /**
+   * Gets the vision returns from the pipeline selected
+   *
+   * @param pipe - the pipeline to read from
+   * @return - array of vision data, tx, ty and ta
+   */
+  public double[] findObject (int pipe) {
+    double targetInfo[] = new double[3];
+
+    m_pipeLine.setNumber(pipe);
+
+    targetInfo[0] = m_tx.getDouble(0.0);
+    targetInfo[1] = m_ty.getDouble(0.0);
+    targetInfo[2] = m_ta.getDouble(0.0);
+    
+    // return to pipeline used by the driver
+    m_pipeLine.setNumber(m_currentPipeline);
+
+    return(targetInfo);
   }
 
 }

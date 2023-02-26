@@ -33,7 +33,9 @@ package frc.robot;
     public static class DriveParameters {
       public static final double k_minRotInput = 0.05;
       public static final double k_RotationFactor = -0.01875;
-      public static final double k_RotationMaxCorrection = 0.10;      
+      public static final double k_RotationMaxCorrection = 0.10;
+      public static final double k_balancePoint = 0.9;  // TODO adjust the max amount out of balanace
+      public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this   
     }
 
     public static class ArmParameters {
@@ -59,7 +61,6 @@ package frc.robot;
     }
 
     public static class GrabberParameters {
-      public static final int k_GrabberPWM = 3;
       public static final int k_encADIO = 2;
       public static final int k_encBDIO = 3;
       public static final int k_openDetctorDIO = 4;
@@ -74,7 +75,10 @@ package frc.robot;
     public static class VisionParameters {
       public static final int k_lightOff = 1;
       public static final int k_lightOn = 3;
-      public static final int k_pipelineCount = 2;
+      public static final int k_maxPipeline = 2;
+      public static final int k_aprilTagPipeline = 0;
+      public static final int k_conePipeline = 1;
+      public static final int k_cubePipeline = 2;
     }
   
     public static enum StartingPosition {

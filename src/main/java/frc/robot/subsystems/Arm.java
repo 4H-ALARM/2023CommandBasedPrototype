@@ -22,7 +22,7 @@ public class Arm extends SubsystemBase {
 
   private final DigitalInput m_lowerLimitDetector = new DigitalInput(ArmParameters.k_lowerLimitDIO);
   private final DigitalInput m_fullRetractDetector = new DigitalInput(ArmParameters.k_fullRetractDIO);
-  private SlewRateLimiter m_limiter = new SlewRateLimiter(ArmParameters.k_raiseLimit);
+  //TODO remove private SlewRateLimiter m_limiter = new SlewRateLimiter(ArmParameters.k_raiseLimit);
 
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
@@ -30,8 +30,8 @@ public class Arm extends SubsystemBase {
   private boolean m_atFullLower = false;
   private boolean m_safeToLower = false;
   private boolean m_goodGrabPos = false;
-  private boolean m_armRaiseZeroed = false;
-  private boolean m_armExtendZeroed = false;
+  private boolean m_armRaiseZeroed = false;  //TODO implement blocking motion based on this
+  private boolean m_armExtendZeroed = false; //TODO implement blocking motion based on this
   private boolean m_overrideShoulder = false;
   private boolean m_overrideExtender = false;
   
@@ -208,6 +208,7 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  //TODO correct the limits for these checks
   private void checkSafeToLower() {
     if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_startStowCount) {
       m_safeToLower = true;  //lowering arm is away from the chassis
@@ -220,6 +221,7 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  //TODO correct the limits for these checks
   private void checkGrabPos() {
     double ec = Math.abs(m_armExtender.getSelectedSensorPosition());
     double sc = m_Shoulder.getSelectedSensorPosition();
