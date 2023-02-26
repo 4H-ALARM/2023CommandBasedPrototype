@@ -171,7 +171,8 @@ public class Drivetrain extends SubsystemBase {
         (m_gravityError == ErrorCode.OK)) {
       // out of balance so calculate the correction
       // use the "z" component of the gravity vector 
-      double c = (m_gravityVector[2] * DriveParameters.k_balanceCorrectionFactor);
+      double c = ((1.0 - m_gravityVector[2]) * DriveParameters.k_balanceCorrectionFactor);
+      if (c > DriveParameters.k_maxBalanceCorrection) { c= DriveParameters.k_maxBalanceCorrection; }
       if (m_pitch < 0) {
         // change the direction of the correction based on the pitch
         c = -c;
