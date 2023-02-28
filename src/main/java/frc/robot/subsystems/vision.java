@@ -20,6 +20,9 @@ public class vision extends SubsystemBase {
   NetworkTableEntry m_tid = m_table.getEntry("tid");
   NetworkTableEntry m_ledMode = m_table.getEntry("ledMode");
   NetworkTableEntry m_pipeLine = m_table.getEntry("pipeline");
+  NetworkTableEntry m_llpython = m_table.getEntry("llpython");
+  private double llpythonDefaultReturn[] = new double[8]; 
+  private double m_llpythonReturn[];
 
   private double m_currentPipeline = 1;
 
@@ -37,6 +40,8 @@ public class vision extends SubsystemBase {
     double y = m_ty.getDouble(0.0);
     double id = m_tid.getDouble(0.0);
     double area = m_ta.getDouble(0.0);
+    
+  
 
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
@@ -81,19 +86,24 @@ public class vision extends SubsystemBase {
    * @param pipe - the pipeline to read from
    * @return - array of vision data, tx, ty and ta
    */
-  public double[] findObject (int pipe) {
+  public double[] findObject () {
     double targetInfo[] = new double[3];
-
-    m_pipeLine.setNumber(pipe);
 
     targetInfo[0] = m_tx.getDouble(0.0);
     targetInfo[1] = m_ty.getDouble(0.0);
     targetInfo[2] = m_ta.getDouble(0.0);
     
-    // return to pipeline used by the driver
-    m_pipeLine.setNumber(m_currentPipeline);
-
     return(targetInfo);
+  }
+
+  public boolean foundObject() {
+    boolean found = false;
+    if (m_currentPipeline == VisionParameters.k_aprilTagPipeline){
+      found = targetFound();
+    } else {
+    if (m_llpythonReturn[0] == 74) { found = true;}
+    }
+    return(found);
   }
 
 }
