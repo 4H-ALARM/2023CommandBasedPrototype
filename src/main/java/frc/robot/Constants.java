@@ -42,7 +42,6 @@ package frc.robot;
     public static class ArmParameters {
       public static final double k_armRaiseSpeed = -0.3;
       public static final double k_armLowerSpeed = 0.3;
-      public static final double k_raiseLimit = 0.3;
       public static final double k_armExtendSpeed = -0.3;
       public static final double k_armRetractSpeed = 0.3;
       public static final int k_lowerLimitDIO = 0;
