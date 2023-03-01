@@ -12,7 +12,6 @@ public class RotateToTarget extends CommandBase {
 
   private Drivetrain m_dt;
   private vision m_v;
-  private double m_startHeading = 0.0;
 
   /** Creates a new DriveRotate. */
   public RotateToTarget(Drivetrain dt, vision v) {
