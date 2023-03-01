@@ -106,4 +106,20 @@ public class vision extends SubsystemBase {
     return(found);
   }
 
+  /**
+   * determine if the target relecting tape is to the left 
+   */
+  //TODO flesh this out
+  public boolean markerToLeft() {
+    return true;
+  }
+
+  /**
+   * determine if the target relecting tape is in front of robot 
+   */
+  //TODO flesh this out
+  public boolean markerFound() {
+    return true;
+  }
+
 }
