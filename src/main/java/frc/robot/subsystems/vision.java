@@ -21,7 +21,7 @@ public class vision extends SubsystemBase {
   NetworkTableEntry m_ledMode = m_table.getEntry("ledMode");
   NetworkTableEntry m_pipeLine = m_table.getEntry("pipeline");
   NetworkTableEntry m_llpython = m_table.getEntry("llpython");
-  private double llpythonDefaultReturn[] = new double[8]; 
+  
   private double m_llpythonReturn[];
 
   private double m_currentPipeline = 1;
