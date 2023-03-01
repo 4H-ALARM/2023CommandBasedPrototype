@@ -22,14 +22,15 @@ public class Grabber extends SubsystemBase {
   private final DigitalInput m_openDetector = new DigitalInput(GrabberParameters.k_openDetctorDIO);
 
   private boolean m_atFullOpen = false;
+  private double m_current = 0.0;
   
   /** Creates a new Grabber. */
   public Grabber() {
     m_clawMotor.setInverted(true);
     m_clawMotor.setNeutralMode(NeutralMode.Brake);
-    m_clawMotor.configContinuousCurrentLimit(5);
-    m_clawMotor.configPeakCurrentLimit(0);
-    m_clawMotor.enableCurrentLimit(false);    
+    m_clawMotor.configContinuousCurrentLimit(1);
+    m_clawMotor.configPeakCurrentLimit(1);
+    m_clawMotor.enableCurrentLimit(true);    
   }
 
   public void open(){ 
@@ -55,6 +56,7 @@ public class Grabber extends SubsystemBase {
   @Override
   public void periodic() { 
     checkOpen();
+    readCurrent();
     
     updateDashboard();
   }
@@ -68,11 +70,15 @@ public class Grabber extends SubsystemBase {
     }
   }
 
+  private void readCurrent() {
+    m_current = m_clawMotor.getSupplyCurrent();
+  }
+
   private void updateDashboard() {
     SmartDashboard.putBoolean("Grabber Open", m_atFullOpen);
 
     if (Debug.ArmON) {
-      SmartDashboard.putNumber("Grab Count", m_encoder.get());
+      SmartDashboard.putNumber("Grab Current", m_current);
     }
   }
 

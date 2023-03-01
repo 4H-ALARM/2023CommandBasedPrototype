@@ -59,6 +59,7 @@ public class RobotContainer {
   //TODO remove private final FullLower m_fullLower = new FullLower(m_Arm);
   //TODO remove private final FullRetract m_FullRetract = new FullRetract(m_Arm);
   private final StowArm m_StowArm = new StowArm(m_Arm);
+  private final DeployArm m_DeployArm = new DeployArm(m_Arm);
   
 
   // Drive Commands note these are in addition to the default 
@@ -143,11 +144,12 @@ public class RobotContainer {
     //TODO remove m_ArmController.povDown().onTrue(m_lowerShoulder).onFalse(m_stopShoulder);
     m_ArmController.leftBumper().onTrue(m_overrideShoulder);
     m_ArmController.rightBumper().onTrue(m_overrideExtender);
-    m_ArmController.leftTrigger().onTrue(m_StowArm); //TODO add a onFalse to call m_ArmStop to add ability to abort, note extended ArmStop to stop both extend/shoulder
+    m_ArmController.leftTrigger().onTrue(m_StowArm).onFalse(m_ArmStop); 
+    m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
-    m_DriveJoystick.x().onTrue(m_RTS);  //TODO build out to find target and cone and box  
+    m_DriveJoystick.x().onTrue(m_RTS);  //TODO change rotate for target sequence and test this slowly and carefully
     //TODO remove m_DriveJoystick.y().onTrue((m_Drive45Angle).andThen(m_Stop));
     m_DriveJoystick.y().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);

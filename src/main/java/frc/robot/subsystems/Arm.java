@@ -136,6 +136,21 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  public void extenderDeploy() {
+    
+    if (!m_atFullExtension) {
+      m_armExtender.set(-0.3);
+    }
+    
+    
+  }
+
+  public void shoulderDeploy() {
+    if (!m_atFullRaise) {
+      m_Shoulder.set(-0.3);
+    }
+  }
+
   public void stop() {
     m_armExtender.set(0.0);
   }
@@ -172,6 +187,14 @@ public class Arm extends SubsystemBase {
 
   public boolean isArmLowered() {
     return m_atFullLower;
+  }
+
+  public boolean isArmExtended() {
+    return  m_atFullExtension;
+  }
+
+  public boolean isArmRaised() {
+    return m_atFullRaise;
   }
 
   private void checkExtensionRetractLimits() {

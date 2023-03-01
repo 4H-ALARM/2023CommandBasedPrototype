@@ -152,6 +152,11 @@ public class Drivetrain extends SubsystemBase {
     drive(0.0, 0.0, 0.3);
   }
 
+  public void rotate(double tgInfo) {
+    if (tgInfo<0) {drive(0, 0, 0.3);}
+    else{drive(0, 0, -0.3);}
+  }
+
   public void stop() {
     drive(0.0, 0.0, 0.0);
   }
