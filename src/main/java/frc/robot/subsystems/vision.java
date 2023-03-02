@@ -25,7 +25,7 @@ public class vision extends SubsystemBase {
   
   private double m_llpythonReturn[];
 
-  private double m_currentPipeline = 1;
+  private double m_currentPipeline = VisionParameters.k_aprilTagPipeline;
 
   /** Creates a new vision. */
   public vision() {
