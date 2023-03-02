@@ -234,16 +234,18 @@ public class Drivetrain extends SubsystemBase {
 
   private void updateDashboard() {   
     
-    SmartDashboard.putNumber("Yaw", m_yaw);
-    SmartDashboard.putNumber("Pitch", m_pitch);
-    SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
+    
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
-    SmartDashboard.putNumber("AHCF", m_AHCF);    
+        
 
     if (Debug.DriveON) {
       double modulo = m_yaw%360.0;
       if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
+      SmartDashboard.putNumber("AHCF", m_AHCF);
+      SmartDashboard.putNumber("Yaw", m_yaw);
+      SmartDashboard.putNumber("Pitch", m_pitch);
+      SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
       SmartDashboard.putNumber("Y In", m_y);
       SmartDashboard.putNumber("X In", m_x);
       SmartDashboard.putNumber("R In", m_r);
