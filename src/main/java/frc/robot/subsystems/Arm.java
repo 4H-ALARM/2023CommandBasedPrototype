@@ -53,7 +53,7 @@ public class Arm extends SubsystemBase {
     checkExtensionRetractLimits();
     checkRaiseLowerLimits();
     checkSafeToLower();
-    checkGrabPos();
+    //TODO add back in when debugged checkGrabPos();
 
     updateDashboard();
   }
@@ -106,12 +106,6 @@ public class Arm extends SubsystemBase {
     }
   }
 
-  public boolean extendToPos(double pos){
-    boolean atLimit = false;
-    if (m_armExtendZeroed) {m_armExtender.set(ControlMode.Position, pos);}
-    return atLimit;
-  }
-
   public boolean retract() {
     if (!m_atFullRetraction) {
       m_armExtender.set(ArmParameters.k_armRetractSpeed);
@@ -124,7 +118,7 @@ public class Arm extends SubsystemBase {
   public void fullRetract() {
     
     if (!m_atFullRetraction) {
-      m_armExtender.set(0.3);
+      m_armExtender.set(ArmParameters.k_armRetractSpeed);
     }
     
     
@@ -132,14 +126,14 @@ public class Arm extends SubsystemBase {
 
   public void fullLower() {
     if (!m_atFullLower) {
-      m_Shoulder.set(0.3);
+      m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     }
   }
 
   public void extenderDeploy() {
     
     if (!m_atFullExtension) {
-      m_armExtender.set(-0.3);
+      m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
     
@@ -147,7 +141,7 @@ public class Arm extends SubsystemBase {
 
   public void shoulderDeploy() {
     if (!m_atFullRaise) {
-      m_Shoulder.set(-0.3);
+      m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
 
@@ -165,7 +159,7 @@ public class Arm extends SubsystemBase {
 
   public void lower() {
     if ((!m_atFullLower) && (m_safeToLower)) {
-      m_Shoulder.set(ArmParameters.k_armRetractSpeed);
+      m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     } else {
       stopShoulder();
     }
