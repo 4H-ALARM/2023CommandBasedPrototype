@@ -318,12 +318,12 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putBoolean("Full Lower", m_atFullLower);
     SmartDashboard.putBoolean("Full Extend", m_atFullExtension);
     SmartDashboard.putBoolean("Full Retract", m_atFullRetraction);
-    SmartDashboard.putBoolean("Safe-Lower", m_safeToLower);
-    SmartDashboard.putBoolean("Good Grab", m_goodGrabPos);
     SmartDashboard.putBoolean("Shoulder Override", m_overrideShoulder);
     SmartDashboard.putBoolean("Extender Override", m_overrideExtender);
 
     if (Debug.ArmON) {
+      SmartDashboard.putBoolean("Safe-Lower", m_safeToLower);
+      SmartDashboard.putBoolean("Good Grab", m_goodGrabPos);
       SmartDashboard.putNumber("ShoulderSp", m_Shoulder.get());
       SmartDashboard.putNumber("ShoulCnt", m_Shoulder.getSelectedSensorPosition());
       SmartDashboard.putNumber("ExtSp", m_armExtender.get());
