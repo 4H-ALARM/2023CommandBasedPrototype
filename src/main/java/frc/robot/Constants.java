@@ -92,7 +92,6 @@ package frc.robot;
       public static final boolean DriveON = false;
       public static final boolean ArmON = false;
       public static final boolean VisionON = false;
-      public static final boolean DriveingON = false;
     }
 }
   

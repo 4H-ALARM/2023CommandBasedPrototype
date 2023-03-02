@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Debug;
@@ -18,10 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Grabber extends SubsystemBase {
 
   private final WPI_TalonSRX m_clawMotor = new WPI_TalonSRX(CANaddresses.k_claw);
-  private final Encoder m_encoder = new Encoder(GrabberParameters.k_encADIO,GrabberParameters.k_encBDIO);
-  private final DigitalInput m_openDetector = new DigitalInput(GrabberParameters.k_openDetctorDIO);
-
-  private boolean m_atFullOpen = false;
+  
   private double m_current = 0.0;
   
   /** Creates a new Grabber. */
@@ -34,19 +29,11 @@ public class Grabber extends SubsystemBase {
   }
 
   public void open(){ 
-    if (m_atFullOpen) {
-      stop();
-    } else {
-      m_clawMotor.set(GrabberParameters.k_openSpeed);
-    }    
+    m_clawMotor.set(GrabberParameters.k_openSpeed);   
   }
 
   public void close() {
-    if (m_encoder.get() > GrabberParameters.k_closeCount) {
-      stop();
-    } else {
-      m_clawMotor.set(GrabberParameters.k_closeSpeed);
-    }
+    m_clawMotor.set(GrabberParameters.k_closeSpeed);
   }
 
   public void stop() {
@@ -55,19 +42,9 @@ public class Grabber extends SubsystemBase {
 
   @Override
   public void periodic() { 
-    checkOpen();
     readCurrent();
     
     updateDashboard();
-  }
-
-  private void checkOpen() {
-    if (m_openDetector.get()) {
-      m_atFullOpen = false; // detector is inverted logic
-    } else {
-      m_atFullOpen = true;
-      m_encoder.reset();
-    }
   }
 
   private void readCurrent() {
@@ -75,8 +52,6 @@ public class Grabber extends SubsystemBase {
   }
 
   private void updateDashboard() {
-    SmartDashboard.putBoolean("Grabber Open", m_atFullOpen);
-
     if (Debug.ArmON) {
       SmartDashboard.putNumber("Grab Current", m_current);
     }
