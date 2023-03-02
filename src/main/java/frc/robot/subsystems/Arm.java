@@ -4,11 +4,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 import static frc.robot.Constants.*;
-
-import javax.swing.text.StyleContext.SmallAttributeSet;
-
 import frc.robot.Constants.Debug;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -79,7 +78,7 @@ public class Arm extends SubsystemBase {
         if ((m_atFullLower) || (!m_safeToLower)) { r = 0.0; }
       } else {
         // we are raising so check for stop
-        if (m_atFullRaise) { r = 0.0; }
+        if ((m_atFullRaise) || (!m_armRaiseZeroed)) { r = 0.0; }
       }
     }
     
@@ -92,7 +91,7 @@ public class Arm extends SubsystemBase {
         if (m_atFullRetraction) { e = 0.0; }
       } else {
         // we are extending so check for stop
-        if (m_atFullExtension) { e = 0.0; }
+        if ((m_atFullExtension) || (!m_armExtendZeroed)) { e = 0.0; }
     }
     }
 
@@ -101,7 +100,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    if (!m_atFullExtension) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
       stop();
@@ -134,7 +133,7 @@ public class Arm extends SubsystemBase {
 
   public void extenderDeploy() {
     
-    if (!m_atFullExtension) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
@@ -142,7 +141,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void shoulderDeploy() {
-    if (!m_atFullRaise) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
@@ -152,7 +151,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lift(){
-    if (!m_atFullRaise) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     } else {
       stopShoulder();
