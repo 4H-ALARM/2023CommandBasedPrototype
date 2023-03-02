@@ -6,6 +6,8 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import frc.robot.Constants.Debug;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -191,6 +193,22 @@ public class Arm extends SubsystemBase {
     return m_atFullRaise;
   }
 
+  public void shoulderOverride() {
+    if (m_overrideShoulder) {
+      m_overrideShoulder = false;
+    } else {
+      m_overrideShoulder = true;
+    }
+  }
+
+  public void extenderOverride() {
+    if (m_overrideExtender) {
+      m_overrideExtender = false;
+    } else {
+      m_overrideExtender = true;
+    }
+  }
+
   private void checkExtensionRetractLimits() {
     // check if we hit limit switch, have to invert reading
     if (!m_fullRetractDetector.get()) {
@@ -233,9 +251,12 @@ public class Arm extends SubsystemBase {
       if (m_armExtender.getSelectedSensorPosition() > ArmParameters.k_safeExtenderStowCount) {
         m_safeToLower = true; // retracted enough to stow
       } else {
-        m_safeToLower = false;  // need to retract before allowing stow
+        m_safeToLower = true;  //TODO change to false after testing need to retract before allowing stow
       }
     }
+    //TODO possible alternate approach using length calculation
+    double h = calculateHypotenus(m_Shoulder.getSelectedSensorPosition());
+
   }
 
   //TODO correct the limits for these checks
@@ -261,7 +282,7 @@ public class Arm extends SubsystemBase {
             m_goodGrabPos = true;
           }
 
-          if (Debug.ArmON) {
+        if (Debug.ArmON) {
           SmartDashboard.putNumber("TarExt", te);
         }
   }
@@ -273,38 +294,31 @@ public class Arm extends SubsystemBase {
    * @return extendCount nominal extension count, always positive an should have error margin applied, 0 if none
    */
   private double getExtensionNeededForGrab(double shoulderCount) {
-    double ec = 0.0;
-    double angleInRadians = Math.abs(shoulderCount) * ArmParameters.k_armRadianPerCount;
-    double cosAngle = Math.cos(angleInRadians);
-
-    // The extension is the hypotenuse calculated from shoulder angle and arm pivot height
-    // protect against divide by zero    
-    if (cosAngle != 0) {
-      ec = ArmParameters.k_armHeight/cosAngle;
+    double ec = calculateHypotenus(shoulderCount);
       // remove the fixed length of the arm from the target extension
+    if (ec != 0.0 ) {
       ec = ec - ArmParameters.k_shortestArmLength;
-    }
-    
+    }    
     // if reach is too far return 0
     if (ec > ArmParameters.k_safeReach) { ec = 0.0; }
 
     return (ec);
   }
 
-  public void shoulderOverride() {
-    if (m_overrideShoulder) {
-      m_overrideShoulder = false;
-    } else {
-      m_overrideShoulder = true;
-    }
-  }
+  private double calculateHypotenus(double shoulderCount) {
+    double h = 0.0;
+    double angleInRadians = Math.abs(shoulderCount) * ArmParameters.k_armRadianPerCount;
+    double cosAngle = Math.cos(angleInRadians);
 
-  public void extenderOverride() {
-    if (m_overrideExtender) {
-      m_overrideExtender = false;
-    } else {
-      m_overrideExtender = true;
+    if (cosAngle != 0) {
+      h = ArmParameters.k_armHeight/cosAngle;
     }
+    if (Debug.ArmON) {
+      SmartDashboard.putNumber("Hyp", h);
+      SmartDashboard.putNumber("Angle", Math.toDegrees(angleInRadians));
+      SmartDashboard.putNumber("Cos", cosAngle);
+    }
+    return(h);
   }
 
   private void updateDashboard() {
