@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Debug;
 
 
 public class vision extends SubsystemBase {
@@ -20,9 +21,6 @@ public class vision extends SubsystemBase {
   NetworkTableEntry m_tid = m_table.getEntry("tid");
   NetworkTableEntry m_ledMode = m_table.getEntry("ledMode");
   NetworkTableEntry m_pipeLine = m_table.getEntry("pipeline");
-  NetworkTableEntry m_llpython = m_table.getEntry("llpython");
-  
-  private double m_llpythonReturn[];
 
   private double m_currentPipeline = 1;
 
@@ -40,19 +38,23 @@ public class vision extends SubsystemBase {
     double y = m_ty.getDouble(0.0);
     double id = m_tid.getDouble(0.0);
     double area = m_ta.getDouble(0.0);
-    
-  
 
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
+    if (Debug.VisionON) {
+      SmartDashboard.putNumber("LimelightX", x);
+      SmartDashboard.putNumber("LimelightY", y);
+      SmartDashboard.putNumber("LimelightArea", area);
+    }
+
     SmartDashboard.putNumber("AprilTag ID;", id);
+    
 
     double ledState = m_ledMode.getDouble(-1);
-    SmartDashboard.putNumber("ledMode", ledState);
+    if (Debug.VisionON)
+      SmartDashboard.putNumber("ledMode", ledState);
 
     m_pipeLine.setNumber(m_currentPipeline);
-    SmartDashboard.putNumber("Pipe", m_currentPipeline);
+    if (Debug.VisionON)
+      SmartDashboard.putNumber("Pipe", m_currentPipeline);
 
   }
 
@@ -64,62 +66,19 @@ public class vision extends SubsystemBase {
     m_ledMode.setNumber(VisionParameters.k_lightOn);
   }
 
-  public void swapPipeline() {
+  public void swapPipleLine() {
     m_currentPipeline++;
-    if (m_currentPipeline > VisionParameters.k_maxPipeline) {
+    if (m_currentPipeline > VisionParameters.k_pipelineCount) {
       m_currentPipeline = 0.0;
     } 
     m_pipeLine.setNumber(m_currentPipeline);
   }
-
 
   public boolean targetFound () {
     boolean found = false;
     double id = m_tid.getDouble(0.0);
     if (id != -1) { found = true;}
     return(found);
-  }
-
-  /**
-   * Gets the vision returns from the pipeline selected
-   *
-   * @param pipe - the pipeline to read from
-   * @return - array of vision data, tx, ty and ta
-   */
-  public double[] findObject () {
-    double targetInfo[] = new double[3];
-
-    targetInfo[0] = m_tx.getDouble(0.0);
-    targetInfo[1] = m_ty.getDouble(0.0);
-    targetInfo[2] = m_ta.getDouble(0.0);
-    
-    return(targetInfo);
-  }
-
-  public boolean foundObject() {
-    boolean found = false;
-    if (m_currentPipeline == VisionParameters.k_aprilTagPipeline){
-      found = targetFound();
-    } else {
-    if (m_llpythonReturn[0] == 74) { found = true;}
-    }
-    return(found);
-  }
-
-  /**
-   * determine if the target relecting tape is to the left 
-   */
-  //TODO flesh this out
-  public boolean markerToLeft() {
-    return true;
-  }
-
-  /**
-   * determine if the target relecting tape is in front of robot 
-   */
-  //TODO flesh this out
-  public boolean markerFound() {
-    return true;
   }
 
 }
