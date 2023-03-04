@@ -134,7 +134,6 @@ public class RobotContainer {
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.b().onTrue((m_switchPerspective));
-    m_DriveJoystick.x().onTrue(m_RTS);  //TODO change rotate for target sequence and test this slowly and carefully
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
 
 
@@ -153,7 +152,8 @@ public class RobotContainer {
   public CommandBase getAutonomousCommand(StartingPosition sp) {
     // An example command will be run in autonomous
 
-    CommandBase autCommand = new AutoSequenceOne(m_robotDrive);  //TODO add autonoumos
+    CommandBase autCommand = new AutoSequenceOne(m_robotDrive, m_Arm);
+    //TODO test the autonomous placement of cone autCommand = new AutoSequenceTwo(m_robotDrive, m_Arm, m_grabberSubsystem);
 
       switch(sp) {
         case LEFT:

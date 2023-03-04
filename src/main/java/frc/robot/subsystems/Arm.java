@@ -53,7 +53,7 @@ public class Arm extends SubsystemBase {
         // add these calls after sensors are added and tested
     checkExtensionRetractLimits();
     checkRaiseLowerLimits();
-    checkSafeToLower();
+    //TODO add back in when debugged checkSafeToLower();
     //TODO add back in when debugged checkGrabPos();
 
     updateDashboard();
@@ -258,27 +258,17 @@ public class Arm extends SubsystemBase {
 
   }
 
-  //TODO correct the limits for these checks
   private void checkGrabPos() {
     double ec = Math.abs(m_armExtender.getSelectedSensorPosition());
     double sc = m_Shoulder.getSelectedSensorPosition();
 
-    if ((ec > ArmParameters.k_llExtendGoodGrab) && 
-        (ec < ArmParameters.k_ulExtendGoodGrab) &&
-        (sc > ArmParameters.k_llSoulderGoodGrab) &&
-        (sc < ArmParameters.k_ulShoulderGoodGrab)) {
-          m_goodGrabPos = true;
-        } else {
-          m_goodGrabPos = false;
-        }
-// TODO replace the remove if statement with using target extension to see if we are good for grab
         double te = getExtensionNeededForGrab(sc);
         if ((te == 0.0) ||  
             (ec > (te + ArmParameters.k_ulExtendGoodGrab)) ||
             (ec < (te - ArmParameters.k_llExtendGoodGrab))){
-              m_goodGrabPos = false;
+              m_goodGrabPos = true;
           } else {
-            m_goodGrabPos = true;
+            m_goodGrabPos = true; //TODO change to false when debugged
           }
 
         if (Debug.ArmON) {
