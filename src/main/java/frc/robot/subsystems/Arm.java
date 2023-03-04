@@ -29,7 +29,7 @@ public class Arm extends SubsystemBase {
   private boolean m_atFullRetraction = false;
   private boolean m_atFullRaise = false;
   private boolean m_atFullLower = false;
-  private boolean m_safeToLower = false;
+  private boolean m_safeToLower = true;  //TODO change to false when method to check for safe lower is debugged
   private boolean m_goodGrabPos = false;
   private boolean m_armRaiseZeroed = false;  //TODO implement blocking motion based on this
   private boolean m_armExtendZeroed = false; //TODO implement blocking motion based on this
