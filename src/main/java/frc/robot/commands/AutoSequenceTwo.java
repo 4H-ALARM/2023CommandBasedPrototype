@@ -18,15 +18,17 @@ public class AutoSequenceTwo extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new GrabberClose(g).withTimeout(1),
+                new GrabberStop(g),
                 new FullRetract(a),
                 new FullLower(a),
                 new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0),
                 new DriveStop(dt),
                 new ShoulderDeploy(a),
                 new ExtenderDeploy(a),
-                new DriveAtAngleForDistance(dt, 0.2, 0.0, 1.0),  
+                new DriveAtAngleForDistance(dt, -0.2, 0.0, 1.0),  
                 new DriveStop(dt),
-                new GrabberOpen(g).withTimeout(2)
+                new GrabberOpen(g).withTimeout(2),
+                new GrabberStop(g)
                 );
   }
 }
