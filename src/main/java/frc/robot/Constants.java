@@ -82,7 +82,7 @@ package frc.robot;
       public static final int k_cubePipeline = 2;
     }
   
-    public static enum StartingPosition {
+    public static enum AutonomousOptions {
       DRIVE, PLACE, NONE
     } 
     
