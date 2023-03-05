@@ -83,7 +83,7 @@ package frc.robot;
     }
   
     public static enum StartingPosition {
-      LEFT, MIDDLE, RIGHT
+      DRIVE, PLACE, NONE
     } 
     
     public final class Debug {

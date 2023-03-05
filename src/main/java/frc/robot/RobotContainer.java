@@ -153,14 +153,15 @@ public class RobotContainer {
     // An example command will be run in autonomous
 
     CommandBase autCommand = new AutoSequenceOne(m_robotDrive, m_Arm);
-    //TODO test the autonomous placement of cone autCommand = new AutoSequenceTwo(m_robotDrive, m_Arm, m_grabberSubsystem);
 
       switch(sp) {
-        case LEFT:
+        case DRIVE:
           break;
-        case MIDDLE:
+        case PLACE:
+          autCommand = new AutoSequenceTwo(m_robotDrive, m_Arm, m_grabberSubsystem);
           break;
-        case RIGHT:
+        case NONE:
+          autCommand = null;
           break;
     }
     return (autCommand);
