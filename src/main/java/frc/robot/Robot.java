@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
 
 
   
-  private final SendableChooser<StartingPosition> positionChooser = new SendableChooser<>();
+  private final SendableChooser<AutonomousOptions> positionChooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,9 +37,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    positionChooser.setDefaultOption("Drive", StartingPosition.DRIVE);
-    positionChooser.addOption("Place", StartingPosition.PLACE);
-    positionChooser.addOption("None", StartingPosition.NONE);
+    positionChooser.setDefaultOption("Drive", AutonomousOptions.DRIVE);
+    positionChooser.addOption("Place", AutonomousOptions.PLACE);
+    positionChooser.addOption("None", AutonomousOptions.NONE);
     SmartDashboard.putData("AutonomousSelection", positionChooser);
 
 
@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    StartingPosition sp = positionChooser.getSelected();
+    AutonomousOptions sp = positionChooser.getSelected();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand(sp);
 
     // schedule the autonomous command (example)

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-import frc.robot.Constants.StartingPosition;
+import frc.robot.Constants.AutonomousOptions;
 import frc.robot.Constants.USBPorts;
 
 import frc.robot.commands.*;
@@ -149,7 +149,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public CommandBase getAutonomousCommand(StartingPosition sp) {
+  public CommandBase getAutonomousCommand(AutonomousOptions sp) {
     // An example command will be run in autonomous
 
     CommandBase autCommand = new AutoSequenceOne(m_robotDrive, m_Arm);
