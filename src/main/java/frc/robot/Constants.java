@@ -62,15 +62,8 @@ package frc.robot;
     }
 
     public static class GrabberParameters {
-      public static final int k_encADIO = 2;
-      public static final int k_encBDIO = 3;
-      public static final int k_openDetctorDIO = 4;
-      public static final double k_openValue = 0.15;
-      public static final double k_closeValueCube = 0.55;
-      public static final double k_closeValueCone = 0.95;
       public static final double k_openSpeed = 0.5;
       public static final double k_closeSpeed = -0.5;
-      public static final double k_closeCount = 5000;
     }
 
     public static class VisionParameters {
