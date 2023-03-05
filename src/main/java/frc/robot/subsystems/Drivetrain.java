@@ -242,7 +242,6 @@ public class Drivetrain extends SubsystemBase {
       if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
       SmartDashboard.putNumber("Yaw", m_yaw);
       SmartDashboard.putNumber("Pitch", m_pitch);
-      SmartDashboard.putNumber("GravityZ",m_gravityVector[2]);
       SmartDashboard.putNumber("AHCF", m_AHCF);    
       SmartDashboard.putNumber("Y In", m_y);
       SmartDashboard.putNumber("X In", m_x);
@@ -264,8 +263,6 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putNumber("RRMC",encoderToDistance(m_rearRight.getSelectedSensorPosition()));
       SmartDashboard.putNumber("Driver Heading", m_driverHeading);
       SmartDashboard.putNumber("Gyro Rate", m_turnRate);
-      SmartDashboard.putNumber("GravityX",m_gravityVector[0]);
-      SmartDashboard.putNumber("GravityY",m_gravityVector[1]);
     }
   }
   
