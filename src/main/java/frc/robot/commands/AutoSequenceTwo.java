@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.DriveParameters;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Grabber;
@@ -21,11 +22,11 @@ public class AutoSequenceTwo extends SequentialCommandGroup {
                 new GrabberStop(g),
                 new FullRetract(a),
                 new FullLower(a),
-                new DriveAtAngleForDistance(dt, 0.2, 0.0, 4.0),
+                new DriveAtAngleForDistance(dt, 0.2, 0.0, 4.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
                 new DriveStop(dt),
                 new ShoulderDeploy(a),
                 new ExtenderDeploy(a),
-                new DriveAtAngleForDistance(dt, -0.2, 0.0, 2.0),  
+                new DriveAtAngleForDistance(dt, -0.2, 0.0, 2.0).withTimeout(2),  
                 new DriveStop(dt),
                 new GrabberOpen(g).withTimeout(7),
                 new GrabberStop(g)

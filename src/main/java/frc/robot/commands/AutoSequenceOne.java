@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.Constants.DriveParameters;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,7 +20,7 @@ public class AutoSequenceOne extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new FullRetract(a),
                 new FullLower(a),
-                new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0).withTimeout(4),
+                new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
                 new DriveStop(dt));
   }
 }
