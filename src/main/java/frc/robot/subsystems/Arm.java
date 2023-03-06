@@ -66,7 +66,7 @@ public class Arm extends SubsystemBase {
    * @param extendSpeed Speed of arm extend/retract motion, Positive is retracting
    */
     public void move(double raiseSpeed, double extendSpeed) {
-    double r = raiseSpeed; //m_limiter.calculate(raiseSpeed);
+    double r = squareInput(raiseSpeed);
     double e = extendSpeed; //squareInput(extendSpeed);
 
     // check if shoulder raise override is active

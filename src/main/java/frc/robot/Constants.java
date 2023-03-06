@@ -62,8 +62,8 @@ package frc.robot;
     }
 
     public static class GrabberParameters {
-      public static final double k_openSpeed = 0.5;
-      public static final double k_closeSpeed = -0.5;
+      public static final double k_openSpeed = 0.8;
+      public static final double k_closeSpeed = -0.8;
     }
 
     public static class VisionParameters {
