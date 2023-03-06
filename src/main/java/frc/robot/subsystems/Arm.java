@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
 public class Arm extends SubsystemBase {
   private final WPI_TalonFX m_armExtender = new WPI_TalonFX(CANaddresses.k_Extender);
@@ -38,14 +39,17 @@ public class Arm extends SubsystemBase {
   
   /** Creates a new Arm. */
   public Arm () {
+    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(true, 0,
+                                             20, 2);
+
     m_Shoulder.setInverted(true);
     m_Shoulder.setNeutralMode(NeutralMode.Brake);
     m_Shoulder.setSensorPhase(false);
 
-    // Note victor controller has brake set by a button on the controller
     m_armExtender.setInverted(true);
     m_armExtender.setNeutralMode(NeutralMode.Brake);
     m_armExtender.setSensorPhase(false);
+    m_armExtender.configSupplyCurrentLimit(lC, 0);
   }
 
   @Override
