@@ -19,7 +19,7 @@ public class AutoSequenceOne extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new FullRetract(a),
                 new FullLower(a),
-                new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0),
+                new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0).withTimeout(4),
                 new DriveStop(dt));
   }
 }
