@@ -17,7 +17,7 @@ public class TraverseToTargetSeq extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new limeLightOn(v),
-                new DriveTraverseToTarget(dt, v),
+                new DriveTraverseToTarget(dt, v,true),
                 new DriveStop(dt),
                 new limeLightOff(v)
                 );

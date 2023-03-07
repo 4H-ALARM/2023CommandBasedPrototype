@@ -12,9 +12,9 @@ import frc.robot.Constants.DriveParameters;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoSequenceOne extends SequentialCommandGroup {
+public class AutoSequenceDrive extends SequentialCommandGroup {
   /** Creates a new AutoSequenceOne. */
-  public AutoSequenceOne(Drivetrain dt, Arm a) {
+  public AutoSequenceDrive(Drivetrain dt, Arm a) {
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
