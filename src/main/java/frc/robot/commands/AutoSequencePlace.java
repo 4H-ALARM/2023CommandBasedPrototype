@@ -13,9 +13,9 @@ import frc.robot.subsystems.Grabber;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoSequenceTwo extends SequentialCommandGroup {
+public class AutoSequencePlace extends SequentialCommandGroup {
   /** Creates a new AutoSequenceTwo. */
-  public AutoSequenceTwo(Drivetrain dt, Arm a, Grabber g) {
+  public AutoSequencePlace(Drivetrain dt, Arm a, Grabber g) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new GrabberClose(g).withTimeout(3),

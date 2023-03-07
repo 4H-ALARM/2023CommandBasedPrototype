@@ -152,13 +152,17 @@ public class RobotContainer {
   public CommandBase getAutonomousCommand(AutonomousOptions sp) {
     // An example command will be run in autonomous
 
-    CommandBase autCommand = new AutoSequenceOne(m_robotDrive, m_Arm);
+    CommandBase autCommand = new AutoSequenceDrive(m_robotDrive, m_Arm);
 
       switch(sp) {
         case DRIVE:
           break;
         case PLACE:
-          autCommand = new AutoSequenceTwo(m_robotDrive, m_Arm, m_grabberSubsystem);
+          autCommand = new AutoSequencePlace(m_robotDrive, m_Arm, m_grabberSubsystem);
+          break;
+        case MOVELEFT:
+          break;
+        case MOVERIGHT:
           break;
         case NONE:
           autCommand = null;

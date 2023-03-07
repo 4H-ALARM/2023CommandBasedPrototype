@@ -15,9 +15,10 @@ public class DriveTraverseToTarget extends CommandBase {
   private boolean m_goLeft = false;
 
   /** Creates a new DriveTraverse. */
-  public DriveTraverseToTarget(Drivetrain dt, vision v) {
+  public DriveTraverseToTarget(Drivetrain dt, vision v, boolean goLeft) {
     this.m_dt = dt;
     this.m_v = v;
+    this.m_goLeft = goLeft;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt, v);
@@ -30,7 +31,6 @@ public class DriveTraverseToTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_goLeft = m_v.markerToLeft();
     m_dt.traverse(m_goLeft);
   }
 
@@ -43,7 +43,7 @@ public class DriveTraverseToTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean found = m_v.markerFound();
+    boolean found = m_v.targetFound();
     return found;
   }
 }
