@@ -161,8 +161,10 @@ public class RobotContainer {
           autCommand = new AutoSequencePlace(m_robotDrive, m_Arm, m_grabberSubsystem);
           break;
         case MOVELEFT:
+          autCommand = new AutoSequenceFromCenter(m_robotDrive, m_Arm, m_vision, true);
           break;
         case MOVERIGHT:
+          autCommand = new AutoSequenceFromCenter(m_robotDrive, m_Arm, m_vision, false);
           break;
         case NONE:
           autCommand = null;
