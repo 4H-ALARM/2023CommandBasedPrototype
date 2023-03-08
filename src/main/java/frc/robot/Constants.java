@@ -37,7 +37,7 @@ package frc.robot;
       public static final double k_balancePoint = 0.9;  //TODO adjust the max amount out of balanace
       public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this
       public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
-      public static final double k_traverseSpeed = 0.3; //TODO measure and correct this
+      public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
       public static final double k_autonmousDriveTimeOut = 4.0;
 
     }
@@ -86,7 +86,7 @@ package frc.robot;
       //unreachable code
       public static final boolean DriveON = false;
       public static final boolean ArmON = false;
-      public static final boolean VisionON = false;
+      public static final boolean VisionON = true;
     }
 }
   
