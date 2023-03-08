@@ -59,10 +59,13 @@ public class RobotContainer {
   // joystick controlled driving in teleop
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
   private final RotateForTargetSeq m_RTS = new RotateForTargetSeq(m_vision, m_robotDrive);
+  private final DriveStop m_driveStop = new DriveStop(m_robotDrive);
   private final SwitchDrivePerspective m_switchPerspective = 
     new SwitchDrivePerspective(m_robotDrive);
   private final ToggleMaintainHeading m_toggleMaintainHeading = 
     new ToggleMaintainHeading(m_robotDrive);
+  private final DriveTraverseToTarget m_TraverseLeftToTarget = 
+    new DriveTraverseToTarget(m_robotDrive, m_vision, true);
   
 
   // Vision Commands
@@ -135,6 +138,7 @@ public class RobotContainer {
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.b().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
+    m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 
