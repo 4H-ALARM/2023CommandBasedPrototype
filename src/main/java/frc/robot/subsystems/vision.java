@@ -82,10 +82,12 @@ public class vision extends SubsystemBase {
   }
 
 
-  public boolean targetFound () {
+  public boolean targetFound() {
     boolean found = false;
     double id = m_tid.getDouble(0.0);
-    if (id != -1) { found = true;}
+    if (id != -1) {       
+      if (Math.abs(m_tx.getDouble(10))<=2) {found = true;}
+    }
     return(found);
   }
 
