@@ -8,15 +8,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.vision;
 
-public class RotateToTarget extends CommandBase {
+public class DriveRotateToTarget extends CommandBase {
 
   private Drivetrain m_dt;
   private vision m_v;
+  private boolean m_goLeft;
 
   /** Creates a new DriveRotate. */
-  public RotateToTarget(Drivetrain dt, vision v) {
+  public DriveRotateToTarget(Drivetrain dt, vision v, boolean goLeft) {
     this.m_dt = dt;
     this.m_v = v;
+    this.m_goLeft = goLeft;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt, v);
@@ -31,7 +33,7 @@ public class RotateToTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_dt.rotate(m_v.findObject()[0]);
+    m_dt.rotate(m_goLeft);
   }
 
   // Called once the command ends or is interrupted.
@@ -43,7 +45,8 @@ public class RotateToTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_v.foundObject();
+    boolean found = m_v.targetFound();
+    return found;
   }
 
 }

@@ -152,9 +152,10 @@ public class Drivetrain extends SubsystemBase {
     drive(0.0, 0.0, 0.3);
   }
 
-  public void rotate(double tgInfo) {
-    if (tgInfo<0) {drive(0, 0, 0.3);}
-    else{drive(0, 0, -0.3);}
+  public void rotate(boolean goLeft) {
+    double s = DriveParameters.k_rotateSpeed;
+    if (goLeft) {s = -s;}
+    drive(0, 0, s);
   }
 
   public void traverse(boolean goLeft) {

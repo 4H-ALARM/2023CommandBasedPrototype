@@ -38,6 +38,7 @@ package frc.robot;
       public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this
       public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
       public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
+      public static final double k_rotateSpeed = 0.3;
       public static final double k_autonmousDriveTimeOut = 4.0;
 
     }
