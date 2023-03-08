@@ -157,14 +157,11 @@ public class RobotContainer {
       switch(sp) {
         case DRIVE:
           break;
-        case PLACE:
-          autCommand = new AutoSequencePlace(m_robotDrive, m_Arm, m_grabberSubsystem);
+        case CUBELEFT:
+          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
           break;
-        case MOVELEFT:
-          autCommand = new AutoSequenceFromCenter(m_robotDrive, m_Arm, m_vision, true);
-          break;
-        case MOVERIGHT:
-          autCommand = new AutoSequenceFromCenter(m_robotDrive, m_Arm, m_vision, false);
+        case CUBERIGHT:
+          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case NONE:
           autCommand = null;
