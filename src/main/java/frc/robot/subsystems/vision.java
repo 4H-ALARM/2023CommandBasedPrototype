@@ -86,7 +86,7 @@ public class vision extends SubsystemBase {
     boolean found = false;
     double id = m_tid.getDouble(0.0);
     if (id != -1) {       
-      if (Math.abs(m_tx.getDouble(10))<=2) {found = true;}
+      if (Math.abs(m_tx.getDouble(10))<= VisionParameters.k_xTargetBounds) {found = true;}
     }
     return(found);
   }
