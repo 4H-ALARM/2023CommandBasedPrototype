@@ -76,6 +76,7 @@ package frc.robot;
       public static final int k_aprilTagPipeline = 0;
       public static final int k_conePipeline = 1;
       public static final int k_cubePipeline = 2;
+      public static final double k_xTargetBounds = 2.0;  //+- degrees
     }
   
     public static enum AutonomousOptions {
