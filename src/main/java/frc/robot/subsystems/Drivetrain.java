@@ -160,7 +160,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void traverse(boolean goLeft) {
     double s = DriveParameters.k_traverseSpeed;
-    if (goLeft) {s = -s;}
+    if (!goLeft) {s = -s;}
     drive(0,s,0);
 
   }
