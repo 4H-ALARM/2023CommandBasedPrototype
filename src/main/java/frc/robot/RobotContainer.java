@@ -145,7 +145,7 @@ public class RobotContainer {
     m_DriveJoystick.b().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.povLeft().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povRight().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
