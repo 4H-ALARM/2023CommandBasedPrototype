@@ -55,7 +55,7 @@ package frc.robot;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = -179000.0;
-      public static final double k_fullRaiseCount = -160000.0;
+      public static final double k_fullRaiseCount = -165000.0;
       public static final double k_startStowCount = -50000.0;
       public static final double k_safeExtenderStowCount = -100.0; 
       public static final double k_llExtendGoodGrab = 20;
@@ -91,7 +91,7 @@ package frc.robot;
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
+      public static final boolean ArmON = true;
       public static final boolean VisionON = false;
     }
 }
