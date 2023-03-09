@@ -58,7 +58,6 @@ public class RobotContainer {
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
   private final ResetGyro m_ResetGyro = new ResetGyro(m_robotDrive);
-  private final RotateForTargetSeq m_RTS = new RotateForTargetSeq(m_vision, m_robotDrive);
   private final DriveStop m_driveStop = new DriveStop(m_robotDrive);
   private final SwitchDrivePerspective m_switchPerspective = 
     new SwitchDrivePerspective(m_robotDrive);
@@ -66,7 +65,14 @@ public class RobotContainer {
     new ToggleMaintainHeading(m_robotDrive);
   private final DriveTraverseToTarget m_TraverseLeftToTarget = 
     new DriveTraverseToTarget(m_robotDrive, m_vision, true);
-  
+  private final DriveTraverseToTarget m_TraverseRightToTarget = 
+    new DriveTraverseToTarget(m_robotDrive, m_vision, false);
+  private final DriveRotateToTarget m_RotateLeftToTarget = 
+    new DriveRotateToTarget(m_robotDrive, m_vision, true);
+  private final DriveRotateToTarget m_RotateRightToTarget = 
+    new DriveRotateToTarget(m_robotDrive, m_vision, false);
+  private final DriveToOptimalTargetToRobotDistance m_DriveToOptimalTargetToRobotDistance = 
+    new DriveToOptimalTargetToRobotDistance(m_robotDrive, m_vision);
 
   // Vision Commands
   private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
@@ -139,6 +145,10 @@ public class RobotContainer {
     m_DriveJoystick.b().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povLeft().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 

@@ -39,6 +39,10 @@ package frc.robot;
       public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
       public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
       public static final double k_rotateSpeed = 0.3;
+      public static final double k_driveSpeed = 0.2;
+      public static final double k_targetArea = 500; //TODO adjust value based on testing
+      public static final double k_minTargetArea = 400; //TODO adjust value based on testing
+      public static final double k_maxTargetArea = 600; //TODO adjust value based on testing
       public static final double k_autonmousDriveTimeOut = 4.0;
 
     }
@@ -51,7 +55,7 @@ package frc.robot;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = -179000.0;
-      public static final double k_fullRaiseCount = -160000.0;
+      public static final double k_fullRaiseCount = -165000.0;
       public static final double k_startStowCount = -50000.0;
       public static final double k_safeExtenderStowCount = -100.0; 
       public static final double k_llExtendGoodGrab = 20;
@@ -87,7 +91,7 @@ package frc.robot;
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
+      public static final boolean ArmON = true;
       public static final boolean VisionON = false;
     }
 }
