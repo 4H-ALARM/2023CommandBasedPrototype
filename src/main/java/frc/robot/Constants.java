@@ -39,6 +39,10 @@ package frc.robot;
       public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
       public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
       public static final double k_rotateSpeed = 0.3;
+      public static final double k_driveSpeed = 0.2;
+      public static final double k_targetArea = 500; //TODO adjust value based on testing
+      public static final double k_minTargetArea = 400; //TODO adjust value based on testing
+      public static final double k_maxTargetArea = 600; //TODO adjust value based on testing
       public static final double k_autonmousDriveTimeOut = 4.0;
 
     }

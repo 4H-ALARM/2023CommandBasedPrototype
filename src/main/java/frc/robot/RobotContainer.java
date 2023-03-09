@@ -71,6 +71,8 @@ public class RobotContainer {
     new DriveRotateToTarget(m_robotDrive, m_vision, true);
   private final DriveRotateToTarget m_RotateRightToTarget = 
     new DriveRotateToTarget(m_robotDrive, m_vision, false);
+  private final DriveToOptimalTargetToRobotDistance m_DriveToOptimalTargetToRobotDistance = 
+    new DriveToOptimalTargetToRobotDistance(m_robotDrive, m_vision);
 
   // Vision Commands
   private final limeLightOff m_limeLightOff = new limeLightOff(m_vision); 
@@ -144,8 +146,9 @@ public class RobotContainer {
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povLeft().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.x().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.y().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 
