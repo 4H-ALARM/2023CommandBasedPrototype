@@ -24,6 +24,7 @@ public class vision extends SubsystemBase {
   NetworkTableEntry m_llpython = m_table.getEntry("llpython");
   
   private double m_llpythonReturn[];
+  private boolean m_lightOn = false;
 
   private double m_currentPipeline = VisionParameters.k_aprilTagPipeline;
 
@@ -61,16 +62,20 @@ public class vision extends SubsystemBase {
     if (Debug.VisionON) {
       SmartDashboard.putNumber("Pipe", m_currentPipeline);
     }
+
+    if (!m_lightOn) {off();}
     
 
   }
 
   public void off() {
     m_ledMode.setNumber(VisionParameters.k_lightOff);
+    m_lightOn = false;
   }
 
   public void on() {
     m_ledMode.setNumber(VisionParameters.k_lightOn);
+    m_lightOn = true;
   }
 
   public void swapPipeline() {

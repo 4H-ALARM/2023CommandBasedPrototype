@@ -56,7 +56,7 @@ public class Drivetrain extends SubsystemBase {
     initMotor(m_frontRight, false);
     initMotor(m_rearRight, false);
 
-    SmartDashboard.putNumber("AHCF", DriveParameters.k_RotationFactor);
+    // SmartDashboard.putNumber("AHCF", DriveParameters.k_RotationFactor);
   }
 
   /**
