@@ -145,7 +145,7 @@ public class RobotContainer {
     m_DriveJoystick.b().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.povLeft().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povRight().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
@@ -172,10 +172,10 @@ public class RobotContainer {
         case DRIVE:
           break;
         case CUBELEFT:
-          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
+          //autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
           break;
         case CUBERIGHT:
-          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          //autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case NONE:
           autCommand = null;
