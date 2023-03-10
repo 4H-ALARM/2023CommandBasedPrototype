@@ -66,6 +66,7 @@ package frc.robot;
       public static final double k_armHeight = 201000;  // arm height in extender counts
       public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
+      public static final double k_BumperCount = 20000;
     }
 
     public static class GrabberParameters {

@@ -212,6 +212,14 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  public boolean atBumper() {
+    boolean ab = false;
+    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_BumperCount) {
+      ab = true;
+    }
+    return (ab);
+  }
+
   private void checkExtensionRetractLimits() {
     // check if we hit limit switch, have to invert reading
     if (!m_fullRetractDetector.get()) {
