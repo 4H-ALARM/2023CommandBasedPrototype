@@ -19,16 +19,17 @@ public class AutoSequencePlaceCube extends SequentialCommandGroup {
   public AutoSequencePlaceCube(Drivetrain dt, Arm a, vision v, Grabber g, boolean goLeft) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new GrabberClose(g).withTimeout(3),
+    addCommands(new GrabberClose(g).withTimeout(1.5),
                 new GrabberStop(g),
                 new FullRetract(a),
                 new FullLower(a),
                 new DriveTraverseToTarget(dt, v, goLeft).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
                 new ShoulderDeploy(a),
                 new ExtenderDeploy(a),
-                new GrabberOpen(g).withTimeout(5),
+                new GrabberOpen(g).withTimeout(3),
                 new GrabberStop(g),
-                new DriveAtAngleForDistance(dt, 0.2, 0.0, 5.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
+                new DriveTraverse(dt, goLeft).withTimeout(2),
+                new DriveAtAngleForDistance(dt, 0.5, 0.0, 15.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
                 new DriveStop(dt));
   }
 }

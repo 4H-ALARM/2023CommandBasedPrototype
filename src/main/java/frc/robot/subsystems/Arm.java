@@ -150,6 +150,13 @@ public class Arm extends SubsystemBase {
     }
   }
 
+  public void shoulderGrab() {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
+      m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
+    }
+  }
+  
+
   public void stop() {
     m_armExtender.set(0.0);
   }
@@ -218,6 +225,14 @@ public class Arm extends SubsystemBase {
       ab = true;
     }
     return (ab);
+  }
+
+  public boolean atGrab() {
+    boolean ag = false;
+    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_GrabCount) {
+      ag = true;
+    }
+    return (ag);
   }
 
   private void checkExtensionRetractLimits() {

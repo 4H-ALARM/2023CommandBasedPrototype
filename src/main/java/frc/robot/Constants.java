@@ -37,25 +37,25 @@ package frc.robot;
       public static final double k_balancePoint = 0.9;  //TODO adjust the max amount out of balanace
       public static final double k_balanceCorrectionFactor = 0.002; //TODO measure and correct this
       public static final double k_maxBalanceCorrection = 0.1;  //TODO adjust the max amount of correction 
-      public static final double k_traverseSpeed = 0.4; //TODO measure and correct this
+      public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
       public static final double k_rotateSpeed = 0.4;
       public static final double k_driveSpeed = 0.2;
       public static final double k_targetArea = 4; //TODO adjust value based on testing
       public static final double k_minTargetArea = 3.5; //TODO adjust value based on testing
       public static final double k_maxTargetArea = 4.5; //TODO adjust value based on testing
-      public static final double k_autonmousDriveTimeOut = 4.0;
+      public static final double k_autonmousDriveTimeOut = 10.0;
 
     }
 
     public static class ArmParameters {
-      public static final double k_armRaiseSpeed = -0.4875;
+      public static final double k_armRaiseSpeed = -0.55;
       public static final double k_armLowerSpeed = 0.425;
-      public static final double k_armExtendSpeed = -0.4875;
+      public static final double k_armExtendSpeed = -0.6875;
       public static final double k_armRetractSpeed = 0.425;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = -179000.0;
-      public static final double k_fullRaiseCount = -165000.0;
+      public static final double k_fullRaiseCount = -150000.0;
       public static final double k_startStowCount = -50000.0;
       public static final double k_safeExtenderStowCount = -100.0; 
       public static final double k_llExtendGoodGrab = 20;
@@ -66,12 +66,13 @@ package frc.robot;
       public static final double k_armHeight = 201000;  // arm height in extender counts
       public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
-      public static final double k_BumperCount = 20000;
+      public static final double k_BumperCount = -15300;
+      public static final double k_GrabCount = -128200;
     }
 
     public static class GrabberParameters {
-      public static final double k_openSpeed = 0.8;
-      public static final double k_closeSpeed = -0.8;
+      public static final double k_openSpeed = 1;
+      public static final double k_closeSpeed = -1;
     }
 
     public static class VisionParameters {

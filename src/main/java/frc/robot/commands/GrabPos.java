@@ -7,10 +7,10 @@ package frc.robot.commands;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class LowerToBumper extends CommandBase {
+public class GrabPos extends CommandBase {
   private Arm m_Arm;
   /** Creates a new RetractToBumper. */
-  public LowerToBumper(Arm a) {
+  public GrabPos(Arm a) {
     this.m_Arm = a;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(a);
@@ -23,7 +23,7 @@ public class LowerToBumper extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Arm.fullLower();
+    m_Arm.shoulderDeploy();
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +35,6 @@ public class LowerToBumper extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Arm.atBumper();
+    return m_Arm.atGrab();
   }
 }
