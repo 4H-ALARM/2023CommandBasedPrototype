@@ -53,6 +53,8 @@ public class RobotContainer {
   private final OverrideExtender m_overrideExtender = new OverrideExtender(m_Arm);
   private final StowArm m_StowArm = new StowArm(m_Arm);
   private final DeployArm m_DeployArm = new DeployArm(m_Arm);
+  private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
+  private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
   
 
   // Drive Commands note these are in addition to the default 
@@ -135,10 +137,12 @@ public class RobotContainer {
 
     // Trigger to Arm command mappings
 
-    m_ArmController.leftBumper().onTrue(m_overrideShoulder);
-    m_ArmController.rightBumper().onTrue(m_overrideExtender);
+    m_ArmController.button(7).onTrue(m_overrideShoulder);
+    m_ArmController.button(8).onTrue(m_overrideExtender);
     m_ArmController.leftTrigger().onTrue(m_StowArm).onFalse(m_ArmStop); 
     m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
+    m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
+    m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
@@ -161,7 +165,12 @@ public class RobotContainer {
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command to run in autonomous
+   * @return the command to run in autonomo+
+   * 
+   * 
+   * 
+   
+  
    */
   public CommandBase getAutonomousCommand(AutonomousOptions sp) {
     // An example command will be run in autonomous
@@ -172,10 +181,10 @@ public class RobotContainer {
         case DRIVE:
           break;
         case CUBELEFT:
-          //autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
+          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
           break;
         case CUBERIGHT:
-          //autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case NONE:
           autCommand = null;

@@ -241,6 +241,18 @@ public class Drivetrain extends SubsystemBase {
     if (Debug.DriveON) {
       double modulo = m_yaw%360.0;
       if (modulo < 0) {modulo = 360.0 - java.lang.Math.abs(modulo);}
+      SmartDashboard.putNumber("FLMCI", m_frontLeft.getSupplyCurrent());
+      SmartDashboard.putNumber("FRMCI", m_frontRight.getSupplyCurrent());
+      SmartDashboard.putNumber("RLMCI", m_rearLeft.getSupplyCurrent());
+      SmartDashboard.putNumber("RRMCI", m_rearRight.getSupplyCurrent());
+      SmartDashboard.putNumber("FLMVO", m_frontLeft.getMotorOutputVoltage());
+      SmartDashboard.putNumber("FRMVO", m_frontRight.getMotorOutputVoltage());
+      SmartDashboard.putNumber("RLMVO", m_rearLeft.getMotorOutputVoltage());
+      SmartDashboard.putNumber("RRMVO", m_rearRight.getMotorOutputVoltage());
+      SmartDashboard.putNumber("FLMVB", m_frontLeft.getBusVoltage());
+      SmartDashboard.putNumber("FRMVB", m_frontRight.getBusVoltage());
+      SmartDashboard.putNumber("RLMVB", m_rearLeft.getBusVoltage());
+      SmartDashboard.putNumber("RRMVB", m_rearRight.getBusVoltage());
       SmartDashboard.putNumber("Yaw", m_yaw);
       SmartDashboard.putNumber("Pitch", m_pitch);
       SmartDashboard.putNumber("AHCF", m_AHCF);    

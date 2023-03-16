@@ -47,7 +47,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   public boolean isFinished() {
     boolean inRange = false;
     double a = m_targetInfo[2];
-    if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = true;}
+    if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = false;}
     return inRange;
   }
 }
