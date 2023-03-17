@@ -144,7 +144,7 @@ public class RobotContainer {
     m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
-    m_ArmController.a().onTrue(m_armPosition1).onFalse(m_ArmStop);
+    m_ArmController.leftBumper().onTrue(m_armPosition1).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
