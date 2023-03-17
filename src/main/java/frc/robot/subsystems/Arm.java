@@ -181,6 +181,10 @@ public class Arm extends SubsystemBase {
     m_Shoulder.set(0.0);
   }
 
+  public double getShoulderCount() {
+    return (m_Shoulder.getSelectedSensorPosition());
+  }
+
   private double squareInput(double i) {
     double s = i*i;
     if (i < 0){ s = -s; }

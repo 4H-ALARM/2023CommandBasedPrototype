@@ -68,6 +68,8 @@ package frc.robot;
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
       public static final double k_BumperCount = -15300;
       public static final double k_GrabCount = -128200;
+      public static final double k_targetCountRange = 1000.0;
+      public static final double k_position1 = -100000.0;
     }
 
     public static class GrabberParameters {
