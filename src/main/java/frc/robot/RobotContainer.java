@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-
+import frc.robot.Constants.ArmParameters;
 import frc.robot.Constants.AutonomousOptions;
 import frc.robot.Constants.USBPorts;
 
@@ -55,6 +55,7 @@ public class RobotContainer {
   private final DeployArm m_DeployArm = new DeployArm(m_Arm);
   private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
   private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
+  private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
   
 
   // Drive Commands note these are in addition to the default 
@@ -143,6 +144,7 @@ public class RobotContainer {
     m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
+    m_ArmController.a().onTrue(m_armPosition1).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
