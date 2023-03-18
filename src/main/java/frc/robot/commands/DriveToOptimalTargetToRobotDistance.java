@@ -12,7 +12,6 @@ import frc.robot.subsystems.vision;
 public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   private Drivetrain m_dt;
   private vision m_v;
-  private double m_targetInfo[] = new double[2];
 
   /** Creates a new DriveTraverse. */
   public DriveToOptimalTargetToRobotDistance(Drivetrain dt, vision v) {
@@ -30,24 +29,28 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_targetInfo = m_v.findObject();
+    double targetInfo[] = new double[2];
+    targetInfo = m_v.findObject();
     double s = DriveParameters.k_driveSpeed;
-    if (m_targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
-    m_dt.drive(s,0,0);
+    if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
+    // m_dt.drive(s,0,0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_dt.stop();
+    // m_dt.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    double targetInfo[] = new double[2];
     boolean inRange = false;
-    double a = m_targetInfo[2];
-    if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = false;}
+    if (m_v.targetFound() == true) {
+      double a = targetInfo[2];
+      if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = true;}
+    }
     return inRange;
   }
 }
