@@ -15,7 +15,7 @@ package frc.robot;
 
  public final class Constants {
     public static final class CANaddresses {
-      public static final int k_FrontLeftMotor = 1;
+      public static final int k_FrontLeftMotor = 1; 
       public static final int k_RearLeftMotor = 2;
       public static final int k_FrontRightMotor = 3;
       public static final int k_RearRight = 4;
@@ -66,10 +66,13 @@ package frc.robot;
       public static final double k_armHeight = 201000;  // arm height in extender counts
       public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
-      public static final double k_BumperCount = -15300;
-      public static final double k_GrabCount = -128200;
-      public static final double k_targetCountRange = 1000.0;
-      public static final double k_position1 = -100000.0;
+      public static final double k_bumperCount = -15300;
+      public static final double k_doubleCount = -128200;
+      public static final double k_singleCount = -127200;
+      public static final double k_floorCount = -120200;
+      public static final double k_lowCount = -126200;
+      public static final double k_targetCountRange = 500.0;
+      public static final double k_floorExtendCount = -100000.0;
     }
 
     public static class GrabberParameters {

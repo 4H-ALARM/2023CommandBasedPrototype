@@ -7,10 +7,10 @@ package frc.robot.commands;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class GrabPos extends CommandBase {
+public class DoublePos extends CommandBase {
   private Arm m_Arm;
   /** Creates a new RetractToBumper. */
-  public GrabPos(Arm a) {
+  public DoublePos(Arm a) {
     this.m_Arm = a;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(a);
@@ -35,6 +35,6 @@ public class GrabPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_Arm.atGrab();
+    return m_Arm.atDouble();
   }
 }

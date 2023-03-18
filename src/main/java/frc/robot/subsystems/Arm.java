@@ -95,7 +95,7 @@ public class Arm extends SubsystemBase {
         if (m_atFullRetraction) { e = 0.0; }
       } else {
         // we are extending so check for stop
-        if ((m_atFullExtension) || (!m_armExtendZeroed)) { e = 0.0; }
+        if ((m_atFullExtension) || (!m_armExtendZeroed)  || (m_atFullLower)) { e = 0.0; }
     }
     }
 
@@ -104,7 +104,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (!m_atFullLower)) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
       stop();
@@ -137,7 +137,7 @@ public class Arm extends SubsystemBase {
 
   public void extenderDeploy() {
     
-    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (!m_atFullLower)) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
@@ -181,8 +181,16 @@ public class Arm extends SubsystemBase {
     m_Shoulder.set(0.0);
   }
 
+  public void stopExtender() {
+    m_armExtender.set(0.0);
+  }
+
   public double getShoulderCount() {
     return (m_Shoulder.getSelectedSensorPosition());
+  }
+
+  public double getExtenderCount() {
+    return (m_armExtender.getSelectedSensorPosition());
   }
 
   private double squareInput(double i) {
@@ -225,15 +233,15 @@ public class Arm extends SubsystemBase {
 
   public boolean atBumper() {
     boolean ab = false;
-    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_BumperCount) {
+    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_bumperCount) {
       ab = true;
     }
     return (ab);
   }
 
-  public boolean atGrab() {
+  public boolean atDouble() {
     boolean ag = false;
-    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_GrabCount) {
+    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_doubleCount) {
       ag = true;
     }
     return (ag);

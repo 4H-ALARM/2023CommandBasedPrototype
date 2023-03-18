@@ -54,8 +54,12 @@ public class RobotContainer {
   private final StowArm m_StowArm = new StowArm(m_Arm);
   private final DeployArm m_DeployArm = new DeployArm(m_Arm);
   private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
-  private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
-  private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
+  //private final ArmDoubleSeq m_ArmGrabSeq = new ArmDoubleSeq(m_Arm);
+  private final ArmDoubleSeq m_doubleSeq = new ArmDoubleSeq(m_Arm, m_grabberSubsystem);
+  private final ArmSingleSeq m_singleSeq = new ArmSingleSeq(m_Arm, m_grabberSubsystem);
+  private final ArmFloorSeq m_floorSeq = new ArmFloorSeq(m_Arm, m_grabberSubsystem);
+  private final ArmLowSeq m_lowSeq = new ArmLowSeq(m_Arm);
+
   
 
   // Drive Commands note these are in addition to the default 
@@ -133,8 +137,8 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.leftBumper().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
 
     // Trigger to Arm command mappings
 
@@ -143,8 +147,11 @@ public class RobotContainer {
     m_ArmController.leftTrigger().onTrue(m_StowArm).onFalse(m_ArmStop); 
     m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
-    m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
-    m_ArmController.leftBumper().onTrue(m_armPosition1).onFalse(m_ArmStop);
+    m_ArmController.y().onTrue(m_doubleSeq).onFalse(m_ArmStop);
+    m_ArmController.b().onTrue(m_singleSeq).onFalse(m_ArmStop);
+    m_ArmController.a().onTrue(m_floorSeq).onFalse(m_ArmStop);
+    m_ArmController.povDown().onTrue(m_lowSeq).onFalse(m_ArmStop);
+
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);

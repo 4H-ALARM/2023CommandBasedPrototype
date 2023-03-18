@@ -25,5 +25,8 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "workbench.preferredHighContrastLightColorTheme": "Visual Studio Dark",
+  "workbench.preferredLightColorTheme": "Visual Studio Dark",
+  "workbench.colorTheme": "Visual Studio Dark"
 }

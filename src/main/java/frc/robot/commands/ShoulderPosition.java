@@ -9,14 +9,14 @@ import frc.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ArmPositionToCount extends CommandBase {
+public class ShoulderPosition extends CommandBase {
   private Arm m_a;
   private double m_targetCount = 0;
   private double m_targetCountUL = 0;
   private double m_targetCountLL = 0;
 
   /** Creates a new ArmPositionToCount. */
-  public ArmPositionToCount(Arm a, double c) {
+  public ShoulderPosition(Arm a, double c) {
     this.m_a = a;
     // as arm counts are always negative take absolute value to make compares easier
     this.m_targetCount = Math.abs(c);

@@ -3,19 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Arm;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmParameters;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DeployArm extends SequentialCommandGroup {
-  /** Creates a new DeployArm. */
-  public DeployArm(Arm a) {
+public class ArmLowSeq extends SequentialCommandGroup {
+  /** Creates a new LowerToBumperSeq. */
+  public ArmLowSeq(Arm a) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShoulderPosition(a, ArmParameters.k_fullRaiseCount), new ExtenderDeploy(a));
+    addCommands(new ShoulderPosition(a, ArmParameters.k_lowCount), new ExtendPosition(a, ArmParameters.k_fullExtendCount));
   }
 }

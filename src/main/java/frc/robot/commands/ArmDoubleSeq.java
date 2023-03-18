@@ -5,15 +5,17 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ArmParameters;
+import frc.robot.subsystems.Grabber;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmGrabSeq extends SequentialCommandGroup {
+public class ArmDoubleSeq extends SequentialCommandGroup {
   /** Creates a new LowerToBumperSeq. */
-  public ArmGrabSeq(Arm a) {
+  public ArmDoubleSeq(Arm a, Grabber g) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new GrabPos(a), new ExtenderDeploy(a));
+    addCommands(new ShoulderPosition(a, ArmParameters.k_doubleCount), new ExtendPosition(a, ArmParameters.k_fullExtendCount), new GrabberOpen(g));
   }
 }
