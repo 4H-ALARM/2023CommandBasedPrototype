@@ -79,7 +79,7 @@ public class Arm extends SubsystemBase {
     } else {
       // check to see if we should stop lowering
       if (r > 0) {
-        if ((m_atFullLower) || (!m_safeToLower)) { r = 0.0; }
+        if ((m_atFullLower) || (!m_safeToLower) || (!clearOfBumper())) { r = 0.0; }
       } else {
         // we are raising so check for stop
         if ((m_atFullRaise) || (!m_armRaiseZeroed)) { r = 0.0; }
@@ -275,6 +275,12 @@ public class Arm extends SubsystemBase {
     } else {
       m_atFullRaise = false;
     }
+  }
+
+  private boolean clearOfBumper() {
+    boolean clear = true;
+
+    return (clear);
   }
 
   //TODO correct the limits for these checks
