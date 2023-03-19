@@ -55,9 +55,9 @@ public class RobotContainer {
   private final DeployArm m_DeployArm = new DeployArm(m_Arm);
   private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
   private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
-  private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
-  private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
-  
+  // private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
+  // private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
+  private final GoToPos1Seq m_GoToPos1Seq = new GoToPos1Seq(m_Arm, ArmParameters.k_position1, ArmParameters.k_position1);
 
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
@@ -145,8 +145,7 @@ public class RobotContainer {
     m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
-    m_ArmController.leftBumper().onTrue(m_armPosition1).onFalse(m_ArmStop);
-    m_ArmController.rightBumper().onTrue(m_armExtendPosition1).onFalse(m_ArmStop);
+    m_ArmController.leftBumper().onTrue(m_GoToPos1Seq).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
