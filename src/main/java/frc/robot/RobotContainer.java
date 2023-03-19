@@ -56,6 +56,7 @@ public class RobotContainer {
   private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
   private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
   private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
+  private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
   
 
   // Drive Commands note these are in addition to the default 
@@ -145,6 +146,7 @@ public class RobotContainer {
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
     m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
     m_ArmController.leftBumper().onTrue(m_armPosition1).onFalse(m_ArmStop);
+    m_ArmController.rightBumper().onTrue(m_armExtendPosition1).onFalse(m_ArmStop);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
@@ -154,7 +156,7 @@ public class RobotContainer {
     m_DriveJoystick.povRight().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
+    // m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 

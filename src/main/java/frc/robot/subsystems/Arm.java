@@ -107,7 +107,7 @@ public class Arm extends SubsystemBase {
     if ((!m_atFullExtension) && (m_armExtendZeroed)) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
-      stop();
+      stopExtender();
     }
   }
 
@@ -115,7 +115,7 @@ public class Arm extends SubsystemBase {
     if (!m_atFullRetraction) {
       m_armExtender.set(ArmParameters.k_armRetractSpeed);
     } else {
-      stop();
+      stopExtender();
     } 
     return (m_atFullRetraction);
   }
@@ -157,7 +157,7 @@ public class Arm extends SubsystemBase {
   }
   
 
-  public void stop() {
+  public void stopExtender() {
     m_armExtender.set(0.0);
   }
 
@@ -183,6 +183,10 @@ public class Arm extends SubsystemBase {
 
   public double getShoulderCount() {
     return (m_Shoulder.getSelectedSensorPosition());
+  }
+
+  public double getExtenderCount() {
+    return (m_armExtender.getSelectedSensorPosition());
   }
 
   private double squareInput(double i) {

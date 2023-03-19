@@ -27,7 +27,7 @@ public class ArmStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Arm.stop(); // stop extender
+    m_Arm.stopExtender(); // stop extender
     m_Arm.stopShoulder(); // stop raise and lower
   }
 

@@ -70,6 +70,7 @@ package frc.robot;
       public static final double k_GrabCount = -128200;
       public static final double k_targetCountRange = 5000.0;
       public static final double k_position1 = -50000.0;
+      public static final double k_rangeFactor = 0.1;
     }
 
     public static class GrabberParameters {
@@ -96,7 +97,7 @@ package frc.robot;
       //unreachable code
       public static final boolean DriveON = false;
       public static final boolean ArmON = false;
-      public static final boolean VisionON = true;
+      public static final boolean VisionON = false;
     }
 }
   
