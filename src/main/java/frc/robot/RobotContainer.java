@@ -157,7 +157,7 @@ public class RobotContainer {
     m_DriveJoystick.povRight().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
     m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
-    // m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 
