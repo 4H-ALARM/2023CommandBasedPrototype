@@ -66,11 +66,16 @@ package frc.robot;
       public static final double k_armHeight = 201000;  // arm height in extender counts
       public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
-      public static final double k_BumperCount = -15300;
-      public static final double k_GrabCount = -128200;
+      public static final double k_bumperCount = -15300;
       public static final double k_targetCountRange = 5000.0;
-      public static final double k_position1 = -50000.0;
-      public static final double k_position2 = -130000.0;
+      public static final double k_floorShoulderCount = -40000.0;
+      public static final double k_singleShoulderCount = -120000.0;
+      public static final double k_lowShoulderCount = -80000.0;
+      public static final double k_doubleShoulderCount = -128200;
+      public static final double k_floorExtendCount = -40000.0;
+      public static final double k_singleExtendCount = -120000.0;
+      public static final double k_lowExtendCount = -80000.0;
+      public static final double k_doubleExtendCount = -128200;
       public static final double k_rangeFactor = 0.1;
     }
 
