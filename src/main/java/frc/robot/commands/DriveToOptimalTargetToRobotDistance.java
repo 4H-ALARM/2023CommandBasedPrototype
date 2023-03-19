@@ -29,23 +29,23 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double targetInfo[] = new double[2];
+    double targetInfo[] = new double[3];
     targetInfo = m_v.findObject();
     double s = DriveParameters.k_driveSpeed;
     if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
-    // m_dt.drive(s,0,0);
+    m_dt.drive(s,0,0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_dt.stop();
+    m_dt.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double targetInfo[] = new double[2];
+    double targetInfo[] = new double[3];
     boolean inRange = false;
     if (m_v.targetFound() == true) {
       double a = targetInfo[2];
