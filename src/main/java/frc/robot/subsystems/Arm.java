@@ -145,13 +145,13 @@ public class Arm extends SubsystemBase {
   }
 
   public void shoulderDeploy() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
 
   public void shoulderGrab() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
@@ -162,7 +162,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lift(){
-    if ((!m_atFullRaise) && (m_armRaiseZeroed)) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     } else {
       stopShoulder();
