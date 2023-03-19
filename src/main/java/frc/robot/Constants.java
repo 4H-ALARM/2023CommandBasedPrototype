@@ -77,6 +77,8 @@ package frc.robot;
       public static final double k_lowExtendCount = -80000.0;
       public static final double k_doubleExtendCount = -128200;
       public static final double k_rangeFactor = 0.1;
+      public static final double k_clearBumperCount = -20000;
+      public static final double k_GrabCount = -20000;
     }
 
     public static class GrabberParameters {
