@@ -196,6 +196,7 @@ public class RobotContainer {
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case CENTER:
+          autCommand = new AutoSequenceCenter();
           break;
         case NONE:
           autCommand = null;
