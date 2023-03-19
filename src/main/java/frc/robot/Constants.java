@@ -69,7 +69,7 @@ package frc.robot;
       public static final double k_BumperCount = -15300;
       public static final double k_GrabCount = -128200;
       public static final double k_targetCountRange = 5000.0;
-      public static final double k_position1 = -100000.0;
+      public static final double k_position1 = -50000.0;
     }
 
     public static class GrabberParameters {
