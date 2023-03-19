@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Debug;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.ctre.phoenix.ErrorCode;
@@ -198,9 +199,12 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void initMotor(WPI_TalonFX m, boolean invert) {
+    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(false, 0,
+                                             20, 2);
       m.setInverted(invert);
       m.setNeutralMode(NeutralMode.Brake);
       m.setSelectedSensorPosition(0);
+      m.configSupplyCurrentLimit(lC, 0);
   }
 
   private double encoderToDistance(double encoderCount ) {
