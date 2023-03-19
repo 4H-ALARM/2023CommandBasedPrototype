@@ -279,7 +279,11 @@ public class Arm extends SubsystemBase {
 
   private boolean clearOfBumper() {
     boolean clear = true;
-
+    if ((m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_clearBumperCount) && 
+        (!m_atFullRetraction))
+    {
+      clear = false;
+    }
     return (clear);
   }
 
