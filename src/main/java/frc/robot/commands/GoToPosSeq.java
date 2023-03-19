@@ -10,9 +10,9 @@ import frc.robot.subsystems.Arm;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class GoToPos1Seq extends SequentialCommandGroup {
+public class GoToPosSeq extends SequentialCommandGroup {
   /** Creates a new GoToPos1Seq. */
-  public GoToPos1Seq(Arm a,double sp,double ep) {
+  public GoToPosSeq(Arm a,double sp,double ep) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));

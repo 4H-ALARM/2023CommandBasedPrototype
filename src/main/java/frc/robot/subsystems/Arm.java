@@ -95,7 +95,7 @@ public class Arm extends SubsystemBase {
         if (m_atFullRetraction) { e = 0.0; }
       } else {
         // we are extending so check for stop
-        if ((m_atFullExtension) || (!m_armExtendZeroed)) { e = 0.0; }
+        if ((m_atFullExtension) || (!m_armExtendZeroed) || (!clearOfBumper())) { e = 0.0; }
     }
     }
 
@@ -104,7 +104,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumper())) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
       stopExtender();
@@ -130,14 +130,14 @@ public class Arm extends SubsystemBase {
   }
 
   public void fullLower() {
-    if (!m_atFullLower) {
+    if ((!m_atFullLower) && (clearOfBumper())) {
       m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     }
   }
 
   public void extenderDeploy() {
     
-    if ((!m_atFullExtension) && (m_armExtendZeroed)) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumper())) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
