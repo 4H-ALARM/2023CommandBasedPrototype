@@ -52,13 +52,15 @@ public class RobotContainer {
   private final OverrideShoulder m_overrideShoulder = new OverrideShoulder(m_Arm);
   private final OverrideExtender m_overrideExtender = new OverrideExtender(m_Arm);
   private final StowArm m_StowArm = new StowArm(m_Arm);
-  private final DeployArm m_DeployArm = new DeployArm(m_Arm);
   private final LowerToBumperSeq m_LowerToBumperSeq = new LowerToBumperSeq(m_Arm);
-  private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
+  // private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
   // private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
   // private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
-  private final GoToPosSeq m_GoToPos1Seq = new GoToPosSeq(m_Arm, ArmParameters.k_position1, ArmParameters.k_position1);
-  private final GoToPosSeq m_GoToPos2Seq = new GoToPosSeq(m_Arm, ArmParameters.k_position2, ArmParameters.k_position2);
+  private final GoToPosSeq m_FloorPos = new GoToPosSeq(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
+  private final GoToPosSeq m_SinglePos = new GoToPosSeq(m_Arm, ArmParameters.k_singleShoulderCount, ArmParameters.k_singleExtendCount);
+  private final GoToPosSeq m_DoublePos = new GoToPosSeq(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
+  private final GoToPosSeq m_LowPos = new GoToPosSeq(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
+  private final DeployArm m_HighPos = new DeployArm(m_Arm);
 
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
@@ -135,19 +137,21 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.a().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.b().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.leftBumper().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
 
     // Trigger to Arm command mappings
 
     m_ArmController.button(7).onTrue(m_overrideShoulder);
     m_ArmController.button(8).onTrue(m_overrideExtender);
     m_ArmController.leftTrigger().onTrue(m_StowArm).onFalse(m_ArmStop); 
-    m_ArmController.rightTrigger().onTrue(m_DeployArm).onFalse(m_ArmStop);
+    m_ArmController.rightTrigger().onTrue(m_HighPos).onFalse(m_ArmStop);
     m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
-    m_ArmController.y().onTrue(m_ArmGrabSeq).onFalse(m_ArmStop);
-    m_ArmController.leftBumper().onTrue(m_GoToPos1Seq).onFalse(m_ArmStop);
-    m_ArmController.rightBumper().onTrue(m_GoToPos2Seq).onFalse(m_ArmStop);
+    m_ArmController.y().onTrue(m_FloorPos).onFalse(m_ArmStop);
+    m_ArmController.a().onTrue(m_SinglePos).onFalse(m_ArmStop);
+    m_ArmController.b().onTrue(m_DoublePos).onFalse(m_ArmStop);
+    m_ArmController.povDown().onTrue(m_LowPos).onFalse(m_ArmStop);
+
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
