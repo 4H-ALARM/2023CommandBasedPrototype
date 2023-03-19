@@ -195,6 +195,8 @@ public class RobotContainer {
         case CUBERIGHT:
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
+        case CENTER:
+          break;
         case NONE:
           autCommand = null;
           break;

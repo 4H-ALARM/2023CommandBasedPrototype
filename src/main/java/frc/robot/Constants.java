@@ -97,7 +97,7 @@ package frc.robot;
     }
   
     public static enum AutonomousOptions {
-      DRIVE, CUBELEFT, CUBERIGHT, NONE
+      DRIVE, CUBELEFT, CUBERIGHT, CENTER, NONE
     } 
     
     public final class Debug {
