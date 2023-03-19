@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     positionChooser.setDefaultOption("Drive", AutonomousOptions.DRIVE);
     positionChooser.addOption("Cube Left", AutonomousOptions.CUBELEFT);
     positionChooser.addOption("Cube Right", AutonomousOptions.CUBERIGHT);
+    positionChooser.addOption("Center", AutonomousOptions.CENTER);
     positionChooser.addOption("None", AutonomousOptions.NONE);
     SmartDashboard.putData("AutonomousSelection", positionChooser);
 
