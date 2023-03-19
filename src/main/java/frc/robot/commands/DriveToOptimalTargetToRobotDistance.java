@@ -30,24 +30,26 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   @Override
   public void execute() {
     double targetInfo[] = new double[3];
-    targetInfo = m_v.findObject();
-    double s = DriveParameters.k_driveSpeed;
+    targetInfo = this.m_v.findObject();
+    double s = DriveParameters.k_d
+    riveSpeed;
     if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
-    m_dt.drive(s,0,0);
+    this.m_dt.drive(s,0,0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_dt.stop();
+    this.m_dt.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     double targetInfo[] = new double[3];
+    targetInfo = this.m_v.findObject();
     boolean inRange = false;
-    if (m_v.targetFound() == true) {
+    if (this.m_v.targetFound() == true) {
       double a = targetInfo[2];
       if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = true;}
     }
