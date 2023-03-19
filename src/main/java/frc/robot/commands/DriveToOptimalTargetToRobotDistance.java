@@ -31,8 +31,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   public void execute() {
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
-    double s = DriveParameters.k_d
-    riveSpeed;
+    double s = DriveParameters.k_driveSpeed;
     if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
     this.m_dt.drive(s,0,0);
   }
