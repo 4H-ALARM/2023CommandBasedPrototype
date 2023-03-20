@@ -79,7 +79,7 @@ public class Arm extends SubsystemBase {
     } else {
       // check to see if we should stop lowering
       if (r > 0) {
-        if ((m_atFullLower) || (!m_safeToLower) || (!clearOfBumper())) { r = 0.0; }
+        if ((m_atFullLower) || (!m_safeToLower) || (!clearOfBumperForRaise())) { r = 0.0; }
       } else {
         // we are raising so check for stop
         if ((m_atFullRaise) || (!m_armRaiseZeroed)) { r = 0.0; }
@@ -95,7 +95,7 @@ public class Arm extends SubsystemBase {
         if (m_atFullRetraction) { e = 0.0; }
       } else {
         // we are extending so check for stop
-        if ((m_atFullExtension) || (!m_armExtendZeroed) || (!clearOfBumper())) { e = 0.0; }
+        if ((m_atFullExtension) || (!m_armExtendZeroed) || (!clearOfBumperForExtend())) { e = 0.0; }
     }
     }
 
@@ -104,7 +104,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumper())) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend())) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
       stopExtender();
@@ -130,14 +130,14 @@ public class Arm extends SubsystemBase {
   }
 
   public void fullLower() {
-    if ((!m_atFullLower) && (clearOfBumper())) {
+    if ((!m_atFullLower) && (clearOfBumperForRaise())) {
       m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     }
   }
 
   public void extenderDeploy() {
     
-    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumper())) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend())) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
@@ -145,13 +145,13 @@ public class Arm extends SubsystemBase {
   }
 
   public void shoulderDeploy() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
 
   public void shoulderGrab() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
@@ -162,7 +162,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lift(){
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumper())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     } else {
       stopShoulder();
@@ -277,7 +277,7 @@ public class Arm extends SubsystemBase {
     }
   }
 
-  private boolean clearOfBumper() {
+  private boolean clearOfBumperForRaise() {
     boolean clear = true;
     if ((m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_clearBumperCount) && 
         (!m_atFullRetraction))
@@ -287,6 +287,14 @@ public class Arm extends SubsystemBase {
     return (clear);
   }
 
+  private boolean clearOfBumperForExtend() {
+    boolean clear = true;
+    if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_clearBumperCount)
+    {
+      clear = false;
+    }
+    return (clear);
+  }
   //TODO correct the limits for these checks
   private void checkSafeToLower() {
     if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_startStowCount) {
