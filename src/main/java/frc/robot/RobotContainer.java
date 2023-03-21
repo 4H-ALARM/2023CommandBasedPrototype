@@ -57,7 +57,7 @@ public class RobotContainer {
   // private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
   // private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
   private final GoToPosSeq m_FloorPos = new GoToPosSeq(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
-  private final GoToPosSeq m_SinglePos = new GoToPosSeq(m_Arm, ArmParameters.k_singleShoulderCount, ArmParameters.k_singleExtendCount);
+  private final GoToPosParallel m_SinglePos = new GoToPosParallel(m_Arm, ArmParameters.k_singleShoulderCount, ArmParameters.k_singleExtendCount);
   private final GoToPosSeq m_DoublePos = new GoToPosSeq(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
   private final GoToPosSeq m_LowPos = new GoToPosSeq(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
   private final DeployArm m_HighPos = new DeployArm(m_Arm);
