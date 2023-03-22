@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Arm;
+import frc.robot.Constants.ArmParameters;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,6 +16,22 @@ public class GoToPosSeq extends SequentialCommandGroup {
   public GoToPosSeq(Arm a,double sp,double ep) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));
+    double shoulderCount = Math.abs(a.getShoulderCount());
+    double extendCount = Math.abs(a.getExtenderCount());
+    boolean up = (shoulderCount < sp);
+    boolean out = (extendCount < ep);
+    if (up){
+      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
+        addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));
+      } else {
+        addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));
+      }
+    } else {
+      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
+        addCommands(new ArmExtendToCount(a, ep), new ArmPositionToCount(a,sp));
+      } else {
+        addCommands(new ArmExtendToCount(a, ep), new ArmPositionToCount(a,sp));
+      }
+    }
   }
 }
