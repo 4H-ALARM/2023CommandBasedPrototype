@@ -199,8 +199,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void initMotor(WPI_TalonFX m, boolean invert) {
-    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(false, 0,
-                                             20, 2);
+    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(false, 10,
+                                             40, 2);
       m.setInverted(invert);
       m.setNeutralMode(NeutralMode.Brake);
       m.setSelectedSensorPosition(0);

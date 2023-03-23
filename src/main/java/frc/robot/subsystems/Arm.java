@@ -39,7 +39,7 @@ public class Arm extends SubsystemBase {
   
   /** Creates a new Arm. */
   public Arm () {
-    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(true, 0,
+    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(true, 10,
                                              20, 2);
 
     m_Shoulder.setInverted(true);
