@@ -96,6 +96,24 @@ public class vision extends SubsystemBase {
     return(found);
   }
 
+  public boolean targetFoundLeft() {
+    boolean found = false;
+    double id = m_tid.getDouble(0.0)+VisionParameters.k_offset;
+    if (id != -1) {       
+      if (Math.abs(m_tx.getDouble(10))<= VisionParameters.k_xTargetBounds) {found = true;}
+    }
+    return(found);
+  }
+
+  public boolean targetFoundRight() {
+    boolean found = false;
+    double id = m_tid.getDouble(0.0)-VisionParameters.k_offset;
+    if (id != -1) {       
+      if (Math.abs(m_tx.getDouble(10))<= VisionParameters.k_xTargetBounds) {found = true;}
+    }
+    return(found);
+  }
+
   /**
    * Gets the vision returns from the pipeline selected
    *

@@ -56,10 +56,10 @@ public class RobotContainer {
   // private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
   // private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
   // private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
-  private final GoToPosSeq m_FloorPos = new GoToPosSeq(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
+  private final GoToPosParallel m_FloorPos = new GoToPosParallel(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
   private final GoToPosParallel m_SinglePos = new GoToPosParallel(m_Arm, ArmParameters.k_singleShoulderCount, ArmParameters.k_singleExtendCount);
-  private final GoToPosSeq m_DoublePos = new GoToPosSeq(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
-  private final GoToPosSeq m_LowPos = new GoToPosSeq(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
+  private final GoToPosParallel m_DoublePos = new GoToPosParallel(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
+  private final GoToPosParallel m_LowPos = new GoToPosParallel(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
   private final DeployArm m_HighPos = new DeployArm(m_Arm);
 
   // Drive Commands note these are in addition to the default 
@@ -189,14 +189,23 @@ public class RobotContainer {
       switch(sp) {
         case DRIVE:
           break;
-        case CUBELEFT:
+        case OUTSIDELEFT:
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
           break;
-        case CUBERIGHT:
+        case OUTSIDERIGHT:
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
-        case CENTER:
-          autCommand = new AutoSequenceCenter();
+        case CENTERLEFT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case CENTERRIGHT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case BALANCELEFT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case BALANCERIGHT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case NONE:
           autCommand = null;

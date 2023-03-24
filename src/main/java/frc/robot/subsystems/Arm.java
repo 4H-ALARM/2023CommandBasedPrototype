@@ -104,7 +104,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void extend(){
-    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend())) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend()) && (clearOfFloorForExtend(true))) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     } else {
       stopExtender();
@@ -130,14 +130,14 @@ public class Arm extends SubsystemBase {
   }
 
   public void fullLower() {
-    if ((!m_atFullLower) && (clearOfBumperForRaise())) {
+    if ((!m_atFullLower) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(false))) {
       m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     }
   }
 
   public void extenderDeploy() {
     
-    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend())) {
+    if ((!m_atFullExtension) && (m_armExtendZeroed) && (clearOfBumperForExtend()) && (clearOfFloorForExtend(true))) {
       m_armExtender.set(ArmParameters.k_armExtendSpeed);
     }
     
@@ -145,13 +145,13 @@ public class Arm extends SubsystemBase {
   }
 
   public void shoulderDeploy() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(true))) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
 
   public void shoulderGrab() {
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(true))) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
@@ -162,7 +162,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lift(){
-    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise())) {
+    if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(true))) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     } else {
       stopShoulder();
@@ -170,7 +170,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void lower() {
-    if ((!m_atFullLower) && (m_safeToLower)) {
+    if ((!m_atFullLower) && (m_safeToLower) && (clearOfFloorForRaise(false))) {
       m_Shoulder.set(ArmParameters.k_armLowerSpeed);
     } else {
       stopShoulder();
@@ -295,6 +295,64 @@ public class Arm extends SubsystemBase {
     }
     return (clear);
   }
+
+  private boolean clearOfFloorForExtend(boolean up) {
+    double shoulderCount = Math.abs(getShoulderCount());
+    double extendCount = Math.abs(getExtenderCount());
+    double maxH = calculateHypotenus(shoulderCount) - ArmParameters.k_hypSafety;
+    double currentH = ArmParameters.k_shortestArmLength + extendCount;
+    if (up){
+      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
+        if (currentH >= maxH){
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
+        return true;
+      } else {
+        if (isArmRetracted()) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }
+  }
+
+    private boolean clearOfFloorForRaise(boolean up) {
+      double shoulderCount = Math.abs(getShoulderCount());
+      double extendCount = Math.abs(getExtenderCount());
+      double maxH = calculateHypotenus(shoulderCount) - ArmParameters.k_hypSafety;
+      double currentH = ArmParameters.k_shortestArmLength + extendCount;
+      if (up){
+        return true;
+      } else {
+        if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
+          if (currentH >= maxH){
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          if (isArmRetracted()) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    // if (m_Shoulder.getSelectedSensorPosition() > ArmParameters.k_clearBumperCount)
+    // {
+    //   clear = false;
+    // }
+    // return (clear);
+  }
+
   //TODO correct the limits for these checks
   private void checkSafeToLower() {
     if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_startStowCount) {
@@ -347,12 +405,13 @@ public class Arm extends SubsystemBase {
     return (ec);
   }
 
-  private double calculateHypotenus(double shoulderCount) {
+  public double calculateHypotenus(double shoulderCount) {
     double h = 0.0;
-    double angleInRadians = Math.abs(shoulderCount) * ArmParameters.k_armRadianPerCount;
+    double angleInRadians = Math.abs(shoulderCount) * ArmParameters.k_armRadianPerCount + ArmParameters.k_stowAngle;
     double cosAngle = Math.cos(angleInRadians);
-
-    if (cosAngle != 0) {
+    if (angleInRadians >= 3.14159265358979/2){
+      h = 9999999999999999.0;
+    } else if (cosAngle != 0) {
       h = ArmParameters.k_armHeight/cosAngle;
     }
     if (Debug.ArmON) {
