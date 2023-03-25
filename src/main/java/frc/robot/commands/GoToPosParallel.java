@@ -16,24 +16,6 @@ public class GoToPosParallel extends ParallelCommandGroup {
   public GoToPosParallel(Arm a,double sp,double ep) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    double shoulderCount = Math.abs(a.getShoulderCount());
-    boolean up = (shoulderCount < sp);
-    if (up){
-      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
-        addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));
-      } else {
-        addCommands(new ArmPositionToCount(a,sp));
-      }
-    } else {
-      if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
-        addCommands(new ArmExtendToCount(a, ep), new ArmPositionToCount(a,sp));
-      } else {
-        if (a.isArmRetracted()) {
-          addCommands(new ArmPositionToCount(a,sp));
-        } else {
-          addCommands(new ArmExtendToCount(a, ep));
-        }
-      }
-    }
+    addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));
   }
 }

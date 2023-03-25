@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.vision;
 
-public class DriveToTargetOnLeft extends CommandBase {
+public class DriveTraverseToTargetOnLeft extends CommandBase {
   private Drivetrain m_dt;
   private vision m_v;
 
   private boolean m_goLeft = false;
 
   /** Creates a new DriveTraverse. */
-  public DriveToTargetOnLeftain dt, vision v, boolean goLeft) {
+  public DriveTraverseToTargetOnLeft (Drivetrain dt, vision v, boolean goLeft) {
     this.m_dt = dt;
     this.m_v = v;
     this.m_goLeft = goLeft;
