@@ -14,9 +14,9 @@ import frc.robot.Constants.DriveParameters;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoSequenceCenter extends SequentialCommandGroup {
-  /** Creates a new AutoSequenceFromCenter. */
-  public AutoSequenceCenter(Drivetrain dt, Arm a, vision v, Grabber g, boolean goLeft) {
+public class AutoSequenceBalance extends SequentialCommandGroup {
+  /** Creates a new AutoSequenceCenter. */
+  public AutoSequenceBalance(Drivetrain dt, Arm a, vision v, Grabber g, boolean goLeft) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new GrabberClose(g).withTimeout(1.5),
@@ -28,6 +28,10 @@ public class AutoSequenceCenter extends SequentialCommandGroup {
                 new ExtenderDeploy(a),
                 new GrabberOpen(g).withTimeout(3),
                 new GrabberStop(g),
+                new FullRetract(a),
+                new FullLower(a),
+                new DriveAtAngleForDistance(dt, 0.5, 0.0, 8.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
+                // new DriveBalance(dt),
                 new DriveStop(dt));
   }
 }

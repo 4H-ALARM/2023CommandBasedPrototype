@@ -65,6 +65,7 @@ package frc.robot;
       public static final double k_armRadianPerCount = Math.toRadians(90.0)/145000.0; // ~145K in 90 degrees
       public static final double k_armHeight = 201000;  // arm height in extender counts
       public static final double k_shortestArmLength = 230000; // length of the fixed portion of the arm in extender counts
+      public static final double k_hypSafety = 1000;  // safety to ensure arm doesn't hit floor when using hypotenuse calculation
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
       public static final double k_bumperCount = -15300;
       public static final double k_targetCountRange = 5000.0;
@@ -77,8 +78,9 @@ package frc.robot;
       public static final double k_lowExtendCount = -80000.0;
       public static final double k_doubleExtendCount = -128200;
       public static final double k_rangeFactor = 0.1;
-      public static final double k_clearBumperCount = -20000;
+      public static final double k_clearBumperCount = -17500;
       public static final double k_GrabCount = -128200;
+      public static final double k_stowAngle = Math.PI/7.1;
     }
 
     public static class GrabberParameters {
@@ -94,17 +96,18 @@ package frc.robot;
       public static final int k_conePipeline = 1;
       public static final int k_cubePipeline = 2;
       public static final double k_xTargetBounds = 2.0;  //+- degrees
+      public static final double k_offset = 8.0;
     }
   
     public static enum AutonomousOptions {
-      DRIVE, CUBELEFT, CUBERIGHT, CENTER, NONE
+      DRIVE, OUTSIDELEFT, OUTSIDERIGHT, CENTERLEFT, CENTERRIGHT, BALANCELEFT, BALANCERIGHT, NONE
     } 
     
     public final class Debug {
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
+      public static final boolean ArmON = true;
       public static final boolean VisionON = false;
     }
 }

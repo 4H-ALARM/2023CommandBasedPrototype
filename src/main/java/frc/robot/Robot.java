@@ -40,9 +40,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     positionChooser.setDefaultOption("Drive", AutonomousOptions.DRIVE);
-    positionChooser.addOption("Cube Left", AutonomousOptions.CUBELEFT);
-    positionChooser.addOption("Cube Right", AutonomousOptions.CUBERIGHT);
-    positionChooser.addOption("Center", AutonomousOptions.CENTER);
+    positionChooser.addOption("Outside Left", AutonomousOptions.OUTSIDELEFT);
+    positionChooser.addOption("Outside Right", AutonomousOptions.OUTSIDERIGHT);
+    positionChooser.addOption("Center Left", AutonomousOptions.CENTERLEFT);
+    positionChooser.addOption("Center Right", AutonomousOptions.CENTERRIGHT);
+    positionChooser.addOption("Balance Left", AutonomousOptions.BALANCELEFT);
+    positionChooser.addOption("Balance Right", AutonomousOptions.BALANCERIGHT);
     positionChooser.addOption("None", AutonomousOptions.NONE);
     SmartDashboard.putData("AutonomousSelection", positionChooser);
 

@@ -17,9 +17,7 @@ public class GoToPosSeq extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     double shoulderCount = Math.abs(a.getShoulderCount());
-    double extendCount = Math.abs(a.getExtenderCount());
     boolean up = (shoulderCount < sp);
-    boolean out = (extendCount < ep);
     if (up){
       if (shoulderCount > Math.abs(ArmParameters.k_clearBumperCount)){
         addCommands(new ArmPositionToCount(a,sp), new ArmExtendToCount(a, ep));

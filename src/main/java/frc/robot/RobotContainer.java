@@ -56,10 +56,10 @@ public class RobotContainer {
   // private final ArmGrabSeq m_ArmGrabSeq = new ArmGrabSeq(m_Arm);
   // private final ArmPositionToCount m_armPosition1 = new ArmPositionToCount(m_Arm, ArmParameters.k_position1);
   // private final ArmExtendToCount m_armExtendPosition1 = new ArmExtendToCount(m_Arm, ArmParameters.k_position1);
-  private final GoToPosSeq m_FloorPos = new GoToPosSeq(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
+  private final GoToPosParallel m_FloorPos = new GoToPosParallel(m_Arm, ArmParameters.k_floorShoulderCount, ArmParameters.k_floorExtendCount);
   private final GoToPosParallel m_SinglePos = new GoToPosParallel(m_Arm, ArmParameters.k_singleShoulderCount, ArmParameters.k_singleExtendCount);
-  private final GoToPosSeq m_DoublePos = new GoToPosSeq(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
-  private final GoToPosSeq m_LowPos = new GoToPosSeq(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
+  private final GoToPosParallel m_DoublePos = new GoToPosParallel(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
+  private final GoToPosParallel m_LowPos = new GoToPosParallel(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
   private final DeployArm m_HighPos = new DeployArm(m_Arm);
 
   // Drive Commands note these are in addition to the default 
@@ -137,31 +137,31 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.leftBumper().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.rightBumper().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.leftBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().whileTrue(m_GrabberClose).onFalse(m_GrabberStop);
 
     // Trigger to Arm command mappings
 
     m_ArmController.button(7).onTrue(m_overrideShoulder);
     m_ArmController.button(8).onTrue(m_overrideExtender);
-    m_ArmController.leftTrigger().onTrue(m_StowArm).onFalse(m_ArmStop); 
-    m_ArmController.rightTrigger().onTrue(m_HighPos).onFalse(m_ArmStop);
-    m_ArmController.x().onTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
-    m_ArmController.y().onTrue(m_FloorPos).onFalse(m_ArmStop);
-    m_ArmController.a().onTrue(m_SinglePos).onFalse(m_ArmStop);
-    m_ArmController.b().onTrue(m_DoublePos).onFalse(m_ArmStop);
-    m_ArmController.povDown().onTrue(m_LowPos).onFalse(m_ArmStop);
+    m_ArmController.leftTrigger().whileTrue(m_StowArm).onFalse(m_ArmStop); 
+    m_ArmController.rightTrigger().whileTrue(m_HighPos).onFalse(m_ArmStop);
+    m_ArmController.x().whileTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
+    m_ArmController.y().whileTrue(m_FloorPos).onFalse(m_ArmStop);
+    m_ArmController.a().whileTrue(m_SinglePos).onFalse(m_ArmStop);
+    m_ArmController.b().whileTrue(m_DoublePos).onFalse(m_ArmStop);
+    m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
 
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
     m_DriveJoystick.b().onTrue((m_switchPerspective));
     m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
-    m_DriveJoystick.povLeft().onTrue(m_TraverseLeftToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.povRight().onTrue(m_TraverseRightToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.povUp().onTrue(m_RotateLeftToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.povDown().onTrue(m_RotateRightToTarget).toggleOnFalse(m_driveStop);
-    m_DriveJoystick.x().onTrue(m_DriveToOptimalTargetToRobotDistance).toggleOnFalse(m_driveStop);
+    m_DriveJoystick.povLeft().whileTrue(m_TraverseLeftToTarget).onFalse(m_driveStop);
+    m_DriveJoystick.povRight().whileTrue(m_TraverseRightToTarget).onFalse(m_driveStop);
+    m_DriveJoystick.povUp().whileTrue(m_RotateLeftToTarget).onFalse(m_driveStop);
+    m_DriveJoystick.povDown().whileTrue(m_RotateRightToTarget).onFalse(m_driveStop);
+    m_DriveJoystick.x().whileTrue(m_DriveToOptimalTargetToRobotDistance).onFalse(m_driveStop);
 
 
     // Trigger to Vision command mappings 
@@ -189,14 +189,23 @@ public class RobotContainer {
       switch(sp) {
         case DRIVE:
           break;
-        case CUBELEFT:
+        case OUTSIDELEFT:
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, true);
           break;
-        case CUBERIGHT:
+        case OUTSIDERIGHT:
           autCommand = new AutoSequencePlaceCube(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
-        case CENTER:
-          autCommand = new AutoSequenceCenter();
+        case CENTERLEFT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case CENTERRIGHT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case BALANCELEFT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
+          break;
+        case BALANCERIGHT:
+          autCommand = new AutoSequenceBalance(m_robotDrive, m_Arm, m_vision, m_grabberSubsystem, false);
           break;
         case NONE:
           autCommand = null;
