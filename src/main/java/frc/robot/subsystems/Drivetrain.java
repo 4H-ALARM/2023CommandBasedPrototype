@@ -97,6 +97,8 @@ public class Drivetrain extends SubsystemBase {
       m_r = r;      
     }    
 
+    SmartDashboard.putNumber("X In", x_squared); //TODO remove
+
     if (m_fieldRelative) {
       m_drive.driveCartesian(x_squared, y_squared, r, m_rotation);
     } else {
@@ -205,6 +207,7 @@ public class Drivetrain extends SubsystemBase {
       m.setNeutralMode(NeutralMode.Brake);
       m.setSelectedSensorPosition(0);
       m.configSupplyCurrentLimit(lC, 0);
+      m.configOpenloopRamp(0.1);
   }
 
   private double encoderToDistance(double encoderCount ) {
@@ -240,6 +243,8 @@ public class Drivetrain extends SubsystemBase {
   private void updateDashboard() {   
     SmartDashboard.putBoolean("Perspective",m_fieldRelative);
     SmartDashboard.putBoolean("Maintain Heading",m_autoMaintainHeading);
+    
+    
 
 
     if (Debug.DriveON) {

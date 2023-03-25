@@ -33,7 +33,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
     double s = DriveParameters.k_driveSpeed;
-    s = s * m_error * 0.1;
+    s = s * m_error * DriveParameters.k_optimalDistanceErrorGain;
     if (s > 0.5) {s = 0.5;}
     if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
     this.m_dt.drive(s,0,0);
@@ -50,12 +50,14 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   public boolean isFinished() {
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
-    boolean inRange = false;
-    if (this.m_v.targetFound() == true) {
+    boolean stop = false;
+    if (this.m_v.targetFound()) {
       double a = targetInfo[2];
       m_error = Math.abs(a - DriveParameters.k_targetArea);
-      if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {inRange = true;}
+      if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {stop = true;}
+  } else {
+      stop = true;
     }
-    return inRange;
+    return stop;
   }
 }
