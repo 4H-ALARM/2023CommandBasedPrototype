@@ -11,6 +11,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Debug;
+import frc.robot.commands.limeLightOff;
+import frc.robot.commands.limeLightOn;
 
 
 public class vision extends SubsystemBase {
@@ -80,10 +82,13 @@ public class vision extends SubsystemBase {
 
   public void swapPipeline() {
     m_currentPipeline++;
-    if (m_currentPipeline > VisionParameters.k_maxPipeline) {
-      m_currentPipeline = 0.0;
-    } 
-    m_pipeLine.setNumber(m_currentPipeline);
+    if (m_currentPipeline == VisionParameters.k_aprilTagPipeline) {
+      m_currentPipeline = VisionParameters.k_retrotapePipeline;
+      off();
+    } else {
+      m_currentPipeline = VisionParameters.k_aprilTagPipeline;
+      on();
+    }
   }
 
 

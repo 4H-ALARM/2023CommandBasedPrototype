@@ -137,8 +137,8 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.leftBumper().onTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.rightBumper().onTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.leftBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().whileTrue(m_GrabberClose).onFalse(m_GrabberStop);
 
     // Trigger to Arm command mappings
 

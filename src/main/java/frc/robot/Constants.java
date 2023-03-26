@@ -40,7 +40,7 @@ package frc.robot;
       public static final double k_traverseSpeed = 0.5; //TODO measure and correct this
       public static final double k_rotateSpeed = 0.4;
       public static final double k_driveSpeed = 0.2;
-      public static final double k_optimalDistanceErrorGain = 2;
+      public static final double k_optimalDistanceErrorGain = 3;
       public static final double k_targetArea = 4; //TODO adjust value based on testing
       public static final double k_minTargetArea = 3.5; //TODO adjust value based on testing
       public static final double k_maxTargetArea = 4.5; //TODO adjust value based on testing
@@ -94,6 +94,7 @@ package frc.robot;
       public static final int k_aprilTagPipeline = 0;
       public static final int k_conePipeline = 1;
       public static final int k_cubePipeline = 2;
+      public static final int k_retrotapePipeline = 3;
       public static final double k_xTargetBounds = 2.0;  //+- degrees
     }
   
