@@ -38,6 +38,7 @@ public class RobotContainer {
   private final Grabber m_grabberSubsystem = new Grabber();
   private final Arm m_Arm = new Arm();
   private final vision m_vision = new vision();
+  private final Leds m_leds = new Leds();
   // End subsystems *****************************************************
 
   // Robot's commands  **************************************************
