@@ -25,7 +25,7 @@ public class Grabber extends SubsystemBase {
     m_clawMotor.setNeutralMode(NeutralMode.Brake);
     m_clawMotor.configContinuousCurrentLimit(2);
     m_clawMotor.configPeakCurrentLimit(5);
-    m_clawMotor.enableCurrentLimit(true);    
+    m_clawMotor.enableCurrentLimit(false);    
   }
 
   public void open(){ 
