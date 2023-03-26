@@ -81,13 +81,12 @@ public class vision extends SubsystemBase {
   }
 
   public void swapPipeline() {
-    m_currentPipeline++;
     if (m_currentPipeline == VisionParameters.k_aprilTagPipeline) {
       m_currentPipeline = VisionParameters.k_retrotapePipeline;
-      off();
+      on();
     } else {
       m_currentPipeline = VisionParameters.k_aprilTagPipeline;
-      on();
+      off();
     }
   }
 
