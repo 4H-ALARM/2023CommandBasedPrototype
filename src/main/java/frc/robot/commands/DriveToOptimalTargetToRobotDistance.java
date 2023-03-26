@@ -48,13 +48,22 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    double pipe = m_v.getPipeline();
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
     boolean stop = false;
+    double area = DriveParameters.k_targetArea;
+    double minArea = DriveParameters.k_minTargetArea;
+    double maxArea = DriveParameters.k_maxTargetArea;
+    if (pipe != 0) {
+      area = DriveParameters.k_targetArea;
+      minArea = DriveParameters.k_minTargetArea;
+      maxArea = DriveParameters.k_maxTargetArea;
+    }
     if (this.m_v.targetFound()) {
       double a = targetInfo[2];
-      m_error = Math.abs(a - DriveParameters.k_targetArea);
-      if ((a>DriveParameters.k_minTargetArea) && (a<DriveParameters.k_maxTargetArea)) {stop = true;}
+      m_error = Math.abs(a - area);
+      if ((a>minArea) && (a<maxArea)) {stop = true;}
   } else {
       stop = true;
     }

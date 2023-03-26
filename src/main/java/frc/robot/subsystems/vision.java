@@ -134,14 +134,8 @@ public class vision extends SubsystemBase {
     return(targetInfo);
   }
 
-  public boolean foundObject() {
-    boolean found = false;
-    if (m_currentPipeline == VisionParameters.k_aprilTagPipeline){
-      found = targetFound();
-    } else {
-    if (m_llpythonReturn[0] == 74) { found = true;}
-    }
-    return(found);
+  public double getPipeline() {
+    return(m_currentPipeline);
   }
 
   /**
