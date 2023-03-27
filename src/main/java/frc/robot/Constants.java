@@ -109,8 +109,8 @@ package frc.robot;
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
-      public static final boolean VisionON = true;
+      public static final boolean ArmON = true;
+      public static final boolean VisionON = false;
     }
 }
   

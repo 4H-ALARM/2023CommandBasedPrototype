@@ -48,6 +48,9 @@ public class RobotContainer {
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
 
+  // Leds commands
+  private final changeLedcolor m_changeLedcolor = new changeLedcolor(m_leds);
+
   // Arm Commands
   private final ArmStop m_ArmStop = new ArmStop(m_Arm);
   private final OverrideShoulder m_overrideShoulder = new OverrideShoulder(m_Arm);
@@ -170,6 +173,8 @@ public class RobotContainer {
     m_DriveJoystick.button(8).onTrue(m_limeLightOff);
     m_DriveJoystick.rightTrigger().onTrue(m_swapPipeline);
 
+    // Trigger to Leds command mappings
+    m_ArmController.povUp().onTrue(m_changeLedcolor);
   }
 
   /**

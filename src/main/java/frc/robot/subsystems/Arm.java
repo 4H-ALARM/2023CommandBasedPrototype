@@ -39,8 +39,8 @@ public class Arm extends SubsystemBase {
   
   /** Creates a new Arm. */
   public Arm () {
-    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(true, 10,
-                                             20, 2);
+    SupplyCurrentLimitConfiguration lC = new SupplyCurrentLimitConfiguration(true, 2,
+                                             5, 2);
 
     m_Shoulder.setInverted(true);
     m_Shoulder.setNeutralMode(NeutralMode.Brake);
@@ -437,6 +437,7 @@ public class Arm extends SubsystemBase {
       SmartDashboard.putNumber("ShoulCnt", m_Shoulder.getSelectedSensorPosition());
       SmartDashboard.putNumber("ExtSp", m_armExtender.get());
       SmartDashboard.putNumber("ExtCnt", m_armExtender.getSelectedSensorPosition());
+      SmartDashboard.putNumber("ASC", m_armExtender.getSupplyCurrent());
     }
   }
 
