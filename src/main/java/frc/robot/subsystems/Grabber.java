@@ -23,9 +23,9 @@ public class Grabber extends SubsystemBase {
   public Grabber() {
     m_clawMotor.setInverted(true);
     m_clawMotor.setNeutralMode(NeutralMode.Brake);
-    m_clawMotor.configContinuousCurrentLimit(2);
-    m_clawMotor.configPeakCurrentLimit(5);
-    m_clawMotor.enableCurrentLimit(false);    
+    m_clawMotor.configContinuousCurrentLimit(10);
+    m_clawMotor.configPeakCurrentLimit(20); 
+       
   }
 
   public void open(){ 
@@ -54,6 +54,9 @@ public class Grabber extends SubsystemBase {
   private void updateDashboard() {
     if (Debug.ArmON) {
       SmartDashboard.putNumber("Grab Current", m_current);
+      SmartDashboard.putNumber("GBV", m_clawMotor.getBusVoltage());
+      SmartDashboard.putNumber("GMOV", m_clawMotor.getMotorOutputVoltage());
+      SmartDashboard.putNumber("GSC", m_clawMotor.getSupplyCurrent());
     }
   }
 
