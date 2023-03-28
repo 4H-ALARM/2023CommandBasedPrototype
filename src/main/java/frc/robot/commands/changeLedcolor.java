@@ -40,7 +40,7 @@ public class changeLedcolor extends CommandBase {
       m_Leds.setRGB(255,0,255);
         break;
       case 3:
-      m_counter = 0;
+      m_counter = -1;
         break;
     }
 
