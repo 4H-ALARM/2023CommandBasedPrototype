@@ -46,6 +46,7 @@ public class RobotContainer {
   // Grabber commands
   private final GrabberOpen m_GrabberOpen = new GrabberOpen(m_grabberSubsystem);
   private final GrabberStop m_GrabberStop = new GrabberStop(m_grabberSubsystem);
+  private final GrabberSlow m_GrabberSlow = new GrabberSlow(m_grabberSubsystem);
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
 
   // Leds commands
@@ -142,7 +143,7 @@ public class RobotContainer {
     
      // Trigger to Grabber command mappings
     m_ArmController.leftBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
-    m_ArmController.rightBumper().whileTrue(m_GrabberClose).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().whileTrue(m_GrabberClose).onFalse(m_GrabberSlow);
 
     // Trigger to Arm command mappings
 
@@ -151,9 +152,9 @@ public class RobotContainer {
     m_ArmController.leftTrigger().whileTrue(m_StowArm).onFalse(m_ArmStop); 
     m_ArmController.rightTrigger().whileTrue(m_HighPos).onFalse(m_ArmStop);
     m_ArmController.x().whileTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
-    m_ArmController.y().whileTrue(m_FloorPos).onFalse(m_ArmStop);
-    m_ArmController.a().whileTrue(m_SinglePos).onFalse(m_ArmStop);
-    m_ArmController.b().whileTrue(m_DoublePos).onFalse(m_ArmStop);
+    m_ArmController.a().whileTrue(m_FloorPos).onFalse(m_ArmStop);
+    m_ArmController.b().whileTrue(m_SinglePos).onFalse(m_ArmStop);
+    m_ArmController.y().whileTrue(m_DoublePos).onFalse(m_ArmStop);
     m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
 
 

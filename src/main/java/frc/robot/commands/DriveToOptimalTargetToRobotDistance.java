@@ -35,7 +35,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
     double s = DriveParameters.k_driveSpeed;
     s = s * m_error * DriveParameters.k_optimalDistanceErrorGain;
     if (s > 0.5) {s = 0.5;}
-    if (targetInfo[2] < DriveParameters.k_targetArea ){s = -s;}
+    if (targetInfo[2] < DriveParameters.k_targetAreaApril ){s = -s;}
     this.m_dt.drive(s,0,0);
   }
 
@@ -52,13 +52,13 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
     boolean stop = false;
-    double area = DriveParameters.k_targetArea;
-    double minArea = DriveParameters.k_minTargetArea;
-    double maxArea = DriveParameters.k_maxTargetArea;
+    double area = DriveParameters.k_targetAreaApril;
+    double minArea = DriveParameters.k_minAprilTargetArea;
+    double maxArea = DriveParameters.k_maxAprilTargetArea;
     if (pipe != 0) {
-      area = DriveParameters.k_targetArea;
-      minArea = DriveParameters.k_minTargetArea;
-      maxArea = DriveParameters.k_maxTargetArea;
+      area = DriveParameters.k_targetAreaRetro;
+      minArea = DriveParameters.k_minRetroTargetArea;
+      maxArea = DriveParameters.k_maxRetroTargetArea;
     }
     if (this.m_v.targetFound()) {
       double a = targetInfo[2];

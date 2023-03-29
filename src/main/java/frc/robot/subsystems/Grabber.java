@@ -40,6 +40,10 @@ public class Grabber extends SubsystemBase {
     m_clawMotor.set(0.0);
   }
 
+  public void slow() {
+    m_clawMotor.set(0.15);
+  }
+
   @Override
   public void periodic() { 
     readCurrent();
@@ -57,6 +61,7 @@ public class Grabber extends SubsystemBase {
       SmartDashboard.putNumber("GBV", m_clawMotor.getBusVoltage());
       SmartDashboard.putNumber("GMOV", m_clawMotor.getMotorOutputVoltage());
       SmartDashboard.putNumber("GSC", m_clawMotor.getSupplyCurrent());
+      SmartDashboard.putNumber("GV", m_clawMotor.getSelectedSensorVelocity());
     }
   }
 

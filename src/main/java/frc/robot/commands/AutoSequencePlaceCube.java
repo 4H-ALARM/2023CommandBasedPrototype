@@ -28,8 +28,8 @@ public class AutoSequencePlaceCube extends SequentialCommandGroup {
                 new ExtenderDeploy(a),
                 new GrabberOpen(g).withTimeout(3),
                 new GrabberStop(g),
-                new DriveTraverse(dt, goLeft).withTimeout(2),
-                new DriveAtAngleForDistance(dt, 0.5, 0.0, 15.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
+                new DriveTraverse(dt, goLeft).withTimeout(1),
+                new DriveAtAngleForDistance(dt, 0.5, 0.0, 8.0).withTimeout(DriveParameters.k_autonmousDriveTimeOut),
                 new DriveStop(dt));
   }
 }
