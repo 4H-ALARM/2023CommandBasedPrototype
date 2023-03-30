@@ -66,6 +66,7 @@ public class RobotContainer {
   private final GoToPosParallel m_DoublePos = new GoToPosParallel(m_Arm, ArmParameters.k_doubleShoulderCount, ArmParameters.k_doubleExtendCount);
   private final GoToPosParallel m_LowPos = new GoToPosParallel(m_Arm, ArmParameters.k_lowShoulderCount, ArmParameters.k_lowExtendCount);
   private final DeployArm m_HighPos = new DeployArm(m_Arm);
+  private final ArmBumpDown m_bumpDown = new ArmBumpDown(m_Arm);
 
   // Drive Commands note these are in addition to the default 
   // joystick controlled driving in teleop
@@ -146,7 +147,6 @@ public class RobotContainer {
     m_ArmController.rightBumper().whileTrue(m_GrabberClose); //.onFalse(m_GrabberSlow);
 
     // Trigger to Arm command mappings
-
     m_ArmController.button(7).onTrue(m_overrideShoulder);
     m_ArmController.button(8).onTrue(m_overrideExtender);
     m_ArmController.leftTrigger().whileTrue(m_StowArm).onFalse(m_ArmStop); 
@@ -156,7 +156,10 @@ public class RobotContainer {
     m_ArmController.b().whileTrue(m_SinglePos).onFalse(m_ArmStop);
     m_ArmController.y().whileTrue(m_DoublePos).onFalse(m_ArmStop);
     m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
+    m_ArmController.leftStick().whileTrue(m_bumpDown).onFalse(m_ArmStop);
 
+     // Trigger to Leds command mappings
+     m_ArmController.povUp().onTrue(m_changeLedcolor);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
@@ -174,8 +177,6 @@ public class RobotContainer {
     m_DriveJoystick.button(8).onTrue(m_limeLightOff);
     m_DriveJoystick.rightTrigger().onTrue(m_swapPipeline);
 
-    // Trigger to Leds command mappings
-    m_ArmController.povUp().onTrue(m_changeLedcolor);
   }
 
   /**
