@@ -77,11 +77,11 @@ package frc.robot;
       public static final double k_targetCountRange = 2500.0;
       public static final double k_floorShoulderCount = -72634.0;
       public static final double k_singleShoulderCount = -120000.0;
-      public static final double k_lowShoulderCount = -80000.0;
+      public static final double k_lowShoulderCount = -124678.0;
       public static final double k_doubleShoulderCount = -136800;
       public static final double k_floorExtendCount = -k_fullExtendCount;
       public static final double k_singleExtendCount = -120000.0;
-      public static final double k_lowExtendCount = -80000.0;
+      public static final double k_lowExtendCount = -29214.0;
       public static final double k_doubleExtendCount = 0;
       public static final double k_rangeFactor = 0.1;
       public static final double k_clearBumperCount = -17500;
@@ -115,7 +115,7 @@ package frc.robot;
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
+      public static final boolean ArmON = true;
       public static final boolean VisionON = false;
     }
 }

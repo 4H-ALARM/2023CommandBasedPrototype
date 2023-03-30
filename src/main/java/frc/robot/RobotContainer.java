@@ -157,11 +157,11 @@ public class RobotContainer {
     m_ArmController.a().whileTrue(m_FloorPos).onFalse(m_ArmStop);
     m_ArmController.b().whileTrue(m_SinglePos).onFalse(m_ArmStop);
     m_ArmController.y().whileTrue(m_DoublePos).onFalse(m_ArmStop);
-    m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
-    m_ArmController.leftStick().onTrue(m_bumpDown);
+    m_ArmController.povUp().whileTrue(m_LowPos).onFalse(m_ArmStop);
+    m_ArmController.povDown().onTrue(m_bumpDown);
 
      // Trigger to Leds command mappings
-     m_ArmController.povUp().onTrue(m_changeLedcolor);
+     m_ArmController.povRight().onTrue(m_changeLedcolor);
 
     // Trigger to Drive command mappings  
     m_DriveJoystick.a().onTrue(m_ResetGyro);
