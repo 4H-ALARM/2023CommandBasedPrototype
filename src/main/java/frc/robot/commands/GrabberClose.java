@@ -20,7 +20,10 @@ public class GrabberClose extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // clear hold mode in case we are in hold from a prior call to this command
+    m_Grabber.releaseHold();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -34,11 +37,14 @@ public class GrabberClose extends CommandBase {
     m_Grabber.setHold();
   }
 
-  // Returns true when the command should end.
+  /**
+   * only ends when button is released, MUST be
+   * mapped to a "whileTrue" trigger
+   * 
+   * @return always returns false
+   */
   @Override
-  public boolean isFinished() {
-    // only ends when button is released, must be
-    // mapped to a "whileTrue" trigger
+  public boolean isFinished() {    
     return false;
   }
 }
