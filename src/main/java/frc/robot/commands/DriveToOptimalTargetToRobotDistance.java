@@ -13,6 +13,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
   private Drivetrain m_dt;
   private vision m_v;
   private double m_error = 0;
+  private double m_multiplier = DriveParameters.k_aprilMultiplier;
 
   /** Creates a new DriveTraverse. */
   public DriveToOptimalTargetToRobotDistance(Drivetrain dt, vision v) {
@@ -33,7 +34,7 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
     double targetInfo[] = new double[3];
     targetInfo = this.m_v.findObject();
     double s = DriveParameters.k_driveSpeed;
-    s = s * m_error * DriveParameters.k_optimalDistanceErrorGain;
+    s = s * m_error * DriveParameters.k_optimalDistanceErrorGain * m_multiplier;
     if (s > 0.5) {s = 0.5;}
     if (targetInfo[2] < DriveParameters.k_targetAreaApril ){s = -s;}
     this.m_dt.drive(s,0,0);
@@ -55,10 +56,12 @@ public class DriveToOptimalTargetToRobotDistance extends CommandBase {
     double area = DriveParameters.k_targetAreaApril;
     double minArea = DriveParameters.k_minAprilTargetArea;
     double maxArea = DriveParameters.k_maxAprilTargetArea;
+    m_multiplier = DriveParameters.k_aprilMultiplier;
     if (pipe != 0) {
       area = DriveParameters.k_targetAreaRetro;
       minArea = DriveParameters.k_minRetroTargetArea;
       maxArea = DriveParameters.k_maxRetroTargetArea;
+      m_multiplier = DriveParameters.k_retroMultiplier;
     }
     if (this.m_v.targetFound()) {
       double a = targetInfo[2];

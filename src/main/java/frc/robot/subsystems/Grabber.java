@@ -18,6 +18,8 @@ public class Grabber extends SubsystemBase {
   private final WPI_TalonSRX m_clawMotor = new WPI_TalonSRX(CANaddresses.k_claw);
   
   private double m_current = 0.0;
+  private boolean m_holdOn = false;
+  private Integer m_holdCount = 0;
   
   /** Creates a new Grabber. */
   public Grabber() {
@@ -44,10 +46,32 @@ public class Grabber extends SubsystemBase {
     m_clawMotor.set(0.15);
   }
 
+  private void hold() {
+    if (m_holdCount < 10) {
+      slow();
+    } else {
+      stop();
+    }
+    m_holdCount++;
+    if (m_holdCount > 10) {
+      m_holdCount = 0;
+    }
+  }
+
+  public void setHold() {
+    m_holdOn = true;
+  }
+
+  public void releaseHold() {
+    m_holdOn = false;
+  }
+
   @Override
   public void periodic() { 
     readCurrent();
-    
+    if (m_holdOn){
+      hold();
+    }
     updateDashboard();
   }
 

@@ -48,6 +48,8 @@ package frc.robot;
       public static final double k_minRetroTargetArea = 0.43; 
       public static final double k_maxRetroTargetArea = 0.46; 
       public static final double k_autonmousDriveTimeOut = 10.0;
+      public static final double k_aprilMultiplier = 1.0;
+      public static final double k_retroMultiplier = 10.0;
 
     }
 
