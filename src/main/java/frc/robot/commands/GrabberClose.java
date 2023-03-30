@@ -37,6 +37,8 @@ public class GrabberClose extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // only ends when button is released, must be
+    // mapped to a "whileTrue" trigger
     return false;
   }
 }

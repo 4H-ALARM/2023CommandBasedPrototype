@@ -144,6 +144,8 @@ public class RobotContainer {
     
      // Trigger to Grabber command mappings
     m_ArmController.leftBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    // when button released grabber close will put the grabber into a "hold" mode
+    // that gets cleared when the grabber is either commanded to open or close again
     m_ArmController.rightBumper().whileTrue(m_GrabberClose); //.onFalse(m_GrabberSlow);
 
     // Trigger to Arm command mappings
@@ -156,7 +158,7 @@ public class RobotContainer {
     m_ArmController.b().whileTrue(m_SinglePos).onFalse(m_ArmStop);
     m_ArmController.y().whileTrue(m_DoublePos).onFalse(m_ArmStop);
     m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
-    m_ArmController.leftStick().whileTrue(m_bumpDown).onFalse(m_ArmStop);
+    m_ArmController.leftStick().onTrue(m_bumpDown);
 
      // Trigger to Leds command mappings
      m_ArmController.povUp().onTrue(m_changeLedcolor);
