@@ -31,19 +31,17 @@ public class changeLedcolor extends CommandBase {
 
     switch(m_counter) {
       case 0:
-      m_Leds.setRGB(0,0,0);
-      m_Leds.setRGB(0,0,0);
+        m_Leds.setRGB(0,0,0);
         break;
       case 1:
-      m_Leds.setRGB(0,0,0);
-      m_Leds.setRGB(255,100,0);
+        m_Leds.setRGB(255,100,0);
         break;
       case 2:
-      m_Leds.setRGB(0,0,0);
-      m_Leds.setRGB(255,0,255);
+        m_Leds.setRGB(255,0,255);
+        m_counter = -1;
         break;
       case 3:
-      m_counter = -1;
+        m_counter = -1;
         break;
     }
 
