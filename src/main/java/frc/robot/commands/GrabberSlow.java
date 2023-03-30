@@ -7,11 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Grabber;
 
-public class GrabberOpen extends CommandBase {
+
+public class GrabberSlow extends CommandBase {
   private Grabber m_Grabber;
 
-  /** Creates a new GrabberOpen. */
-  public GrabberOpen(Grabber g) {
+  /** Creates a new GrabberStop. */
+  public GrabberSlow(Grabber g) {
     this.m_Grabber = g;
 
     // Use addRequirements(g) here to declare subsystem dependencies.
@@ -20,14 +21,12 @@ public class GrabberOpen extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_Grabber.releaseHold();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Grabber.open();
+    m_Grabber.slow();
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +36,6 @@ public class GrabberOpen extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

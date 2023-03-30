@@ -41,10 +41,15 @@ package frc.robot;
       public static final double k_rotateSpeed = 0.4;
       public static final double k_driveSpeed = 0.2;
       public static final double k_optimalDistanceErrorGain = 3;
-      public static final double k_targetArea = 4; //TODO adjust value based on testing
-      public static final double k_minTargetArea = 3.5; //TODO adjust value based on testing
-      public static final double k_maxTargetArea = 4.5; //TODO adjust value based on testing
+      public static final double k_targetAreaApril = 4;
+      public static final double k_targetAreaRetro = 0.445;
+      public static final double k_minAprilTargetArea = 3.5;
+      public static final double k_maxAprilTargetArea = 4.5;
+      public static final double k_minRetroTargetArea = 0.43; 
+      public static final double k_maxRetroTargetArea = 0.46; 
       public static final double k_autonmousDriveTimeOut = 10.0;
+      public static final double k_aprilMultiplier = 1.0;
+      public static final double k_retroMultiplier = 10.0;
 
     }
 
@@ -56,7 +61,7 @@ package frc.robot;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
       public static final double k_fullExtendCount = -179000.0;
-      public static final double k_fullRaiseCount = -150000.0;
+      public static final double k_fullRaiseCount = -157000.0;
       public static final double k_startStowCount = -50000.0;
       public static final double k_safeExtenderStowCount = -100.0; 
       public static final double k_llExtendGoodGrab = 20;
@@ -69,15 +74,15 @@ package frc.robot;
       public static final double k_hypSafety = 1000;  // safety to ensure arm doesn't hit floor when using hypotenuse calculation
       public static final double k_safeReach = 100000; // max extension count allowed for a grab
       public static final double k_bumperCount = -15300;
-      public static final double k_targetCountRange = 5000.0;
-      public static final double k_floorShoulderCount = -40000.0;
+      public static final double k_targetCountRange = 2500.0;
+      public static final double k_floorShoulderCount = -72634.0;
       public static final double k_singleShoulderCount = -120000.0;
       public static final double k_lowShoulderCount = -80000.0;
-      public static final double k_doubleShoulderCount = -128200;
-      public static final double k_floorExtendCount = -40000.0;
+      public static final double k_doubleShoulderCount = -136800;
+      public static final double k_floorExtendCount = -k_fullExtendCount;
       public static final double k_singleExtendCount = -120000.0;
       public static final double k_lowExtendCount = -80000.0;
-      public static final double k_doubleExtendCount = -128200;
+      public static final double k_doubleExtendCount = 0;
       public static final double k_rangeFactor = 0.1;
       public static final double k_clearBumperCount = -17500;
       public static final double k_GrabCount = -128200;
@@ -85,8 +90,8 @@ package frc.robot;
     }
 
     public static class GrabberParameters {
-      public static final double k_openSpeed = 1;
-      public static final double k_closeSpeed = -1;
+      public static final double k_openSpeed = -0.65;
+      public static final double k_closeSpeed = 1;
     }
 
     public static class VisionParameters {
@@ -109,8 +114,8 @@ package frc.robot;
       //set to false to allow compiler to identify and eliminate
       //unreachable code
       public static final boolean DriveON = false;
-      public static final boolean ArmON = false;
-      public static final boolean VisionON = false;
+      public static final boolean ArmON = true;
+      public static final boolean VisionON = true;
     }
 }
   

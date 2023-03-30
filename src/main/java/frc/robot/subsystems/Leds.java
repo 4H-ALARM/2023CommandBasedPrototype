@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Leds extends SubsystemBase {
   private final AddressableLED m_led = new AddressableLED(0);
-  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(150);
+  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(13);
   /** Creates a new Leds. */
   public Leds() {
     m_led.setLength(m_ledBuffer.getLength());
