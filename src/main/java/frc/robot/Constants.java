@@ -87,6 +87,7 @@ package frc.robot;
       public static final double k_clearBumperCount = -17500;
       public static final double k_GrabCount = -128200;
       public static final double k_stowAngle = Math.PI/7.1;
+      public static final double k_bumpDownCount = 10000;
     }
 
     public static class GrabberParameters {
