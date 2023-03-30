@@ -19,14 +19,12 @@ public class Leds extends SubsystemBase {
   }
 
     
-    public void setRGB (Integer r, Integer g, Integer b) {
+  public void setRGB (Integer r, Integer g, Integer b) {
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      // Sets the specified LED to the RGB values for red
+      // Sets the specified LED to the RGB values given
       m_ledBuffer.setRGB(i, r, g, b);
-      m_led.setData(m_ledBuffer);
-    }
-   
-
+    }   
+    m_led.setData(m_ledBuffer);
   }
 
   @Override
