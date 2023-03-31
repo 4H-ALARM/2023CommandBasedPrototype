@@ -50,7 +50,7 @@ public class RobotContainer {
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
 
   // Leds commands
-  private final changeLedColor m_ChangeLedColor = new changeLedColor(m_leds);
+  private final changeLedcolor m_ChangeLedColor = new changeLedcolor(m_leds);
   private final changeLedYellow m_changeLedYellow = new changeLedYellow(m_leds);
   private final changeLedPurple m_changeLedPurple = new changeLedPurple(m_leds);
 

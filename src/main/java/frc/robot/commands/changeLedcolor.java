@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Leds;
 
-public class changeLedColor extends CommandBase {
+public class changeLedcolor extends CommandBase {
   private Leds m_Leds;
   Integer m_counter = 0;
 
   /** Creates a new changeLedcolor. */
-  public changeLedColor(Leds l) {
+  public changeLedcolor(Leds l) {
     this.m_Leds = l;
 
     // Use addRequirements(v) here to declare subsystem dependencies.
