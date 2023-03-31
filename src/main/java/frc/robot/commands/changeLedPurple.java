@@ -26,7 +26,7 @@ public class changeLedPurple extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Leds.setRGB(255,100,0);
+    m_Leds.setRGB(255,0,255);
   }
 
   // Called once the command ends or is interrupted.
