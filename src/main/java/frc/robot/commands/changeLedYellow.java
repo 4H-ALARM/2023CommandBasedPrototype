@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Leds;
 
-public class changeLedColor extends CommandBase {
+public class changeLedYellow extends CommandBase {
   private Leds m_Leds;
   Integer m_counter = 0;
 
   /** Creates a new changeLedcolor. */
-  public changeLedColor(Leds l) {
+  public changeLedYellow(Leds l) {
     this.m_Leds = l;
 
     // Use addRequirements(v) here to declare subsystem dependencies.
@@ -26,25 +26,9 @@ public class changeLedColor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    m_counter++;
-
-    switch(m_counter) {
-      case 0:
-        m_Leds.setRGB(0,0,0);
-        break;
-      case 1:
-        m_Leds.setRGB(255,100,0);
-        break;
-      case 2:
-        m_Leds.setRGB(255,0,255);
-        m_counter = -1;
-        break;
-      case 3:
-        m_counter = -1;
-        break;
-    }
-
+    m_Leds.setRGB(255,100,0);
+    m_Leds.ledColor = false;
+    m_Leds.updateDashboard();
   }
 
   // Called once the command ends or is interrupted.

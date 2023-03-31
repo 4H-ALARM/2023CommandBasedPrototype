@@ -16,5 +16,6 @@ public class DeployArm extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new ShoulderDeploy(a), new ExtenderDeploy(a));
+//    addCommands(new ShoulderDouble(a), new ExtenderDeploy(a), new ShoulderDeploy(a));
   }
 }

@@ -29,6 +29,7 @@ public class Arm extends SubsystemBase {
   private boolean m_atFullExtension = false;
   private boolean m_atFullRetraction = false;
   private boolean m_atFullRaise = false;
+  private boolean m_atDouble = false;
   private boolean m_atFullLower = false;
   private boolean m_safeToLower = true;  //TODO change to false when method to check for safe lower is debugged
   private boolean m_goodGrabPos = false;
@@ -146,6 +147,12 @@ public class Arm extends SubsystemBase {
 
   public void shoulderDeploy() {
     if ((!m_atFullRaise) && (m_armRaiseZeroed) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(true))) {
+      m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
+    }
+  }
+
+  public void shoulderDouble() {
+    if ((!m_atDouble) && (m_armRaiseZeroed) && (clearOfBumperForRaise()) && (clearOfFloorForRaise(true))) {
       m_Shoulder.set(ArmParameters.k_armRaiseSpeed);
     }
   }
@@ -274,6 +281,12 @@ public class Arm extends SubsystemBase {
       m_atFullRaise = true;
     } else {
       m_atFullRaise = false;
+    }
+
+    if (m_Shoulder.getSelectedSensorPosition() < ArmParameters.k_doubleShoulderCount) {
+      m_atDouble = true;
+    } else {
+      m_atDouble = false;
     }
   }
 
@@ -429,6 +442,7 @@ public class Arm extends SubsystemBase {
     SmartDashboard.putBoolean("Full Retract", m_atFullRetraction);
     SmartDashboard.putBoolean("Shoulder Override", m_overrideShoulder);
     SmartDashboard.putBoolean("Extender Override", m_overrideExtender);
+    //SmartDashboard.putBoolean("LED Color", LEDcolor);
 
     if (Debug.ArmON) {
       SmartDashboard.putBoolean("Safe-Lower", m_safeToLower);

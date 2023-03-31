@@ -60,7 +60,7 @@ package frc.robot;
       public static final double k_armRetractSpeed = 0.425;
       public static final int k_lowerLimitDIO = 0;
       public static final int k_fullRetractDIO = 1;
-      public static final double k_fullExtendCount = -179000.0;
+      public static final double k_fullExtendCount = -197737.0;
       public static final double k_fullRaiseCount = -157000.0;
       public static final double k_startStowCount = -50000.0;
       public static final double k_safeExtenderStowCount = -100.0; 
