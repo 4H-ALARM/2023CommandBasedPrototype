@@ -7,15 +7,18 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Leds extends SubsystemBase {
   private final AddressableLED m_led = new AddressableLED(0);
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(13);
+  public boolean ledColor;
   /** Creates a new Leds. */
   public Leds() {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.setData(m_ledBuffer);
     m_led.start();
+    boolean ledColor = false;
   }
 
     
@@ -30,5 +33,9 @@ public class Leds extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void updateDashboard() {
+    SmartDashboard.putBoolean("LED Color", ledColor);
   }
 }

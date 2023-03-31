@@ -61,7 +61,7 @@ public class Grabber extends SubsystemBase {
     }
     // keep track of how many times we have held since hold turned on or off
     // comment this out to turn motor protection off
-    m_motorProtectCount++;
+   // m_motorProtectCount++;
   }
 
   public void setHold() {

@@ -50,7 +50,9 @@ public class RobotContainer {
   private final GrabberClose m_GrabberClose = new GrabberClose(m_grabberSubsystem);
 
   // Leds commands
-  private final changeLedcolor m_changeLedcolor = new changeLedcolor(m_leds);
+  private final changeLedColor m_ChangeLedColor = new changeLedColor(m_leds);
+  private final changeLedYellow m_changeLedYellow = new changeLedYellow(m_leds);
+  private final changeLedPurple m_changeLedPurple = new changeLedPurple(m_leds);
 
   // Arm Commands
   private final ArmStop m_ArmStop = new ArmStop(m_Arm);
@@ -143,30 +145,33 @@ public class RobotContainer {
      */
     
      // Trigger to Grabber command mappings
-    m_ArmController.leftBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
+    m_ArmController.rightBumper().whileTrue(m_GrabberOpen).onFalse(m_GrabberStop);
     // when button released grabber close will put the grabber into a "hold" mode
     // that gets cleared when the grabber is either commanded to open or close again
-    m_ArmController.rightBumper().whileTrue(m_GrabberClose); //.onFalse(m_GrabberSlow);
+    m_ArmController.leftBumper().whileTrue(m_GrabberClose); //.onFalse(m_GrabberSlow);
 
     // Trigger to Arm command mappings
     m_ArmController.button(7).onTrue(m_overrideShoulder);
     m_ArmController.button(8).onTrue(m_overrideExtender);
     m_ArmController.leftTrigger().whileTrue(m_StowArm).onFalse(m_ArmStop); 
-    m_ArmController.rightTrigger().whileTrue(m_HighPos).onFalse(m_ArmStop);
-    m_ArmController.x().whileTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
-    m_ArmController.a().whileTrue(m_FloorPos).onFalse(m_ArmStop);
-    m_ArmController.b().whileTrue(m_SinglePos).onFalse(m_ArmStop);
-    m_ArmController.y().whileTrue(m_DoublePos).onFalse(m_ArmStop);
-    m_ArmController.povDown().whileTrue(m_LowPos).onFalse(m_ArmStop);
-    m_ArmController.leftStick().onTrue(m_bumpDown);
+    m_ArmController.y().whileTrue(m_HighPos).onFalse(m_ArmStop);
+    m_ArmController.a().whileTrue(m_LowerToBumperSeq).onFalse(m_ArmStop);
+    m_ArmController.povDown().whileTrue(m_FloorPos).onFalse(m_ArmStop);
+    m_ArmController.povLeft().whileTrue(m_SinglePos).onFalse(m_ArmStop);
+    m_ArmController.povRight().whileTrue(m_SinglePos).onFalse(m_ArmStop);
+    m_ArmController.povUp().whileTrue(m_DoublePos).onFalse(m_ArmStop);
+    m_ArmController.b().whileTrue(m_LowPos).onFalse(m_ArmStop);
+    m_ArmController.x().whileTrue(m_LowPos).onFalse(m_ArmStop);
+    m_ArmController.rightTrigger().onTrue(m_bumpDown);
 
      // Trigger to Leds command mappings
-     m_ArmController.povUp().onTrue(m_changeLedcolor);
+     m_ArmController.rightStick().onTrue(m_changeLedYellow);
+     m_ArmController.leftStick().onTrue(m_changeLedPurple);
 
     // Trigger to Drive command mappings  
-    m_DriveJoystick.a().onTrue(m_ResetGyro);
-    m_DriveJoystick.b().onTrue((m_switchPerspective));
-    m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
+//    m_DriveJoystick.a().onTrue(m_ResetGyro);
+//    m_DriveJoystick.b().onTrue((m_switchPerspective));
+//    m_DriveJoystick.leftTrigger().onTrue(m_toggleMaintainHeading);
     m_DriveJoystick.povLeft().whileTrue(m_TraverseLeftToTarget).onFalse(m_driveStop);
     m_DriveJoystick.povRight().whileTrue(m_TraverseRightToTarget).onFalse(m_driveStop);
     m_DriveJoystick.povUp().whileTrue(m_RotateLeftToTarget).onFalse(m_driveStop);
